@@ -60,11 +60,11 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 	}
 
 	@PersistenceContext
-	public void setEntityManager(EntityManager entityManager) {
+	protected void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
 
-	public Class<T> getEntityClass() {
+	protected Class<T> getEntityClass() {
 		return this.entityClass;
 	}
 

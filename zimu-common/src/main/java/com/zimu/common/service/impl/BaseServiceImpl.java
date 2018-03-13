@@ -28,7 +28,7 @@ public class BaseServiceImpl<T, PK extends Serializable> implements BaseService<
 	}
 
 	@Autowired
-	public void setBaseDao(BaseDao<T, PK> baseDao) {
+	protected void setBaseDao(BaseDao<T, PK> baseDao) {
 		this.baseDao = baseDao;
 	}
 
