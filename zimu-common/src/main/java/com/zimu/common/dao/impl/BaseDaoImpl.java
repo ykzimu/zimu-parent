@@ -22,13 +22,11 @@ import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 import javax.persistence.metamodel.SingularAttribute;
 
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.zimu.common.bean.Pageable;
 import com.zimu.common.bean.Pager;
@@ -40,9 +38,6 @@ import com.zimu.common.dao.BaseDao;
 import com.zimu.common.utils.BeanUtils;
 
 public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
-
-	// 日志记录
-	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	// 数据库映射实体类型
 	protected Class<T> entityClass;
@@ -169,7 +164,6 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 	@Override
 	public void update(Collection<T> objs) {
 		if (objs == null || objs.isEmpty()) {
-			logger.info("update collection is empty");
 			return;
 		}
 
@@ -220,7 +214,6 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 	@Override
 	public void delete(Collection<T> pos) {
 		if (pos == null || pos.isEmpty()) {
-			logger.info("delete collection is empty");
 			return;
 		}
 		for (T obj : pos) {
@@ -374,7 +367,7 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 			if (operator == null) {
 				operator = Operator.like;
 			}
-			if (StringUtils.isNotEmpty(key) && value != null) {
+			if (StringUtils.isNotBlank(key) && value != null) {
 				Path x = root.get(key);
 				Class javaType = x.getJavaType();
 				switch (operator) {
@@ -396,22 +389,22 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 					}
 					break;
 				case lt:
-					if (Number.class.isAssignableFrom(javaType) && NumberUtils.isNumber(value.toString())) {
+					if (Number.class.isAssignableFrom(javaType) && NumberUtils.isCreatable(value.toString())) {
 						predicates.add(cb.lt(root.get(key), (Number) value));
 					}
 					break;
 				case le:
-					if (Number.class.isAssignableFrom(javaType) && NumberUtils.isNumber(value.toString())) {
+					if (Number.class.isAssignableFrom(javaType) && NumberUtils.isCreatable(value.toString())) {
 						predicates.add(cb.le(root.get(key), (Number) value));
 					}
 					break;
 				case gt:
-					if (Number.class.isAssignableFrom(javaType) && NumberUtils.isNumber(value.toString())) {
+					if (Number.class.isAssignableFrom(javaType) && NumberUtils.isCreatable(value.toString())) {
 						predicates.add(cb.gt(root.get(key), (Number) value));
 					}
 					break;
 				case ge:
-					if (Number.class.isAssignableFrom(javaType) && NumberUtils.isNumber(value.toString())) {
+					if (Number.class.isAssignableFrom(javaType) && NumberUtils.isCreatable(value.toString())) {
 						predicates.add(cb.ge(root.get(key), (Number) value));
 					}
 					break;
@@ -490,7 +483,7 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 		Direction orderType = pager.getOrderType();
 
 		// 单个排序条件
-		if (StringUtils.isNotEmpty(orderBy) && orderType != null) {
+		if (StringUtils.isNotBlank(orderBy) && orderType != null) {
 			if (orderType == Direction.desc) {
 				ocq.orderBy(cb.desc(root.get(orderBy)));
 			} else {
@@ -504,7 +497,7 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 			for (QueryOrder param : params) {
 				orderBy = param.getProperty();
 				orderType = param.getDirection();
-				if (StringUtils.isNotEmpty(orderBy) && orderType != null) {
+				if (StringUtils.isNotBlank(orderBy) && orderType != null) {
 					if (orderType == Direction.desc) {
 						ocq.orderBy(cb.desc(root.get(orderBy)));
 					} else {
@@ -694,7 +687,6 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 			Object qs = BeanUtils.getPrivateProperty(ccq, "queryStructure");
 			BeanUtils.setPrivateProperty(qs, "roots", roots);
 		} catch (Exception e) {
-			logger.info(e.getMessage(), e);
 		}
 
 		ccq.select(cb.count(root));
