@@ -23,7 +23,7 @@ public class BaseServiceImpl<T, PK extends Serializable> implements BaseService<
 
 	protected BaseDao<T, PK> baseDao;
 
-	public BaseDao<T, PK> getBaseDao() {
+	protected BaseDao<T, PK> getBaseDao() {
 		return baseDao;
 	}
 

@@ -61,6 +61,15 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 		}
 	}
 
+	protected EntityManager getEntityManager() {
+		return entityManager;
+	}
+
+	@PersistenceContext
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+
 	public Class<T> getEntityClass() {
 		return this.entityClass;
 	}
@@ -813,15 +822,6 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 	 */
 	protected Session getSession() {
 		return this.entityManager.unwrap(Session.class);
-	}
-
-	protected EntityManager getEntityManager() {
-		return entityManager;
-	}
-
-	@PersistenceContext
-	protected void setEntityManager(EntityManager entityManager) {
-		this.entityManager = entityManager;
 	}
 
 	protected CriteriaBuilder getCriteriaBuilder() {
