@@ -47,6 +47,7 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
 		field.set(object, newValue);
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static Object invokePrivateMethod(Object object, String methodName, Object[] params)
 			throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		Class[] types = new Class[params.length];
@@ -63,6 +64,7 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
 		return invokePrivateMethod(object, methodName, new Object[] { param });
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static Object invokeStaticMethod(Class clazz, String methodName, Object[] params)
 			throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
@@ -75,6 +77,7 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
 		return method.invoke(null, params);
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static String reflectBeanToString(Object value, int depth) {
 		String result = "";
 		if (value instanceof Collection) {
