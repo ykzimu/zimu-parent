@@ -29,7 +29,6 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.Assert;
 
 import com.zimu.common.bean.Pageable;
 import com.zimu.common.bean.Pager;
@@ -131,55 +130,44 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public PK save(T entity) {
-		Assert.notNull(entity, "entity must not be null");
 		return (PK) this.getSession().save(entity);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public PK save(String entityName, T entity) {
-		Assert.hasText(entityName, "entityName must not be empty");
-		Assert.notNull(entity, "entity must not be null");
 		return (PK) this.getSession().save(entityName, entity);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T merge(T entity) {
-		Assert.notNull(entity, "entity must not be null");
 		return (T) this.getSession().merge(entity);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public T merge(String entityName, T entity) {
-		Assert.hasText(entityName, "entityName must not be empty");
-		Assert.notNull(entity, "entity must not be null");
 		return (T) this.getSession().merge(entityName, entity);
 	}
 
 	@Override
 	public void persist(T object) {
-		Assert.notNull(object, "object must not be null");
 		this.getSession().persist(object);
 	}
 
 	@Override
 	public void persist(String entityName, T object) {
-		Assert.hasText(entityName, "entityName must not be empty");
-		Assert.notNull(object, "object must not be null");
 		this.getSession().persist(entityName, object);
 	}
 
 	@Override
 	public void update(T entity) {
-		Assert.notNull(entity, "entity must not be null");
 		this.getSession().update(entity);
 	}
 
 	@Override
 	public void update(Collection<T> objs) {
-
 		if (objs == null || objs.isEmpty()) {
 			logger.info("update collection is empty");
 			return;
@@ -198,37 +186,31 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	public void update(String entityName, T entity) {
-		Assert.hasText(entityName, "entityName must not be empty");
-		Assert.notNull(entity, "entity must not be null");
 		this.getSession().update(entityName, entity);
 	}
 
 	@Override
 	public void saveOrUpdate(T entity) {
-		Assert.notNull(entity, "entity must not be null");
 		this.getSession().saveOrUpdate(entity);
 	}
 
 	@Override
 	public void saveOrUpdate(String entityName, T entity) {
-		Assert.hasText(entityName, "entityName must not be empty");
-		Assert.notNull(entity, "entity must not be null");
 		this.getSession().saveOrUpdate(entityName, entity);
 	}
 
 	@Override
 	public void delete(PK id) {
-		Assert.notNull(id, "id must not be null");
 		T entity = get(id);
-		Assert.notNull(entity, "entity must not be null");
-		this.getSession().delete(entity);
+		if (entity != null) {
+			this.getSession().delete(entity);
+		}
 
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
 	public int delete(PK[] ids) {
-		Assert.notEmpty(ids, "ids must not be empty");
 		String hql = "DELETE FROM " + this.entityClass.getName() + " WHERE ID IN (:ids)";
 		Query query = getSession().createQuery(hql);
 		query.setParameterList("ids", ids);
@@ -237,7 +219,6 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	public void delete(Collection<T> pos) {
-
 		if (pos == null || pos.isEmpty()) {
 			logger.info("delete collection is empty");
 			return;
@@ -250,28 +231,22 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	public void delete(T entity) {
-		Assert.notNull(entity, "entity must not be null");
 		this.getSession().delete(entity);
 	}
 
 	@Override
 	public void delete(String entityName, T entity) {
-		Assert.hasText(entityName, "entityName must not be empty");
-		Assert.notNull(entity, "entity must not be null");
 		this.getSession().delete(entityName, entity);
 	}
 
 	@Override
 	public int deleteByField(SingularAttribute<T, ?> propertyName, Object value) {
-		Assert.notNull(value, "value must not be null");
 		return deleteByField(propertyName.getName(), value);
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
 	public int deleteByField(String propertyName, Object value) {
-		Assert.hasText(propertyName, "propertyName must not be empty");
-		Assert.notNull(value, "value must not be null");
 		String hql = "DELETE FROM " + this.entityClass.getName() + " WHERE " + propertyName + "=:" + propertyName;
 		Query query = getSession().createQuery(hql);
 		query.setParameter(propertyName, value);
@@ -298,7 +273,7 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	public List<T> findAll(String orderBy) {
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaBuilder cb = getCriteriaBuilder();
 		CriteriaQuery<T> q = cb.createQuery(entityClass);
 		Root<T> root = q.from(entityClass);
 		q.select(root);
@@ -310,13 +285,11 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	public List<T> findByField(SingularAttribute<T, ?> propertyName, Object value) {
-		Assert.notNull(value, "value must not be null");
 		return findByField(propertyName.getName(), value);
 	}
 
 	@Override
 	public List<T> findByField(SingularAttribute<T, ?> propertyName, Object value, SingularAttribute<T, ?> orderBy) {
-		Assert.notNull(value, "value must not be null");
 		return findByField(propertyName.getName(), value, orderBy.getName());
 	}
 
@@ -327,10 +300,7 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	public List<T> findByField(String propertyName, Object value, String orderBy) {
-		Assert.hasText(propertyName, "propertyName must not be empty");
-		Assert.notNull(value, "value must not be null");
-
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaBuilder cb = getCriteriaBuilder();
 		CriteriaQuery<T> q = cb.createQuery(entityClass);
 		Root<T> root = q.from(entityClass);
 		q.select(root);
@@ -349,14 +319,12 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	public List<T> findByFields(Map<String, Object> params, SingularAttribute<T, ?> orderBy) {
-		Assert.notNull(orderBy, "orderBy must not be null");
 		return findByFields(params, orderBy.getName());
 	}
 
 	@Override
 	public List<T> findByFields(Map<String, Object> params, String orderBy) {
-		Assert.hasText(orderBy, "orderBy must not be empty");
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaBuilder cb = getCriteriaBuilder();
 		CriteriaQuery<T> q = cb.createQuery(entityClass);
 		Root<T> root = q.from(entityClass);
 		q.select(root);
@@ -568,29 +536,23 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	public T get(PK id) {
-		Assert.notNull(id, "id must not be null");
 		return (T) this.getSession().get(this.entityClass, id);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public T get(String entityName, PK id) {
-		Assert.hasText(entityName, "entityName must not be empty");
-		Assert.notNull(id, "id must not be null");
 		return (T) this.getSession().get(entityName, id);
 	}
 
 	@Override
 	public T get(String propertyName, Object value) {
-		Assert.hasText(propertyName, "propertyName must not be empty");
-		Assert.notNull(value, "value must not be null");
 		return this.getByField(propertyName, value);
 	}
 
 	@Override
 	public List<T> get(List<PK> ids) {
-		Assert.notEmpty(ids, "ids must not be empty");
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaBuilder cb = getCriteriaBuilder();
 		CriteriaQuery<T> q = cb.createQuery(entityClass);
 		Root<T> root = q.from(entityClass);
 		q.select(root);
@@ -601,7 +563,6 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	public List<T> get(PK[] ids) {
-		Assert.notEmpty(ids, "ids must not be empty");
 		List<PK> list = (List<PK>) Arrays.asList(ids);
 		return get(list);
 	}
@@ -613,20 +574,17 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	public T getByField(SingularAttribute<T, ?> propertyName, Object value) {
-		Assert.notNull(value, "value must not be null");
 		return this.getByField(propertyName.getName(), value);
 	}
 
 	@Override
 	public T getByField(String propertyName, Object value) {
-		Assert.hasText(propertyName, "propertyName must not be empty");
-		Assert.notNull(value, "value must not be null");
+
 		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery<T> q = cb.createQuery(entityClass);
 		Root<T> root = q.from(entityClass);
 		q.select(root);
 		q.where(cb.equal(root.get(propertyName), value));
-
 		return this.getByCriteria(q);
 	}
 
@@ -663,35 +621,29 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	public T load(PK id) {
-		Assert.notNull(id, "id must not be null");
+
 		return (T) this.getSession().load(this.entityClass, id);
 	}
 
 	@Override
 	public void load(Object object, PK id) {
-		Assert.notNull(object, "object must not be null");
-		Assert.notNull(id, "id must not be null");
+
 		this.getSession().load(object, id);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public T load(String entityName, PK id) {
-		Assert.hasText(entityName, "entityName must not be empty");
-		Assert.notNull(id, "id must not be null");
 		return (T) this.getSession().load(entityName, id);
 	}
 
 	@Override
 	public void refresh(Object object) {
-		Assert.notNull(object, "object must not be null");
 		this.getSession().refresh(object);
 	}
 
 	@Override
 	public void refresh(String entityName, Object object) {
-		Assert.hasText(entityName, "entityName must not be empty");
-		Assert.notNull(object, "object must not be null");
 		this.getSession().refresh(entityName, object);
 	}
 
@@ -702,7 +654,7 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	public long getCount(Map<String, Object> params) {
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaBuilder cb = getCriteriaBuilder();
 		CriteriaQuery<Long> q = cb.createQuery(Long.class);
 		Root<T> root = q.from(entityClass);
 		q.select(cb.count(root));
@@ -727,7 +679,6 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	public long getCount(SingularAttribute<T, ?> propertyName, Object value) {
-		Assert.notNull(value, "value must not be null");
 		return this.getCount(propertyName.getName(), value);
 	}
 
@@ -735,7 +686,6 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 	public <E> Long getCountByCriteria(CriteriaQuery<E> cq) {
 		//
 		CriteriaBuilder cb = getCriteriaBuilder();
-
 		// 执行count查询
 		Set<Root<?>> roots = cq.getRoots();
 		Root<?> root = roots.iterator().next();
@@ -765,21 +715,17 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	public boolean isExist(PK id) {
-		Assert.notNull(id, "id must not be null");
 		T entity = (T) this.getSession().get(this.entityClass, id);
 		return entity != null;
 	}
 
 	@Override
 	public boolean isExist(T object) {
-		Assert.notNull(object, "object must not be null");
 		return this.getSession().contains(object);
 	}
 
 	@Override
 	public boolean isExist(String propertyName, Object value) {
-		Assert.hasText(propertyName, "propertyName must not be empty");
-		Assert.notNull(value, "value must not be null");
 		T entity = getByField(propertyName, value);
 		if (entity == null) {
 			return false;
@@ -790,7 +736,6 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	public boolean isExist(SingularAttribute<T, ?> propertyName, Object value) {
-		Assert.notNull(value, "value must not be null");
 		return isExist(propertyName.getName(), value);
 	}
 
@@ -806,7 +751,6 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	public void evict(T entity) {
-		Assert.notNull(entity, "entity must not be null");
 		this.getSession().evict(entity);
 	}
 
@@ -821,11 +765,11 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 	 * @throws
 	 */
 	protected Session getSession() {
-		return this.entityManager.unwrap(Session.class);
+		return this.getEntityManager().unwrap(Session.class);
 	}
 
 	protected CriteriaBuilder getCriteriaBuilder() {
-		return getEntityManager().getCriteriaBuilder();
+		return this.getEntityManager().getCriteriaBuilder();
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

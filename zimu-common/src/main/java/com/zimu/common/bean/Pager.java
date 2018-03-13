@@ -3,7 +3,7 @@ package com.zimu.common.bean;
 import java.util.Collections;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
+import com.zimu.common.utils.BeanUtils;
 
 public class Pager<T> extends Pageable {
 	private static final long serialVersionUID = 1L;
@@ -75,7 +75,7 @@ public class Pager<T> extends Pageable {
 		super();
 		if (pageable != null) {
 			try {
-				BeanUtils.copyProperties(pageable, this);
+				BeanUtils.copyProperties(this, pageable);
 			} catch (Exception e) {
 
 			}
@@ -178,7 +178,7 @@ public class Pager<T> extends Pageable {
 	public Pager(Pager<?> pageable) {
 		super();
 		try {
-			BeanUtils.copyProperties(pageable, this, new String[] { "list" });
+			BeanUtils.copyProperties(this, pageable);
 		} catch (Exception e) {
 			// e.printStackTrace();
 		}
