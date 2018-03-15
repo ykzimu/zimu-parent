@@ -35,25 +35,25 @@ public interface BaseDao<T, PK extends Serializable> {
 
 	PK save(T entity);
 
-	PK save(String entityName, T entity);
+	<E> PK save(String entityName, E entity);
 
 	T merge(T entity);
 
-	T merge(String entityName, T entity);
+	<E> E merge(String entityName, E entity);
 
 	void persist(T object);
 
-	void persist(String entityName, T object);
+	<E> void persist(String entityName, E object);
 
 	void update(T entity);
 
 	void update(Collection<T> objs);
 
-	void update(String entityName, T entity);
+	<E> void update(String entityName, E entity);
 
 	void saveOrUpdate(T entity);
 
-	void saveOrUpdate(String entityName, T entity);
+	<E> void saveOrUpdate(String entityName, E entity);
 
 	void delete(PK id);
 
@@ -61,7 +61,7 @@ public interface BaseDao<T, PK extends Serializable> {
 
 	void delete(T entity);
 
-	void delete(String entityName, T entity);
+	<E> void delete(String entityName, E entity);
 
 	void delete(Collection<T> pos);
 
@@ -97,7 +97,7 @@ public interface BaseDao<T, PK extends Serializable> {
 
 	T get(PK id);
 
-	T get(String entityName, PK id);
+	<E> E get(String entityName, PK id);
 
 	T get(String propertyName, Object value);
 
@@ -117,7 +117,7 @@ public interface BaseDao<T, PK extends Serializable> {
 
 	void load(Object object, PK id);
 
-	T load(String entityName, PK id);
+	<E> E load(String entityName, PK id);
 
 	void refresh(Object object);
 

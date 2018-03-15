@@ -130,7 +130,7 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public PK save(String entityName, T entity) {
+	public <E> PK save(String entityName, E entity) {
 		return (PK) this.getSession().save(entityName, entity);
 	}
 
@@ -142,8 +142,8 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public T merge(String entityName, T entity) {
-		return (T) this.getSession().merge(entityName, entity);
+	public <E> E merge(String entityName, E entity) {
+		return (E) this.getSession().merge(entityName, entity);
 	}
 
 	@Override
@@ -152,7 +152,7 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 	}
 
 	@Override
-	public void persist(String entityName, T object) {
+	public <E> void persist(String entityName, E object) {
 		this.getSession().persist(entityName, object);
 	}
 
@@ -179,7 +179,7 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 	}
 
 	@Override
-	public void update(String entityName, T entity) {
+	public <E> void update(String entityName, E entity) {
 		this.getSession().update(entityName, entity);
 	}
 
@@ -189,7 +189,7 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 	}
 
 	@Override
-	public void saveOrUpdate(String entityName, T entity) {
+	public <E> void saveOrUpdate(String entityName, E entity) {
 		this.getSession().saveOrUpdate(entityName, entity);
 	}
 
@@ -228,7 +228,7 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 	}
 
 	@Override
-	public void delete(String entityName, T entity) {
+	public <E> void delete(String entityName, E entity) {
 		this.getSession().delete(entityName, entity);
 	}
 
@@ -335,7 +335,7 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 		return this.findByCriteria(q);
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public Pager<T> findByPager(Pageable pager) {
 
@@ -385,7 +385,7 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 						obj1 = ((Collection) value).toArray();
 					}
 					if (obj1 != null && obj1.length == 2) {
-						// predicates.add(cb.between(root.get(key), obj1[0], obj1[1]));
+						predicates.add(cb.between(root.get(key), (Comparable) obj1[0], (Comparable) obj1[1]));
 					}
 					break;
 				case lt:
@@ -534,8 +534,8 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public T get(String entityName, PK id) {
-		return (T) this.getSession().get(entityName, id);
+	public <E> E get(String entityName, PK id) {
+		return (E) this.getSession().get(entityName, id);
 	}
 
 	@Override
@@ -614,20 +614,18 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	public T load(PK id) {
-
 		return (T) this.getSession().load(this.entityClass, id);
 	}
 
 	@Override
 	public void load(Object object, PK id) {
-
 		this.getSession().load(object, id);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public T load(String entityName, PK id) {
-		return (T) this.getSession().load(entityName, id);
+	public <E> E load(String entityName, PK id) {
+		return (E) this.getSession().load(entityName, id);
 	}
 
 	@Override
