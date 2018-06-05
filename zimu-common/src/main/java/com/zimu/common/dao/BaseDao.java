@@ -57,7 +57,13 @@ public interface BaseDao<T, PK extends Serializable> {
 
 	void delete(PK id);
 
+	int delete(List<PK> ids);
+
+	int delete(List<PK> ids, SingularAttribute<T, PK> id);
+
 	int delete(PK[] ids);
+
+	int delete(PK[] ids, SingularAttribute<T, PK> id);
 
 	void delete(T entity);
 
@@ -91,9 +97,9 @@ public interface BaseDao<T, PK extends Serializable> {
 
 	List<T> findByFields(Map<String, Object> params, String orderBy);
 
-	Pager<T> findByPager(Pageable pager);
+	Pager<T> findByPager(Pageable pageable);
 
-	<E> Pager<E> findByPager(CriteriaQuery<E> cq, Pageable pager);
+	<E> Pager<E> findByPager(CriteriaQuery<E> cq, Pageable pageable);
 
 	T get(PK id);
 
@@ -103,7 +109,11 @@ public interface BaseDao<T, PK extends Serializable> {
 
 	List<T> get(List<PK> ids);
 
+	List<T> get(List<PK> ids, SingularAttribute<T, PK> id);
+
 	List<T> get(PK[] ids);
+
+	List<T> get(PK[] ids, SingularAttribute<T, PK> id);
 
 	List<T> getAll();
 

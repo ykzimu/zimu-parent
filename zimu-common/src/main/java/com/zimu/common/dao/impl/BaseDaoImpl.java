@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
@@ -26,7 +27,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
 import com.zimu.common.bean.Pageable;
 import com.zimu.common.bean.Pager;
@@ -35,13 +35,19 @@ import com.zimu.common.bean.QueryFilter.Operator;
 import com.zimu.common.bean.QueryOrder;
 import com.zimu.common.bean.QueryOrder.Direction;
 import com.zimu.common.dao.BaseDao;
-import com.zimu.common.utils.BeanUtils;
 
 public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
-	// 数据库映射实体类型
+	private static final String DEFAULT_PK_NAME = "id";
+
+	/**
+	 * 数据库映射实体类型
+	 */
 	protected Class<T> entityClass;
 
+	/**
+	 * EntityManager
+	 */
 	protected EntityManager entityManager;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -202,13 +208,40 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	}
 
-	@SuppressWarnings("rawtypes")
+	@Override
+	public int delete(List<PK> ids) {
+		return this.delete(ids, null);
+	}
+
 	@Override
 	public int delete(PK[] ids) {
-		String hql = "DELETE FROM " + this.entityClass.getName() + " WHERE ID IN (:ids)";
-		Query query = getSession().createQuery(hql);
-		query.setParameterList("ids", ids);
-		return query.executeUpdate();
+		if (ids == null || ids.length == 0) {
+			return 0;
+		}
+		List<PK> list = (List<PK>) Arrays.asList(ids);
+		return this.delete(list, null);
+	}
+
+	@Override
+	public int delete(List<PK> ids, SingularAttribute<T, PK> id) {
+		CriteriaBuilder cb = getCriteriaBuilder();
+		CriteriaDelete<T> cd = cb.createCriteriaDelete(this.entityClass);
+		Root<T> root = cd.from(this.entityClass);
+		String pkName = DEFAULT_PK_NAME;
+		if (id != null) {
+			pkName = id.getName();
+		}
+		cd.where(cb.in(root.get(pkName)).value(ids));
+		return this.entityManager.createQuery(cd).executeUpdate();
+	}
+
+	@Override
+	public int delete(PK[] ids, SingularAttribute<T, PK> id) {
+		if (ids == null || ids.length == 0) {
+			return 0;
+		}
+		List<PK> list = (List<PK>) Arrays.asList(ids);
+		return this.delete(list, id);
 	}
 
 	@Override
@@ -237,53 +270,55 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 		return deleteByField(propertyName.getName(), value);
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
 	public int deleteByField(String propertyName, Object value) {
-		String hql = "DELETE FROM " + this.entityClass.getName() + " WHERE " + propertyName + "=:" + propertyName;
-		Query query = getSession().createQuery(hql);
-		query.setParameter(propertyName, value);
-		return query.executeUpdate();
+		Map<String, Object> params = new HashMap<>();
+		params.put(propertyName, value);
+		return deleteByMap(params);
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
 	public int deleteAll() {
-		String hql = "DELETE FROM " + this.entityClass.getName();
-		Query query = getSession().createQuery(hql);
-		return query.executeUpdate();
+		return this.deleteByMap(null);
+	}
+
+	private int deleteByMap(Map<String, Object> params) {
+		CriteriaBuilder cb = getCriteriaBuilder();
+		CriteriaDelete<T> cd = cb.createCriteriaDelete(this.entityClass);
+		Root<T> root = cd.from(this.entityClass);
+		if (params != null && !params.isEmpty()) {
+			List<Predicate> predicates = new ArrayList<>();
+			for (Map.Entry<String, Object> entry : params.entrySet()) {
+				predicates.add(cb.equal(root.get(entry.getKey()), entry.getValue()));
+			}
+			cd.where(predicates.toArray(new Predicate[0]));
+		}
+		return this.entityManager.createQuery(cd).executeUpdate();
 	}
 
 	@Override
 	public List<T> findAll() {
-		return this.findAll((String) null);
+		return this.findByMap(null, null);
 	}
 
 	@Override
 	public List<T> findAll(SingularAttribute<T, ?> orderBy) {
-		return findAll(orderBy.getName());
+		return this.findByMap(null, orderBy.getName());
 	}
 
 	@Override
 	public List<T> findAll(String orderBy) {
-		CriteriaBuilder cb = getCriteriaBuilder();
-		CriteriaQuery<T> q = cb.createQuery(entityClass);
-		Root<T> root = q.from(entityClass);
-		q.select(root);
-		if (StringUtils.isNotBlank(orderBy)) {
-			q.orderBy(cb.asc(root.get(orderBy)));
-		}
-		return this.findByCriteria(q);
+		return this.findByMap(null, orderBy);
 	}
 
 	@Override
 	public List<T> findByField(SingularAttribute<T, ?> propertyName, Object value) {
-		return findByField(propertyName.getName(), value);
+		return this.findByField(propertyName.getName(), value);
 	}
 
 	@Override
 	public List<T> findByField(SingularAttribute<T, ?> propertyName, Object value, SingularAttribute<T, ?> orderBy) {
-		return findByField(propertyName.getName(), value, orderBy.getName());
+		return this.findByField(propertyName.getName(), value, orderBy.getName());
 	}
 
 	@Override
@@ -293,70 +328,48 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	public List<T> findByField(String propertyName, Object value, String orderBy) {
-		CriteriaBuilder cb = getCriteriaBuilder();
-		CriteriaQuery<T> q = cb.createQuery(entityClass);
-		Root<T> root = q.from(entityClass);
-		q.select(root);
-		q.where(cb.equal(root.get(propertyName), value));
-		if (StringUtils.isNotBlank(orderBy)) {
-			q.orderBy(cb.asc(root.get(orderBy)));
-		}
-
-		return this.findByCriteria(q);
+		Map<String, Object> params = new HashMap<>();
+		params.put(propertyName, value);
+		return this.findByMap(params, orderBy);
 	}
 
 	@Override
 	public List<T> findByFields(Map<String, Object> params) {
-		return this.findByFields(params, (String) null);
+		return this.findByMap(params, null);
 	}
 
 	@Override
 	public List<T> findByFields(Map<String, Object> params, SingularAttribute<T, ?> orderBy) {
-		return findByFields(params, orderBy.getName());
+		return this.findByMap(params, orderBy.getName());
 	}
 
 	@Override
 	public List<T> findByFields(Map<String, Object> params, String orderBy) {
-		CriteriaBuilder cb = getCriteriaBuilder();
-		CriteriaQuery<T> q = cb.createQuery(entityClass);
-		Root<T> root = q.from(entityClass);
-		q.select(root);
-		if (params != null && !params.isEmpty()) {
-			List<Predicate> predicates = new ArrayList<>();
-			for (Map.Entry<String, Object> entry : params.entrySet()) {
-				predicates.add(cb.equal(root.get(entry.getKey()), entry.getValue()));
-			}
-			q.where(predicates.toArray(new Predicate[0]));
-		}
-		if (StringUtils.isNotBlank(orderBy)) {
-			q.orderBy(cb.asc(root.get(orderBy)));
-		}
-
-		return this.findByCriteria(q);
+		return this.findByMap(params, orderBy);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public Pager<T> findByPager(Pageable pager) {
+	public Pager<T> findByPager(Pageable pageable) {
 
-		if (pager == null) {
-			pager = new Pageable();
+		if (pageable == null) {
+			pageable = new Pageable();
 		}
 
 		// 根
-		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-		CriteriaQuery<T> cq = cb.createQuery(entityClass);
-		Root<T> root = cq.from(entityClass);
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+		CriteriaQuery<T> cq = cb.createQuery(this.entityClass);
+		Root<T> root = cq.from(this.entityClass);
 		cq.select(root);
 
 		// 查询参数
 		List<Predicate> predicates = new ArrayList<Predicate>();
-		List<QueryFilter> params = pager.getFilters();
-		if (StringUtils.isNotBlank(pager.getProperty()) && StringUtils.isNotBlank(pager.getKeyword())) {
+		List<QueryFilter> params = pageable.getFilters();
+		if (StringUtils.isNotBlank(pageable.getProperty()) && StringUtils.isNotBlank(pageable.getKeyword())) {
 			QueryFilter term = new QueryFilter();
-			term.setProperty(pager.getProperty());
-			term.setValue(pager.getKeyword());
-			term.setOperator(pager.getSymbol());
+			term.setProperty(pageable.getProperty());
+			term.setValue(pageable.getKeyword());
+			term.setOperator(pageable.getSymbol());
 			params.add(term);
 		}
 
@@ -452,79 +465,98 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 		}
 
 		cq.where(cb.and(predicates.toArray(new Predicate[0])));
-		return findByPager(cq, pager);
+		return findByPager(cq, pageable);
 
 	}
 
 	@Override
-	public <E> Pager<E> findByPager(CriteriaQuery<E> ocq, Pageable pager) {
-		if (pager == null) {
-			pager = new Pageable();
+	public <E> Pager<E> findByPager(CriteriaQuery<E> cq, Pageable pageable) {
+		if (pageable == null) {
+			pageable = new Pageable();
 		}
-		Integer pageNumber = pager.getPageNum();
-		Integer pageSize = pager.getPageSize();
+		Integer pageNumber = pageable.getPageNum();
+		Integer pageSize = pageable.getPageSize();
 
 		//
 		CriteriaBuilder cb = getCriteriaBuilder();
 
 		// 执行count查询
-		Long totalCount = this.getCountByCriteria(ocq);
-		Pager<E> result = new Pager<E>(pager);
+		Long totalCount = this.getCountByCriteria(cq);
+		Pager<E> result = new Pager<E>(pageable);
 		if (totalCount == null || totalCount <= 0) {
 			return result;
 		}
 
 		// 排序操作
-		Set<Root<?>> roots = ocq.getRoots();
+		Set<Root<?>> roots = cq.getRoots();
 		Root<?> root = roots.iterator().next();
 
 		// 2.加入pager中传入的排序
-		String orderBy = pager.getOrderBy();
-		Direction orderType = pager.getOrderType();
+		String orderBy = pageable.getOrderBy();
+		Direction orderType = pageable.getOrderType();
 
 		// 单个排序条件
 		if (StringUtils.isNotBlank(orderBy) && orderType != null) {
 			if (orderType == Direction.desc) {
-				ocq.orderBy(cb.desc(root.get(orderBy)));
+				cq.orderBy(cb.desc(root.get(orderBy)));
 			} else {
-				ocq.orderBy(cb.asc(root.get(orderBy)));
+				cq.orderBy(cb.asc(root.get(orderBy)));
 			}
 		}
 
 		// 多个排序条件
-		List<QueryOrder> params = pager.getSortClauses();
+		List<QueryOrder> params = pageable.getSortClauses();
 		if (params != null && !params.isEmpty()) {
 			for (QueryOrder param : params) {
 				orderBy = param.getProperty();
 				orderType = param.getDirection();
 				if (StringUtils.isNotBlank(orderBy) && orderType != null) {
 					if (orderType == Direction.desc) {
-						ocq.orderBy(cb.desc(root.get(orderBy)));
+						cq.orderBy(cb.desc(root.get(orderBy)));
 					} else {
-						ocq.orderBy(cb.asc(root.get(orderBy)));
+						cq.orderBy(cb.asc(root.get(orderBy)));
 					}
 				}
 			}
 		}
 		//
-		TypedQuery<E> query = getEntityManager().createQuery(ocq);
+		TypedQuery<E> query = this.entityManager.createQuery(cq);
 		int startIndex = (pageNumber - 1) * pageSize;
 		query.setFirstResult(startIndex);
 		query.setMaxResults(pageSize);
-		result = new Pager<E>(pager, query.getResultList(), totalCount.intValue());
+		result = new Pager<E>(pageable, query.getResultList(), totalCount.longValue());
 		return result;
 	}
 
-	public List<T> findByCriteria(CriteriaQuery<T> c) {
-		TypedQuery<T> query = getEntityManager().createQuery(c);
+	public List<T> findByCriteria(CriteriaQuery<T> cq) {
+		TypedQuery<T> query = this.entityManager.createQuery(cq);
 		return query.getResultList();
 	}
 
-	public List<T> findByCriteria(CriteriaQuery<T> c, int firstResult, int maxResults) {
-		TypedQuery<T> query = getEntityManager().createQuery(c);
+	public List<T> findByCriteria(CriteriaQuery<T> cq, int firstResult, int maxResults) {
+		TypedQuery<T> query = this.entityManager.createQuery(cq);
 		query.setFirstResult(firstResult);
 		query.setMaxResults(maxResults);
 		return query.getResultList();
+	}
+
+	private List<T> findByMap(Map<String, Object> params, String orderBy) {
+		CriteriaBuilder cb = getCriteriaBuilder();
+		CriteriaQuery<T> cq = cb.createQuery(this.entityClass);
+		Root<T> root = cq.from(this.entityClass);
+		cq.select(root);
+		if (params != null && !params.isEmpty()) {
+			List<Predicate> predicates = new ArrayList<>();
+			for (Map.Entry<String, Object> entry : params.entrySet()) {
+				predicates.add(cb.equal(root.get(entry.getKey()), entry.getValue()));
+			}
+			cq.where(predicates.toArray(new Predicate[0]));
+		}
+		if (StringUtils.isNotBlank(orderBy)) {
+			cq.orderBy(cb.asc(root.get(orderBy)));
+		}
+
+		return this.findByCriteria(cq);
 	}
 
 	@Override
@@ -545,19 +577,37 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	public List<T> get(List<PK> ids) {
-		CriteriaBuilder cb = getCriteriaBuilder();
-		CriteriaQuery<T> q = cb.createQuery(entityClass);
-		Root<T> root = q.from(entityClass);
-		q.select(root);
-		q.where(cb.in(root.get("id")).value(ids));
-		TypedQuery<T> typedQuery = entityManager.createQuery(q);
-		return typedQuery.getResultList();
+		return this.get(ids, null);
 	}
 
 	@Override
 	public List<T> get(PK[] ids) {
 		List<PK> list = (List<PK>) Arrays.asList(ids);
-		return get(list);
+		return this.get(list, null);
+	}
+
+	@Override
+	public List<T> get(List<PK> ids, SingularAttribute<T, PK> id) {
+		if (ids == null || ids.isEmpty()) {
+			return new ArrayList<T>();
+		}
+		CriteriaBuilder cb = getCriteriaBuilder();
+		CriteriaQuery<T> cq = cb.createQuery(this.entityClass);
+		Root<T> root = cq.from(entityClass);
+		cq.select(root);
+		String pkName = DEFAULT_PK_NAME;
+		if (id != null) {
+			pkName = id.getName();
+		}
+		cq.where(cb.in(root.get(pkName)).value(ids));
+		TypedQuery<T> typedQuery = this.entityManager.createQuery(cq);
+		return typedQuery.getResultList();
+	}
+
+	@Override
+	public List<T> get(PK[] ids, SingularAttribute<T, PK> id) {
+		List<PK> list = (List<PK>) Arrays.asList(ids);
+		return this.get(list, id);
 	}
 
 	@Override
@@ -572,30 +622,18 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 
 	@Override
 	public T getByField(String propertyName, Object value) {
-
-		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-		CriteriaQuery<T> q = cb.createQuery(entityClass);
-		Root<T> root = q.from(entityClass);
-		q.select(root);
-		q.where(cb.equal(root.get(propertyName), value));
-		return this.getByCriteria(q);
+		Map<String, Object> params = new HashMap<>();
+		params.put(propertyName, value);
+		return this.getByFields(params);
 	}
 
 	@Override
 	public T getByFields(Map<String, Object> params) {
-		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-		CriteriaQuery<T> q = cb.createQuery(entityClass);
-		Root<T> root = q.from(entityClass);
-		q.select(root);
-		if (params != null && !params.isEmpty()) {
-			List<Predicate> predicates = new ArrayList<>();
-			for (Map.Entry<String, Object> entry : params.entrySet()) {
-				predicates.add(cb.equal(root.get(entry.getKey()), entry.getValue()));
-			}
-			q.where(predicates.toArray(new Predicate[0]));
+		List<T> restlt = this.findByMap(params, null);
+		if (restlt == null || restlt.size() > 1) {
+			return null;
 		}
-
-		return this.getByCriteria(q);
+		return restlt.get(0);
 	}
 
 	/**
@@ -603,9 +641,10 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 	 * @param c
 	 * @return
 	 */
-	public T getByCriteria(CriteriaQuery<T> c) {
-		TypedQuery<T> query = getEntityManager().createQuery(c);
+	public T getByCriteria(CriteriaQuery<T> cq) {
+
 		try {
+			TypedQuery<T> query = this.entityManager.createQuery(cq);
 			return query.getSingleResult();
 		} catch (Exception e) {
 			return null;
@@ -646,19 +685,20 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 	@Override
 	public long getCount(Map<String, Object> params) {
 		CriteriaBuilder cb = getCriteriaBuilder();
-		CriteriaQuery<Long> q = cb.createQuery(Long.class);
-		Root<T> root = q.from(entityClass);
-		q.select(cb.count(root));
+		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+		Root<T> root = cq.from(this.entityClass);
+		cq.select(cb.count(root));
 		if (params != null && !params.isEmpty()) {
 			List<Predicate> predicates = new ArrayList<>();
 			for (Map.Entry<String, Object> entry : params.entrySet()) {
 				predicates.add(cb.equal(root.get(entry.getKey()), entry.getValue()));
 			}
-			q.where(predicates.toArray(new Predicate[0]));
+			cq.where(predicates.toArray(new Predicate[0]));
 		}
 
-		TypedQuery<Long> typedQuery = entityManager.createQuery(q);
-		return typedQuery.getSingleResult().longValue();
+		TypedQuery<Long> query = this.entityManager.createQuery(cq);
+		Long totalCount = query.getSingleResult();
+		return totalCount;
 	}
 
 	@Override
@@ -681,19 +721,14 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 		Set<Root<?>> roots = cq.getRoots();
 		Root<?> root = roots.iterator().next();
 		CriteriaQuery<Long> ccq = cb.createQuery(Long.class);
-		try {
-			Object qs = BeanUtils.getPrivateProperty(ccq, "queryStructure");
-			BeanUtils.setPrivateProperty(qs, "roots", roots);
-		} catch (Exception e) {
-		}
-
+		ccq.getRoots().addAll(roots);
 		ccq.select(cb.count(root));
 		Predicate restriction = cq.getRestriction();
 		if (restriction != null) {
 			ccq.where(restriction);
 		}
 		// 查询总条数
-		TypedQuery<Long> ctq = getEntityManager().createQuery(ccq);
+		TypedQuery<Long> ctq = this.entityManager.createQuery(ccq);
 		Long totalCount = ctq.getSingleResult();
 		return totalCount;
 	}
@@ -755,11 +790,11 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 	 * @throws
 	 */
 	protected Session getSession() {
-		return this.getEntityManager().unwrap(Session.class);
+		return this.entityManager.unwrap(Session.class);
 	}
 
 	protected CriteriaBuilder getCriteriaBuilder() {
-		return this.getEntityManager().getCriteriaBuilder();
+		return this.entityManager.getCriteriaBuilder();
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -792,7 +827,9 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
 	}
 
 	/**
-	 * 根据给定的条件进行组合查询 等价的Sql语句为 select * from mainTable where mainTable.mainCol in (select subCol from subTable where subTable.subQureyCol |*symbolType*| keyword); symbolType 当前仅取可">,<,=,like"，参见SymbolType 枚举类型。
+	 * 根据给定的条件进行组合查询 等价的Sql语句为 select * from mainTable where mainTable.mainCol in
+	 * (select subCol from subTable where subTable.subQureyCol |*symbolType*|
+	 * keyword); symbolType 当前仅取可">,<,=,like"，参见SymbolType 枚举类型。
 	 * 
 	 * @param mainTable
 	 *            查询主表对象

@@ -3,7 +3,8 @@ package com.zimu.common.bean;
 import java.util.Collections;
 import java.util.List;
 
-import com.zimu.common.utils.BeanUtils;
+import org.apache.commons.beanutils.BeanUtils;
+
 
 public class Pager<T> extends Pageable {
 	private static final long serialVersionUID = 1L;
