@@ -1,4 +1,5 @@
 target/
+zimu-common/target/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
