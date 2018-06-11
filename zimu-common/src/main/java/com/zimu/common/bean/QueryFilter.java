@@ -2,9 +2,9 @@ package com.zimu.common.bean;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode
 public class QueryFilter implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -129,22 +129,6 @@ public class QueryFilter implements Serializable {
 
 	public void setIgnoreCase(Boolean ignoreCase) {
 		this.ignoreCase = ignoreCase;
-	}
-
-	public boolean equals(Object obj) {
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		if (this == obj)
-			return true;
-		QueryFilter localFilter = (QueryFilter) obj;
-		return new EqualsBuilder().append(getProperty(), localFilter.getProperty())
-				.append(getOperator(), localFilter.getOperator()).append(getValue(), localFilter.getValue()).isEquals();
-	}
-
-	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(getProperty()).append(getOperator()).append(getValue()).toHashCode();
 	}
 
 }

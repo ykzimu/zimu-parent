@@ -8,12 +8,13 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.zimu.common.bean.QueryFilter.Operator;
 import com.zimu.common.bean.QueryOrder.Direction;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode
 public class Pageable implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -178,39 +179,6 @@ public class Pageable implements Serializable {
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
-	}
-
-	public boolean equals(Object obj) {
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		if (this == obj)
-			return true;
-		Pageable localPageable = (Pageable) obj;
-		EqualsBuilder builder = new EqualsBuilder();
-		builder.append(getPageNum(), localPageable.getPageNum());
-		builder.append(getPageSize(), localPageable.getPageSize());
-		builder.append(getProperty(), localPageable.getProperty());
-		builder.append(getKeyword(), localPageable.getKeyword());
-		builder.append(getOrderBy(), localPageable.getOrderBy());
-		builder.append(getOrderType(), localPageable.getOrderType());
-		builder.append(getFilters(), localPageable.getFilters());
-		builder.append(getSortClauses(), localPageable.getSortClauses());
-		return builder.isEquals();
-	}
-
-	public int hashCode() {
-		HashCodeBuilder builder = new HashCodeBuilder(17, 37);
-		builder.append(getPageNum());
-		builder.append(getPageSize());
-		builder.append(getProperty());
-		builder.append(getKeyword());
-		builder.append(getOrderBy());
-		builder.append(getOrderType());
-		builder.append(getFilters());
-		builder.append(getSortClauses());
-		return builder.toHashCode();
 	}
 
 	public Map<String, Object> getQueryMap() {

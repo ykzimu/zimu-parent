@@ -2,9 +2,9 @@ package com.zimu.common.bean;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode
 public class QueryOrder implements Serializable {
 	private static final long serialVersionUID = -3078342809727773232L;
 	private static final QueryOrder.Direction DESC = QueryOrder.Direction.desc;
@@ -49,21 +49,5 @@ public class QueryOrder implements Serializable {
 
 	public void setDirection(QueryOrder.Direction direction) {
 		this.direction = direction;
-	}
-
-	public boolean equals(Object obj) {
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		if (this == obj)
-			return true;
-		QueryOrder localOrder = (QueryOrder) obj;
-		return new EqualsBuilder().append(getProperty(), localOrder.getProperty())
-				.append(getDirection(), localOrder.getDirection()).isEquals();
-	}
-
-	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(getProperty()).append(getDirection()).toHashCode();
 	}
 }
