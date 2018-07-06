@@ -1,4 +1,5 @@
 target/
+zimu/target/
 zimu-common/target/
 !.mvn/wrapper/maven-wrapper.jar
 
@@ -25,3 +26,4 @@ nbdist/
 .nb-gradle/
 ~/zimu/develop/logs/zimu.log
 /~/
+

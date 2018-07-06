@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+	<Properties>
+		<property name="LOG_PATTERN"
+			value="[%-5p][%d{HH:mm:ss}][%t][%c{1.} (%M:%L)] %m%n" />
+		<property name="LOG_PATH" value="/home/logs" />
+		<property name="LOG_FILE" value="muzi" />
+	</Properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+		</Console>
+		<Socket name="Logstash" host="116.196.125.0" port="4560"
+			protocol="TCP">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+		</Socket>
+		<RollingFile name="LogFile"
+			fileName="${LOG_PATH}/${LOG_FILE}.log"
+			filePattern="${LOG_PATH}/${LOG_FILE}-%d{yyyy-MM-dd}.log">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy modulate="true"
+					interval="24" />
+				<SizeBasedTriggeringPolicy />
+			</Policies>
+			<DefaultRolloverStrategy max="30" />
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Root level="INFO">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="LogFile" />
+			<AppenderRef ref="Logstash" />
+		</Root>
+		<Logger name="com.zimu" level="DEBUG" />
+		<Logger name="org.springframework" level="INFO" />
+		<Logger name="org.apache.http" level="INFO" />
+		<Logger name="org.apache.commons" level="INFO" />
+		<Logger name="org.apache.ibatis" level="INFO" />
+		<Logger name="org.mybatis.spring" level="INFO" />
+		<Logger name="org.hibernate" level="INFO" />
+		<Logger name="org.hibernate.validator" level="INFO" />
+		<Logger name="org.jboss" level="INFO" />
+		<Logger name="org.quartz" level="INFO" />
+		<Logger name="com.alibaba" level="INFO" />
+		<Logger name="druid.sql" level="INFO" />
+		<Logger name="io.netty" level="INFO" />
+		<Logger name="io.lettuce" level="INFO" />
+		<Logger name="reactor" level="INFO" />
+		<Logger name="com.zaxxer.hikari" level="INFO" />
+		<Logger name="net.sf.ehcache" level="INFO" />
+		<Logger name="net.spy.memcached" level="INFO" />
+	</Loggers>
+</Configuration>  

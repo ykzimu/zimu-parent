@@ -1,0 +1,81 @@
+spring:
+  mvc:
+    static-path-pattern: /static/**
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://mysql.qinbeixian.com:3306/zimu?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: yangkun
+    password: yksyc316497
+    driver-class-name: com.mysql.jdbc.Driver
+    name: muziDataSource
+  freemarker:
+    cache: false
+    expose-spring-macro-helpers: false
+    request-context-attribute: request
+  redis:
+    host: redis.qinbeixian.com
+    password: yksyc316497
+    port: 6379
+    lettuce:
+      shutdown-timeout: 100ms
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
+#  session:
+#    store-type: REDIS
+  messages:
+    basename: messages/messages
+  quartz:
+    job-store-type: JDBC
+    jdbc:
+      initialize-schema: ALWAYS
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: 8179f26a817c06993768
+            client-secret: 520d4930423bf8bfb7ebc37907b7e539633d35cd
+            redirect-uri-template: http://localhost:8080/login/oauth2/code/github
+          baidu:
+            client-name: BaiDu
+            client-id: RHbWyzcVpMcqfDKVLOd1gKIx
+            client-secret: kK4EUpDWR72sF7D92cwSueVXQzK6Fwlz
+            authorization-grant-type: authorization_code
+            redirect-uri-template: http://localhost:8080/login/oauth2/code/baidu
+            scope: basic
+        provider:
+          baidu:
+            authorization-uri: https://openapi.baidu.com/oauth/2.0/authorize
+            token-uri: https://openapi.baidu.com/oauth/2.0/token
+            user-info-uri: https://openapi.baidu.com/rest/2.0/passport/users/getLoggedInUser
+            user-name-attribute: basic
+            jwk-set-uri: https://api.gitee.com/user
+  cache:
+    type: ehcache
+    ehcache:
+      config: classpath:ehcache.xml
+mybatis:
+  mapper-locations: classpath:com/zimu/dao/mapper/*.xml
+  type-aliases-package: com.zimu.domain.entity
+memcached:
+  servers: memcached.qinbeixian.com:11211
+  protocol: BINARY
+  op-timeout: 1000
+  timeout-exception-threshold: 1998
+  locator-type: CONSISTENT
+  failure-mode: Redistribute
+  use-nagle-algorithm: false
+cas:
+  server:
+    host: https://123.207.120.165:8443/cas
+    login: ${cas.server.host}/login
+    logout: ${cas.server.host}/logout
+  service:
+    host: http://localhost:8080
+    login: /login
+    logout: /logout
+logging:
+  config: classpath:log4j2.xml
