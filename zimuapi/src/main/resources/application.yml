@@ -1,0 +1,30 @@
+spring:
+  mvc:
+    static-path-pattern: /static/**
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://mysql.qinbeixian.com:3306/zimu?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: yangkun
+    password: yksyc316497
+    driver-class-name: com.mysql.jdbc.Driver
+    name: muziDataSource
+  redis:
+    host: redis.qinbeixian.com
+    password: yksyc316497
+    port: 6379
+    lettuce:
+      shutdown-timeout: 100ms
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
+  cache:
+    type: ehcache
+    ehcache:
+      config: classpath:ehcache.xml
+mybatis:
+  mapper-locations: classpath:com/zimu/dao/mapper/*.xml
+  type-aliases-package: com.zimu.domain.entity
+logging:
+  config: classpath:log4j2.xml
