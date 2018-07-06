@@ -15,6 +15,9 @@
 	<modules>
 		<module>zimu</module>
 		<module>zimu-common</module>
+		<module>zimu-dao</module>
+		<module>zimu-domain</module>
+		<module>zimu-service</module>
 	</modules>
 
 	<properties>
