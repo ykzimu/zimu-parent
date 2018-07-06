@@ -379,7 +379,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
 	<repositories>
 		<repository>
 			<id>spring-snapshots</id>
@@ -417,6 +416,4 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-
-
 </project>

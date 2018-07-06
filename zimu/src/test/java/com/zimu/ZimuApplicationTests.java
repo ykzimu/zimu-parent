@@ -1,4 +1,4 @@
-package com.muzi;
+package com.zimu;
 
 import java.util.Locale;
 
@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class MuziApplicationTests {
+public class ZimuApplicationTests {
 
 	@Autowired
 	private MessageSource messageSource;
@@ -21,7 +21,7 @@ public class MuziApplicationTests {
 	public void contextLoads() {
 		Locale locale = LocaleContextHolder.getLocale();
 		Object[] args = new String[] { "yangkun" };
-		String value = messageSource.getMessage("I001", args, locale);
+		String value = messageSource.getMessage("I0001", args, locale);
 		System.out.println(value);
 	}
 
