@@ -18,43 +18,43 @@ import com.zimu.domain.info.ResultCode;
 
 import java.util.Locale;
 
-@ControllerAdvice("com.muzi.controller")
+@ControllerAdvice("com.zimu.controller")
 public class ExceptionHandlerAdvice {
 
-    @ExceptionHandler(value = {AuthenticationException.class, ValidationException.class, BusinessException.class,
-        Exception.class})
-    @ResponseBody
-    public JsonView exception(Exception e) {
-        JsonView result = new JsonView();
-        Msg msg = result.getMsg();
+	@ExceptionHandler(value = { AuthenticationException.class, ValidationException.class, BusinessException.class,
+			Exception.class })
+	@ResponseBody
+	public JsonView exception(Exception e) {
+		JsonView result = new JsonView();
+		Msg msg = result.getMsg();
 
-        String message = null;
-        if (e instanceof AuthenticationException) {
-            msg.setMsg(ResultCode.AUTH_ERROR);
-            message = getMessage((BasicException) e);
-        } else if (e instanceof ValidationException) {
-            msg.setMsg(ResultCode.ARGUMENT_ERROR);
-            message = getMessage((BasicException) e);
-        } else if (e instanceof BusinessException) {
-            msg.setMsg(ResultCode.BUSINESS_ERROR);
-            message = getMessage((BasicException) e);
-        } else {
-            msg.setMsg(ResultCode.SYSTEM_ERROR);
-            message = e.getMessage();
-        }
-        msg.setMessage(message);
-        return result;
-    }
+		String message = null;
+		if (e instanceof AuthenticationException) {
+			msg.setMsg(ResultCode.AUTH_ERROR);
+			message = getMessage((BasicException) e);
+		} else if (e instanceof ValidationException) {
+			msg.setMsg(ResultCode.ARGUMENT_ERROR);
+			message = getMessage((BasicException) e);
+		} else if (e instanceof BusinessException) {
+			msg.setMsg(ResultCode.BUSINESS_ERROR);
+			message = getMessage((BasicException) e);
+		} else {
+			msg.setMsg(ResultCode.SYSTEM_ERROR);
+			message = e.getMessage();
+		}
+		msg.setMessage(message);
+		return result;
+	}
 
-    // 获取资源国际化值
-    private String getMessage(BasicException e) {
-        try {
-            // 获取资源
-            MessageSource messageSource = SpringContextUtils.getBean(MessageSource.class);
-            Locale locale = LocaleContextHolder.getLocale();
-            return messageSource.getMessage(e.getMessage(), e.getVariables(), locale);
-        } catch (NoSuchMessageException nse) {
-            return e.getMessage();
-        }
-    }
+	// 获取资源国际化值
+	private String getMessage(BasicException e) {
+		try {
+			// 获取资源
+			MessageSource messageSource = SpringContextUtils.getBean(MessageSource.class);
+			Locale locale = LocaleContextHolder.getLocale();
+			return messageSource.getMessage(e.getMessage(), e.getVariables(), locale);
+		} catch (NoSuchMessageException nse) {
+			return e.getMessage();
+		}
+	}
 }
