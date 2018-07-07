@@ -5,23 +5,16 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>zimuapi</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>zimuapi</name>
-	<description>Demo project for Spring Boot</description>
+	<description>zimuapi</description>
 
 	<parent>
 		<groupId>com.zimu</groupId>
 		<artifactId>zimu-parent</artifactId>
 		<version>1.0.0.RELEASE</version>
 	</parent>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
-	</properties>
 
 	<dependencies>
 		<dependency>
@@ -36,9 +29,31 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<fork>true</fork>
+				</configuration>
+				<dependencies>
+					<!-- spring热部署 -->
+					<dependency>
+						<groupId>org.springframework</groupId>
+						<artifactId>springloaded</artifactId>
+						<version>1.2.8.RELEASE</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
-
 
 </project>
