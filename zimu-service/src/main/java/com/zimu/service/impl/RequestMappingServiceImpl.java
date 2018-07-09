@@ -35,6 +35,7 @@ public class RequestMappingServiceImpl implements RequestMappingService {
     @Autowired
     private CacheManager cacheManager;
 
+    @Override
     public void initRequestMapping() {
 
         Date now = new Date();
@@ -96,6 +97,7 @@ public class RequestMappingServiceImpl implements RequestMappingService {
         return requestMappingEntity;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
 	public List<SelectInfo> getUrls() {
 

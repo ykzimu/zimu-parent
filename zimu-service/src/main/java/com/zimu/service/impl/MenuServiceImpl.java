@@ -42,6 +42,7 @@ public class MenuServiceImpl implements MenuService {
     @Autowired
     private CommonComponent commonComponent;
 
+    @Override
     public PageInfo<MenuEntity> getMenus() {
 
         List<MenuEntity> list= menuComponent.getSortMenus();
@@ -148,6 +149,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
 
+    @Override
     public boolean updateMenu(MenuEntity menuEntity) {
         Date date = new Date();
         UserInfo userInfo = LoginUserUtils.getUserInfo();

@@ -126,6 +126,7 @@ public class UserServiceImpl implements UserService {
         return roleCodes;
     }
 
+    @Override
     @Transactional
     public UserInfo getUserInfo(DefaultOAuth2User oauth2User) {
 
@@ -323,6 +324,7 @@ public class UserServiceImpl implements UserService {
      * @param userEntity 用户
      * @return Boolean
      */
+    @Override
     @Transactional
     public Boolean registerUser(UserEntity userEntity) throws Exception {
 
@@ -387,11 +389,13 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    @Override
     public void test() {
         PageHelper.startPage(1, 10);
         userEntityMapper.selectByExample(null);
     }
 
+    @Override
     public PageInfo<UserEntity> getUsers(SearchInfo searchInfo) {
 
         String keyword = searchInfo.getKeyword();
@@ -420,6 +424,7 @@ public class UserServiceImpl implements UserService {
         return page;
     }
 
+    @Override
     @Transactional
     public int deleteUserByIds(List<Long> userIds) {
 
@@ -448,6 +453,7 @@ public class UserServiceImpl implements UserService {
      * @param password
      * @return
      */
+    @Override
     @Transactional
     public boolean updPwd(String password) {
 

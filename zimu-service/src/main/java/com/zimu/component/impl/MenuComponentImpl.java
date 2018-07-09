@@ -46,6 +46,7 @@ public class MenuComponentImpl implements MenuComponent {
     private CacheManager cacheManager;
 
 
+    @Override
     public List<MenuInfo> getMenus(Long userId) {
 
         List<MenuInfo> menuInfos = new ArrayList<>();

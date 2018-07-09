@@ -20,7 +20,8 @@ public class RoleComponentImpl implements RoleComponent {
 	private RoleEntityMapper roleEntityMapper;
 
 	// 查询表结构，构造表结构权限
-	public Map<String, String[]> getRoleMenus() {
+	@Override
+    public Map<String, String[]> getRoleMenus() {
 
 		// 查询参数
 		Map<String, Object> params = new HashMap<>();

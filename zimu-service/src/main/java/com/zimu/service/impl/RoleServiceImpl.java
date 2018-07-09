@@ -16,6 +16,7 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleEntityMapper roleEntityMapper;
 
+    @Override
     public PageInfo<RoleEntity> getRoles() {
         List<RoleEntity> list = roleEntityMapper.selectByExample(null);
         PageInfo<RoleEntity> pageInfo = new PageInfo<RoleEntity>(list);

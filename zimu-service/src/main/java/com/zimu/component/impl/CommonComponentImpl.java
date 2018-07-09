@@ -18,6 +18,7 @@ public class CommonComponentImpl implements CommonComponent {
     @Autowired
     private RoleEntityMapper roleEntityMapper;
 
+    @Override
     public RoleEntity getRoleByRoleCode(String roleCode) {
 
         //查询用户权限信息
@@ -30,7 +31,8 @@ public class CommonComponentImpl implements CommonComponent {
         return list.get(0);
     }
 
-	public List<SelectInfo> getPageSizeList() {
+	@Override
+    public List<SelectInfo> getPageSizeList() {
 		List<SelectInfo> list = new ArrayList<SelectInfo>();
 
 		SelectInfo selectInfo = new SelectInfo();
