@@ -106,7 +106,7 @@ public class JfSqlUtils {
 			while (rs.next()) {
 				String colName = rs.getString("COLUMN_NAME").toLowerCase();
 				String remarks = rs.getString("REMARKS");
-				if (remarks == null || remarks.equals("")) {
+				if (remarks == null || "".equals(remarks)) {
 					remarks = colName;
 				}
 				map.put(colName, remarks);

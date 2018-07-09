@@ -61,7 +61,7 @@ public class MenuInterceptor extends HandlerInterceptorAdapter {
         // 构造面包屑导航
         List<MenuInfo> breadcrumbs = new ArrayList<>();
         if (StringUtils.isNotBlank(menuInfo.getParentIds())) {
-            String strs[] = menuInfo.getParentIds().split(",");
+            String []strs = menuInfo.getParentIds().split(",");
             if (strs.length > 0) {
                 for (String str : strs) {
                     if (StringUtils.isNotBlank(str) && !"0".equals(str) && StringUtils.isNumeric(str)) {
