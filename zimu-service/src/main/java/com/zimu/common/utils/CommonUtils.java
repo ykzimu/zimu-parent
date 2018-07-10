@@ -10,13 +10,17 @@ import org.apache.commons.lang.StringUtils;
 public class CommonUtils {
 
     private static final String[] IP_HEADERS = {"X-Forwarded-For", "Proxy-Client-IP", "HTTP_CLIENT_IP",
-        "HTTP_X_FORWARDED_FOR",};
+            "HTTP_X_FORWARDED_FOR",};
 
     private static final String UNKNOWN = "unknown";
     /**
      * 手机号码正则表达式
      */
     private static final String MOBILE_NUMBER_REG = "^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$";
+
+    private static final int MAX_IP_LENGTH = 15;
+
+    private static final int MOBILE_LENGTH = 11;
 
     public static String getIpAddr() {
         HttpServletRequest request = HttpServletManager.getRequest();
@@ -38,7 +42,7 @@ public class CommonUtils {
         // 获取信息
         if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
-        } else if (ip.length() > 15) {
+        } else if (ip.length() > MAX_IP_LENGTH) {
             String[] ips = ip.split(",");
             for (String strIp : ips) {
                 if (!(UNKNOWN.equalsIgnoreCase(strIp))) {
@@ -51,7 +55,7 @@ public class CommonUtils {
     }
 
     public static boolean isMobile(String mobile) {
-        if (StringUtils.isBlank(mobile) || !StringUtils.isNumeric(mobile) || mobile.trim().length() != 11) {
+        if (StringUtils.isBlank(mobile) || !StringUtils.isNumeric(mobile) || mobile.trim().length() != MOBILE_LENGTH) {
             return false;
         }
         Pattern pattern = Pattern.compile(MOBILE_NUMBER_REG);

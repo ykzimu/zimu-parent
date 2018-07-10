@@ -2,7 +2,20 @@ package com.zimu.common.enums;
 
 public enum AddressLevel {
 
-    PROVINCE(1), CITY(2), AREA(3);
+    /**
+     * 省
+     */
+    PROVINCE(1),
+
+    /**
+     * 市
+     */
+    CITY(2),
+
+    /**
+     * 区县
+     */
+    AREA(3);
 
     private int code;
 

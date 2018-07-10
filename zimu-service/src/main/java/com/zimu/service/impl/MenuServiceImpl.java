@@ -45,8 +45,8 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public PageInfo<MenuEntity> getMenus() {
 
-        List<MenuEntity> list= menuComponent.getSortMenus();
-        PageInfo<MenuEntity> pageInfo=new PageInfo<MenuEntity>(list);
+        List<MenuEntity> list = menuComponent.getSortMenus();
+        PageInfo<MenuEntity> pageInfo = new PageInfo<MenuEntity>(list);
 
         return pageInfo;
     }
@@ -57,7 +57,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = RuntimeException.class)
     public boolean sortMenu(String value) {
 
         String[] items = value.split(",");
@@ -84,7 +84,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = RuntimeException.class)
     public boolean changeMenuStatusById(Long id, Boolean delFlag, Boolean isShow) {
         MenuUtils.setMenuInfos(null);
         MenuEntity entity = menuEntityMapper.selectByPrimaryKey(id);
@@ -101,7 +101,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = RuntimeException.class)
     public boolean saveMenu(MenuEntity menuEntity) {
 
         Date date = new Date();

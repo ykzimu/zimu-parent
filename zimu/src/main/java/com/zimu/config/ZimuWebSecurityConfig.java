@@ -22,7 +22,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 
 import com.zimu.component.RoleComponent;
 import com.zimu.domain.info.UserInfo;
-import com.zimu.security.UserInfoOAuth2UserService;
+import com.zimu.security.UserInfoOauth2UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -44,7 +44,7 @@ public class ZimuWebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private CasServiceConfig casServiceConfig;
 
 	@Autowired
-	private UserInfoOAuth2UserService userInfoOAuth2UserService;
+	private UserInfoOauth2UserService userInfoOAuth2UserService;
 
 	/**
 	 * 配置信息
@@ -93,7 +93,6 @@ public class ZimuWebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private CasAuthenticationFilter casAuthenticationFilter() throws Exception {
 		CasAuthenticationFilter casAuthenticationFilter = new CasAuthenticationFilter();
 		casAuthenticationFilter.setAuthenticationManager(authenticationManager());
-		// casAuthenticationFilter.setServiceProperties(serviceProperties);
 		casAuthenticationFilter.setFilterProcessesUrl(this.casServiceConfig.getLogin());
 		casAuthenticationFilter.setContinueChainBeforeSuccessfulAuthentication(false);
 		casAuthenticationFilter.setAuthenticationSuccessHandler(new SavedRequestAwareAuthenticationSuccessHandler());

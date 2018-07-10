@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -113,7 +113,7 @@ public class MenuComponentImpl implements MenuComponent {
             //数据封装
             MenuInfo menuInfo = new MenuInfo();
             try {
-                BeanUtils.copyProperties(menuInfo, menuEntity);
+                BeanUtils.copyProperties(menuEntity, menuInfo);
             } catch (Exception e) {
                 //正常情况下，基本不会报异常
             }
@@ -146,7 +146,7 @@ public class MenuComponentImpl implements MenuComponent {
      * @return 所有菜单
      */
     @SuppressWarnings("unchecked")
-	private List<MenuEntity> cacheMenus() {
+    private List<MenuEntity> cacheMenus() {
         Cache cache = cacheManager.getCache(CacheNames.CACHE_NAME_MUZI);
         List<MenuEntity> cacheList = cache.get(CacheNames.CACHE_KEY_ALL_MENUS, List.class);
         if (cacheList != null && !cacheList.isEmpty()) {
@@ -161,7 +161,7 @@ public class MenuComponentImpl implements MenuComponent {
     }
 
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public Map<String, MenuInfo> getMenuInfoMapId() {
 
         Cache cache = cacheManager.getCache(CacheNames.CACHE_NAME_MUZI);
@@ -175,7 +175,7 @@ public class MenuComponentImpl implements MenuComponent {
         for (MenuEntity menuEntity : list) {
             MenuInfo menuInfo = new MenuInfo();
             try {
-                BeanUtils.copyProperties(menuInfo, menuEntity);
+                BeanUtils.copyProperties(menuEntity, menuInfo);
             } catch (Exception e) {
             }
             map.put(menuEntity.getId().toString(), menuInfo);
@@ -186,7 +186,7 @@ public class MenuComponentImpl implements MenuComponent {
     }
 
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public Map<String, MenuInfo> getMenuInfoMapUri() {
 
         Cache cache = cacheManager.getCache(CacheNames.CACHE_NAME_MUZI);
@@ -203,7 +203,7 @@ public class MenuComponentImpl implements MenuComponent {
             }
             MenuInfo menuInfo = new MenuInfo();
             try {
-                BeanUtils.copyProperties(menuInfo, menuEntity);
+                BeanUtils.copyProperties(menuEntity, menuInfo);
                 map.put(menuEntity.getMenuHref(), menuInfo);
             } catch (Exception e) {
             }

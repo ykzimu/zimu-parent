@@ -45,8 +45,7 @@ public class JfSqlUtils {
 		for (int i = 1; i <= colCount; i++) {
 			String colName = metaData.getColumnName(i).toLowerCase();
 			int colType = metaData.getColumnType(i);
-			// JDBCType type = JDBCType.valueOf(colType);
-			Class clazz = JDBCTypesUtils.jdbcTypeToJavaType(colType);
+			Class clazz = JdbcTypesUtils.jdbcTypeToJavaType(colType);
 			String upname = toUpperCase(colName);
 
 			if (i == 1) {

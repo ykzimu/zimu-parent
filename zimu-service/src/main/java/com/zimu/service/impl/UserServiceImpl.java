@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -44,7 +44,7 @@ import com.zimu.domain.info.UserInfo;
 import com.zimu.service.UserService;
 
 @Service
-@Transactional
+@Transactional(rollbackFor = RuntimeException.class)
 public class UserServiceImpl implements UserService {
 
     private static final String DEFAULT_USER = "1";
@@ -127,7 +127,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = RuntimeException.class)
     public UserInfo getUserInfo(DefaultOAuth2User oauth2User) {
 
         // ip地址
@@ -219,7 +219,7 @@ public class UserServiceImpl implements UserService {
         authorities.addAll(oauth2User.getAuthorities());
         UserInfo userInfo = new UserInfo();
         try {
-            BeanUtils.copyProperties(userInfo, userEntity);
+            BeanUtils.copyProperties(userEntity, userInfo);
         } catch (Exception e) {
 
         }
@@ -325,7 +325,7 @@ public class UserServiceImpl implements UserService {
      * @return Boolean
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = RuntimeException.class)
     public Boolean registerUser(UserEntity userEntity) throws Exception {
 
         // 用户已经存在
@@ -378,13 +378,13 @@ public class UserServiceImpl implements UserService {
 
         // 构建为登录状态
         UserInfo userInfo = new UserInfo();
-        BeanUtils.copyProperties(userInfo, userEntity);
+        BeanUtils.copyProperties(userEntity, userInfo);
         Set<GrantedAuthority> authorities = new HashSet<>();
         GrantedAuthority authority = new SimpleGrantedAuthority(RoleEnum.ROLE_USER.getRoleCode());
         authorities.add(authority);
         userInfo.setAuthorities(authorities);
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userInfo, pwd,
-            authorities);
+                authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return true;
     }
@@ -425,7 +425,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = RuntimeException.class)
     public int deleteUserByIds(List<Long> userIds) {
 
         // 查询ROLE_USER角色
@@ -454,7 +454,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = RuntimeException.class)
     public boolean updPwd(String password) {
 
         // 获取用户信息

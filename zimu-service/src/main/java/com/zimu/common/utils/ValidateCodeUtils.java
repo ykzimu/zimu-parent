@@ -105,11 +105,10 @@ public class ValidateCodeUtils {
         Random random = new Random();
         StringBuilder s = new StringBuilder();
         for (int i = 0; i < 4; i++) {
-            String r = String.valueOf(codeSeq[random.nextInt(codeSeq.length)]);//random.nextInt(10));
+            String r = String.valueOf(codeSeq[random.nextInt(codeSeq.length)]);
             g.setColor(new Color(50 + random.nextInt(100), 50 + random.nextInt(100), 50 + random.nextInt(100)));
             g.setFont(new Font(fontTypes[random.nextInt(fontTypes.length)], Font.BOLD, 26));
             g.drawString(r, 15 * i + 5, 19 + random.nextInt(8));
-			//g.drawString(r, i*w/4, h-5);
             s.append(r);
         }
         return s.toString();

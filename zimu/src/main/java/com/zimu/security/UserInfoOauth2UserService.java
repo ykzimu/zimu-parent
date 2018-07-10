@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 import com.zimu.domain.info.UserInfo;
 import com.zimu.service.UserService;
 
-@Component("userInfoOAuth2UserService")
-public class UserInfoOAuth2UserService extends DefaultOAuth2UserService {
+@Component("userInfoOauth2UserService")
+public class UserInfoOauth2UserService extends DefaultOAuth2UserService {
 
     @Autowired
     private UserService userService;

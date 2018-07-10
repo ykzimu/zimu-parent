@@ -44,12 +44,15 @@ public class MenuInterceptor extends HandlerInterceptorAdapter {
         // 从session获取当前用户菜单
         List<MenuInfo> menuInfos = MenuUtils.getMenuInfos();
         // 如果菜单不存在，session
-        if ((menuInfos == null || menuInfos.isEmpty()) && LoginUserUtils.isLogin()) {
-            // 获取当前登录用户信息
-            Long userId = LoginUserUtils.getUserInfo().getId();
-            MenuComponent menuComponent = SpringContextUtils.getBean(MenuComponent.class);
-            menuInfos = menuComponent.getMenus(userId);
-            MenuUtils.setMenuInfos(menuInfos);
+        if (menuInfos == null || menuInfos.isEmpty()) {
+            boolean isLogin = LoginUserUtils.isLogin();
+            if (isLogin) {
+                // 获取当前登录用户信息
+                Long userId = LoginUserUtils.getUserInfo().getId();
+                MenuComponent menuComponent = SpringContextUtils.getBean(MenuComponent.class);
+                menuInfos = menuComponent.getMenus(userId);
+                MenuUtils.setMenuInfos(menuInfos);
+            }
         }
 
         // 获取当前请求URI对应的菜单信息
@@ -61,7 +64,7 @@ public class MenuInterceptor extends HandlerInterceptorAdapter {
         // 构造面包屑导航
         List<MenuInfo> breadcrumbs = new ArrayList<>();
         if (StringUtils.isNotBlank(menuInfo.getParentIds())) {
-            String []strs = menuInfo.getParentIds().split(",");
+            String[] strs = menuInfo.getParentIds().split(",");
             if (strs.length > 0) {
                 for (String str : strs) {
                     if (StringUtils.isNotBlank(str) && !"0".equals(str) && StringUtils.isNumeric(str)) {

@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class JDBCTypesUtils {
+public class JdbcTypesUtils {
 	private static Map<String, Integer> jdbcTypes; // Name to value
 	private static Map<Integer, String> jdbcTypeValues; // value to Name
 	private static Map<Integer, Class<?>> jdbcJavaTypes; // jdbc type to java
