@@ -5,6 +5,7 @@ import com.zimu.interceptor.HttpServletInterceptor;
 import com.zimu.interceptor.MenuInterceptor;
 import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
+import org.jasig.cas.client.util.HttpServletRequestWrapperFilter;
 import org.jasig.cas.client.validation.Cas20ServiceTicketValidator;
 import org.jasig.cas.client.validation.Cas30ServiceTicketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,6 +117,11 @@ public class ZimuWebConfig implements WebMvcConfigurer {
         singleSignOutFilter.setCasServerUrlPrefix(this.casServerConfig.getHost());
         singleSignOutFilter.setIgnoreInitConfiguration(true);
         return singleSignOutFilter;
+    }
+
+    @Bean
+    public HttpServletRequestWrapperFilter httpServletRequestWrapperFilter() {
+        return new HttpServletRequestWrapperFilter();
     }
 
 }

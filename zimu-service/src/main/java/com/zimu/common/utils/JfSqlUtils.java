@@ -12,7 +12,7 @@ import java.util.Map;
 public class JfSqlUtils {
 
 	// 定义MySQL数据库的连接地址
-	private static final String URL = "jdbc:mysql://devdb.jointforce.com:3306/jf_test_portal?useInformationSchema=true";
+	private static final String URL = "jdbc:mysql://devdb.jointforce.com:3306/jf_dev_cowe?useInformationSchema=true";
 	private static final String USERNAME = "jftest";
 	private static final String PASSWORD = "Dfv3eqYhn532F243";
 	private static Connection conn = null;
@@ -145,7 +145,7 @@ public class JfSqlUtils {
 	public static void main(String[] args) {
 		try {
 
-			String xx = xml("jf_biz_orders");
+			String xx = xml("jf_owe_change");
 			System.out.println(xx);
 
 		} catch (Exception e) {

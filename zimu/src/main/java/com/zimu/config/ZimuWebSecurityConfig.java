@@ -4,6 +4,7 @@ import com.zimu.component.RoleComponent;
 import com.zimu.domain.info.UserInfo;
 import com.zimu.security.UserInfoOauth2UserService;
 import org.jasig.cas.client.session.SingleSignOutFilter;
+import org.jasig.cas.client.util.HttpServletRequestWrapperFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -46,6 +47,9 @@ public class ZimuWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private LogoutFilter logoutFilter;
 
+    @Autowired
+    private HttpServletRequestWrapperFilter httpServletRequestWrapperFilter;
+
     /**
      * 配置信息
      */
@@ -78,7 +82,8 @@ public class ZimuWebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()//
             .addFilter(this.casAuthenticationFilter())//
             .addFilterBefore(this.logoutFilter, LogoutFilter.class)//
-            .addFilterBefore(this.singleSignOutFilter, CasAuthenticationFilter.class);
+            .addFilterBefore(this.singleSignOutFilter, CasAuthenticationFilter.class)//
+            .addFilterAfter(this.httpServletRequestWrapperFilter, CasAuthenticationFilter.class);
     }
 
     /**
