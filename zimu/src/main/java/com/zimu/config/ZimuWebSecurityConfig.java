@@ -61,7 +61,7 @@ public class ZimuWebSecurityConfig extends WebSecurityConfigurerAdapter {
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http
             .authorizeRequests()
             // 静态资源及无需登录的资源
-            .antMatchers("/", "/index", "/static/**", "/test/**", "/public/**", "/register/**").permitAll();
+            .antMatchers("/", "/index", "/static/**","/webjars/**", "/test/**", "/public/**", "/register/**").permitAll();
 
         // 遍历数据库中变更的权限
         Iterator<Map.Entry<String, String[]>> iterator = roleMenus.entrySet().iterator();
