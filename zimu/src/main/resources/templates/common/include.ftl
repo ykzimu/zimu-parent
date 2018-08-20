@@ -1,11 +1,10 @@
 <#assign ctx=request.getContextPath()>
-<#assign ctxStatic=request.getContextPath()+"/static">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!--css start-->
 <!--webjars-->
-<link type="text/css" rel="stylesheet" href="${ctx}/webjars/bootstrap/4.1.3/css/bootstrap.min.css"/>
+<link type="text/css" rel="stylesheet" href="${ctx}/webjars/bootstrap/css/bootstrap.min.css"/>
 <link type="text/css" rel="stylesheet" href="${ctx}/webjars/font-awesome/css/all.min.css"/>
 <link type="text/css" rel="stylesheet" href="${ctx}/webjars/bootstrap-datepicker/css/bootstrap-datepicker.min.css"/>
 <link type="text/css" rel="stylesheet" href="${ctx}/webjars/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css"/>
@@ -14,13 +13,13 @@
 <link type="text/css" rel="stylesheet" href="${ctx}/webjars/animate.css/animate.css"/>
 <link type="text/css" rel="stylesheet" href="${ctx}/webjars/zTree/css/metroStyle/metroStyle.css"/>
 <!--static-->
-<link type="text/css" rel="stylesheet" href="${ctxStatic}/jquery-jbox/0.4.9/jBox.css"/>
-<link type="text/css" rel="stylesheet" href="${ctxStatic}/jquery-jbox/0.4.9/plugins/Confirm/jBox.Confirm.css"/>
-<link type="text/css" rel="stylesheet" href="${ctxStatic}/jquery-jbox/0.4.9/plugins/Image/jBox.Image.css"/>
-<link type="text/css" rel="stylesheet" href="${ctxStatic}/jquery-jbox/0.4.9/plugins/Notice/jBox.Notice.css"/>
-<link type="text/css" rel="stylesheet" href="${ctxStatic}/css/demo/mm-vertical.css"/>
-<link type="text/css" rel="stylesheet" href="${ctxStatic}/css/demo/mm-horizontal.css"/>
-<link type="text/css" rel="stylesheet" href="${ctxStatic}/css/main.css"/>
+<link type="text/css" rel="stylesheet" href="${ctx}/static/jquery-jbox/0.4.9/jBox.css"/>
+<link type="text/css" rel="stylesheet" href="${ctx}/static/jquery-jbox/0.4.9/plugins/Confirm/jBox.Confirm.css"/>
+<link type="text/css" rel="stylesheet" href="${ctx}/static/jquery-jbox/0.4.9/plugins/Image/jBox.Image.css"/>
+<link type="text/css" rel="stylesheet" href="${ctx}/static/jquery-jbox/0.4.9/plugins/Notice/jBox.Notice.css"/>
+<link type="text/css" rel="stylesheet" href="${ctx}/static/css/demo/mm-vertical.css"/>
+<link type="text/css" rel="stylesheet" href="${ctx}/static/css/demo/mm-horizontal.css"/>
+<link type="text/css" rel="stylesheet" href="${ctx}/static/css/main.css"/>
 <!--css end-->
 
 <!--js start-->
@@ -36,11 +35,11 @@
 <script type="text/javascript" src="${ctx}/webjars/metisMenu/metisMenu.min.js"></script>
 <script type="text/javascript" src="${ctx}/webjars/zTree/js/jquery.ztree.all.min.js"></script>
 <!--static-->
-<script type="text/javascript" src="${ctxStatic}/echarts/4.0.2/echarts.min.js"></script>
-<script type="text/javascript" src="${ctxStatic}/echarts/themes/macarons.js"></script>
-<script type="text/javascript" src="${ctxStatic}/jquery-jbox/0.4.9/jBox.min.js"></script>
-<script type="text/javascript" src="${ctxStatic}/jquery-jbox/0.4.9/plugins/Confirm/jBox.Confirm.min.js"></script>
-<script type="text/javascript" src="${ctxStatic}/jquery-jbox/0.4.9/plugins/Image/jBox.Image.min.js"></script>
-<script type="text/javascript" src="${ctxStatic}/jquery-jbox/0.4.9/plugins/Notice/jBox.Notice.min.js"></script>
-<script type="text/javascript" src="${ctxStatic}/js/main.js"></script>
+<script type="text/javascript" src="${ctx}/static/echarts/4.0.2/echarts.min.js"></script>
+<script type="text/javascript" src="${ctx}/static/echarts/themes/macarons.js"></script>
+<script type="text/javascript" src="${ctx}/static/jquery-jbox/0.4.9/jBox.min.js"></script>
+<script type="text/javascript" src="${ctx}/static/jquery-jbox/0.4.9/plugins/Confirm/jBox.Confirm.min.js"></script>
+<script type="text/javascript" src="${ctx}/static/jquery-jbox/0.4.9/plugins/Image/jBox.Image.min.js"></script>
+<script type="text/javascript" src="${ctx}/static/jquery-jbox/0.4.9/plugins/Notice/jBox.Notice.min.js"></script>
+<script type="text/javascript" src="${ctx}/static/js/main.js"></script>
 <!--js end-->
