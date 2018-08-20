@@ -9,6 +9,8 @@
 <link type="text/css" rel="stylesheet" href="${ctx}/webjars/font-awesome/css/all.min.css"/>
 <link type="text/css" rel="stylesheet" href="${ctx}/webjars/bootstrap-datepicker/css/bootstrap-datepicker.min.css"/>
 <link type="text/css" rel="stylesheet" href="${ctx}/webjars/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css"/>
+<link type="text/css" rel="stylesheet" href="${ctx}/webjars/datatables/css/jquery.dataTables.min.css"/>
+<link type="text/css" rel="stylesheet" href="${ctx}/webjars/datatables/css/dataTables.bootstrap4.min.css"/>
 <link type="text/css" rel="stylesheet" href="${ctx}/webjars/select2/css/select2.min.css"/>
 <link type="text/css" rel="stylesheet" href="${ctx}/webjars/metisMenu/metisMenu.min.css"/>
 <link type="text/css" rel="stylesheet" href="${ctx}/webjars/animate.css/animate.css"/>
@@ -32,6 +34,9 @@
 <script type="text/javascript" src="${ctx}/webjars/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="${ctx}/webjars/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript" src="${ctx}/webjars/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<script type="text/javascript" src="${ctx}/webjars/datatables/js/jquery.dataTables.min.js"></script>
+<#--<script type="text/javascript" src="${ctx}/webjars/datatables/js/dataTables.dataTables.min.js"></script>-->
+<script type="text/javascript" src="${ctx}/webjars/datatables/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript" src="${ctx}/webjars/select2/js/select2.full.min.js"></script>
 <script type="text/javascript" src="${ctx}/webjars/select2/js/i18n/zh-CN.js"></script>
 <script type="text/javascript" src="${ctx}/webjars/metisMenu/metisMenu.min.js"></script>

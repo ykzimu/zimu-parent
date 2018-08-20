@@ -131,3 +131,7 @@ table thead tr th:hover{
 .topbar-nav .metismenu a{
     color: white;
 }
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: unset !important;
+}

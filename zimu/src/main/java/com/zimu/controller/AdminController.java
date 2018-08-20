@@ -13,7 +13,6 @@ import com.zimu.service.MenuService;
 import com.zimu.service.RequestMappingService;
 import com.zimu.service.RoleService;
 import com.zimu.service.UserService;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -216,6 +215,31 @@ public class AdminController {
         PageInfo<RoleEntity> page = roleService.getRoles();
         mv.addObject("page", page);
         return mv;
+    }
+
+    /**
+     * 数据字典列表
+     *
+     * @return ModelAndView
+     */
+    @GetMapping("/dict/list")
+    public ModelAndView dictList() {
+        ModelAndView mv = new ModelAndView("/views/dict/list");
+        return mv;
+    }
+
+    /**
+     * 数据字典
+     *
+     * @return ModelAndView
+     */
+    @GetMapping("/dict/listData")
+    @ResponseBody
+    public JsonView dictListData(SearchInfo searchInfo) {
+        JsonView jsonView = new JsonView();
+        PageInfo<UserEntity> page = userService.getUsers(searchInfo);
+        jsonView.setData(page);
+        return jsonView;
     }
 
 }

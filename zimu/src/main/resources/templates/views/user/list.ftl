@@ -28,7 +28,7 @@
                 class="far fa-trash-alt"></i></button>
         </div>
         <div class="form-group">
-            <table class="table table-sm table-striped table-bordered table-hover">
+            <table class="table table-sm table-striped table-bordered table-hover" id="myTable">
                 <caption>
                     总记录数：${(page.total)!}&nbsp;条&nbsp;&nbsp;&nbsp;&nbsp;总页数：${(page.pages)!}&nbsp;页&nbsp;&nbsp;&nbsp;&nbsp;当前页：第&nbsp;${(page.pageNum)!}&nbsp;页
                 </caption>
