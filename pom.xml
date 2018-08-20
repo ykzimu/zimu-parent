@@ -10,7 +10,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.3.RELEASE</version>
+        <version>2.0.4.RELEASE</version>
     </parent>
     <modules>
         <module>zimu</module>
@@ -38,8 +38,6 @@
         <metisMenu.version>2.7.0</metisMenu.version>
         <layui.version>2.3.0</layui.version>
         <zTree.version>3.5.28</zTree.version>
-
-
         <!--webjars end-->
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
