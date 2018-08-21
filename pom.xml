@@ -33,6 +33,7 @@
         <bootstrap.select.version>1.12.4</bootstrap.select.version>
         <select2.version>4.0.5</select2.version>
         <select2.bootstrap.css.version>1.4.6</select2.bootstrap.css.version>
+        <jqgrid.version>4.7.0</jqgrid.version>
         <datatables.version>1.10.19</datatables.version>
         <animate.css.version>3.5.2</animate.css.version>
         <fontawesome.version>5.2.0</fontawesome.version>
@@ -152,6 +153,11 @@
 				<artifactId>select2-bootstrap-css</artifactId>
 				<version>${select2.bootstrap.css.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>jqgrid</artifactId>
+                <version>${jqgrid.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>animate.css</artifactId>
