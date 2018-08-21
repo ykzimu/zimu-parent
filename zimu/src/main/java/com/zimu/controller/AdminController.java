@@ -6,6 +6,7 @@ import com.zimu.common.utils.IdUtils;
 import com.zimu.domain.entity.MenuEntity;
 import com.zimu.domain.entity.RoleEntity;
 import com.zimu.domain.entity.UserEntity;
+import com.zimu.domain.info.DataTablesView;
 import com.zimu.domain.info.JsonView;
 import com.zimu.domain.info.SearchInfo;
 import com.zimu.domain.info.SelectInfo;
@@ -235,11 +236,13 @@ public class AdminController {
      */
     @GetMapping("/dict/listData")
     @ResponseBody
-    public JsonView dictListData(SearchInfo searchInfo) {
-        JsonView jsonView = new JsonView();
+    public DataTablesView dictListData(SearchInfo searchInfo) {
+        DataTablesView<UserEntity> dataTablesView = new DataTablesView<UserEntity>();
         PageInfo<UserEntity> page = userService.getUsers(searchInfo);
-        jsonView.setData(page);
-        return jsonView;
+        dataTablesView.setITotalDisplayRecords(page.getPageSize());
+        dataTablesView.setITotalRecords(page.getTotal());
+        dataTablesView.setAaData(page.getList());
+        return dataTablesView;
     }
 
 }

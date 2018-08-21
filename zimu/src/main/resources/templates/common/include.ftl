@@ -21,7 +21,7 @@
 <link type="text/css" rel="stylesheet" href="${ctx}/static/jquery-jbox/0.4.9/plugins/Notice/jBox.Notice.css"/>
 <link type="text/css" rel="stylesheet" href="${ctx}/static/css/demo/mm-vertical.css"/>
 <link type="text/css" rel="stylesheet" href="${ctx}/static/css/demo/mm-horizontal.css"/>
-<link type="text/css" rel="stylesheet" href="${ctx}/static/css/main.css"/>
+<link type="text/css" rel="stylesheet" href="${ctx}/static/css/main.css?v1"/>
 <!--css end-->
 
 <!--js start-->
@@ -33,8 +33,8 @@
 <script type="text/javascript" src="${ctx}/webjars/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript" src="${ctx}/webjars/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 <script type="text/javascript" src="${ctx}/webjars/datatables/js/jquery.dataTables.min.js"></script>
-<#--<script type="text/javascript" src="${ctx}/webjars/datatables/js/dataTables.dataTables.min.js"></script>-->
 <script type="text/javascript" src="${ctx}/webjars/datatables/js/dataTables.bootstrap4.min.js"></script>
+<#--<script type="text/javascript" src="${ctx}/webjars/datatables/js/dataTables.dataTables.min.js"></script>-->
 <script type="text/javascript" src="${ctx}/webjars/select2/js/select2.full.min.js"></script>
 <script type="text/javascript" src="${ctx}/webjars/select2/js/i18n/zh-CN.js"></script>
 <script type="text/javascript" src="${ctx}/webjars/metisMenu/metisMenu.min.js"></script>

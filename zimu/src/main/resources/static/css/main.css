@@ -135,3 +135,15 @@ table thead tr th:hover{
 .dataTables_wrapper .dataTables_paginate .paginate_button {
     padding: unset !important;
 }
+
+table.dataTable thead .sorting {
+     background-image: unset !important;
+}
+
+table.dataTable thead .sorting_desc {
+    background-image: unset !important;
+}
+
+table.dataTable thead .sorting_asc {
+    background-image: unset !important;
+}
