@@ -74,7 +74,7 @@ cas:
     login: ${cas.server.host}/login
     logout: ${cas.server.host}/logout
   service:
-    host: https://123.207.120.165:8443/zimu
+    host: http://123.207.120.165:8081/zimu
     login: /login
     logout: /logout
 logging:
