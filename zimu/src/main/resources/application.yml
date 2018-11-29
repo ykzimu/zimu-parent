@@ -1,6 +1,6 @@
 spring:
   mvc:
-    static-path-pattern: /**
+    static-path-pattern: /static/**
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://mysql.qinbeixian.com:3306/zimu?useUnicode=true&characterEncoding=UTF-8&useSSL=false
@@ -70,11 +70,11 @@ memcached:
   use-nagle-algorithm: false
 cas:
   server:
-    host: https://123.207.120.165:8443/cas
+    host: https://cas.qinbeixian.com:8443/cas
     login: ${cas.server.host}/login
     logout: ${cas.server.host}/logout
   service:
-    host: http://123.207.120.165:8081/zimu
+    host: https://cas.qinbeixian.com:8443/zimu
     login: /login
     logout: /logout
 logging:
