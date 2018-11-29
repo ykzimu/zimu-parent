@@ -1,6 +1,6 @@
 spring:
   mvc:
-    static-path-pattern: /static/**
+    static-path-pattern: /**
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://mysql.qinbeixian.com:3306/zimu?useUnicode=true&characterEncoding=UTF-8&useSSL=false
