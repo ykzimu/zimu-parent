@@ -6,7 +6,7 @@ spring:
     url: jdbc:mysql://mysql.qinbeixian.com:3306/zimu?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: yangkun
     password: yksyc316497
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     name: muziDataSource
   freemarker:
     cache: false
@@ -70,19 +70,12 @@ memcached:
   use-nagle-algorithm: false
 cas:
   server:
-    host: http://cas.example.org:8443/cas
+    host: https://123.207.120.165:8443/cas
     login: ${cas.server.host}/login
     logout: ${cas.server.host}/logout
   service:
-    host: http://localhost:8080
+    host: https://123.207.120.165:8443/zimu
     login: /login
     logout: /logout
 logging:
   config: classpath:log4j2.xml
-
----
-spring:
-  profiles: dev
-cas:
-  server:
-    host: https://123.207.120.165:8443/cas
