@@ -26,7 +26,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@EnableConfigurationProperties({WebMvcProperties.class, CasServerConfig.class, CasServiceConfig.class})
+@EnableConfigurationProperties({WebMvcProperties.class})
 public class ZimuWebConfig implements WebMvcConfigurer {
 
     @Autowired

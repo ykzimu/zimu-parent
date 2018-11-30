@@ -50,6 +50,9 @@ public class ZimuWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private HttpServletRequestWrapperFilter httpServletRequestWrapperFilter;
 
+    @Autowired
+    private StaticConfig staticConfig;
+
     /**
      * 配置信息
      */
@@ -61,7 +64,7 @@ public class ZimuWebSecurityConfig extends WebSecurityConfigurerAdapter {
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http
             .authorizeRequests()
             // 静态资源及无需登录的资源
-            .antMatchers("/", "/index", "/static/**","/webjars/**", "/test/**", "/public/**", "/register/**").permitAll();
+            .antMatchers(staticConfig.getUrlPatterns()).permitAll();
 
         // 遍历数据库中变更的权限
         Iterator<Map.Entry<String, String[]>> iterator = roleMenus.entrySet().iterator();

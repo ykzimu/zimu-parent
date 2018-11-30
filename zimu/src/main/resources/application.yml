@@ -25,6 +25,8 @@ spring:
         min-idle: 0
 #  session:
 #    store-type: REDIS
+  resources:
+    static-locations: xx
   messages:
     basename: messages/messages
   quartz:
@@ -74,8 +76,18 @@ cas:
     login: ${cas.server.host}/login
     logout: ${cas.server.host}/logout
   service:
-    host: https://cas.qinbeixian.com:8443/zimu
+    host: http://localhost:8080
     login: /login
     logout: /logout
 logging:
   config: classpath:log4j2.xml
+static:
+  url-patterns:
+  - /
+  - /index
+  - /resources/**
+  - /static/**
+  - /public/**
+  - /webjars/**
+  - /test/**
+  - /register/**

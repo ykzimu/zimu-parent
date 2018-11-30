@@ -23,7 +23,7 @@ import org.springframework.cache.annotation.EnableCaching;
 public class ZimuApplication {
 
 	public static void main(String[] args) {
-		//disableSslVerification();// 禁用
+		disableSslVerification();// 禁用
 		SpringApplication.run(ZimuApplication.class, args);
 	}
 
