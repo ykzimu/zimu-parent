@@ -19,10 +19,7 @@ public class ZimuApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		Locale locale = LocaleContextHolder.getLocale();
-		Object[] args = new String[] { "yangkun" };
-		String value = messageSource.getMessage("I0001", args, locale);
-		System.out.println(value);
+
 	}
 
 }
