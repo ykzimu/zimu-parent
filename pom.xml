@@ -30,7 +30,7 @@
         <jquery.cookie.version>1.4.1-1</jquery.cookie.version>
         <bootstrap.version>4.1.3</bootstrap.version>
         <bootstrap.datepicker.version>1.8.0</bootstrap.datepicker.version>
-        <bootstrap.select.version>1.12.4</bootstrap.select.version>
+        <bootstrap.select.version>1.13.43</bootstrap.select.version>
         <select2.version>4.0.5</select2.version>
         <select2.bootstrap.css.version>1.4.6</select2.bootstrap.css.version>
         <jqgrid.version>4.7.0</jqgrid.version>
@@ -38,7 +38,7 @@
         <animate.css.version>3.5.2</animate.css.version>
         <fontawesome.version>5.2.0</fontawesome.version>
         <metisMenu.version>2.7.0</metisMenu.version>
-        <layui.version>2.3.0</layui.version>
+        <layui.version>2.4.5</layui.version>
         <zTree.version>3.5.28</zTree.version>
         <!--webjars end-->
 
