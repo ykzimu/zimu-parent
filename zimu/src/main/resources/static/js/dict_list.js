@@ -2,8 +2,6 @@ $(document).ready(function () {
 
 
     $('#myTable').DataTable({
-        processing: true,
-        loadingRecords: "Loading...",
         ajax: {
             url: "/admin/dict/listData",
             type: "GET",
@@ -20,6 +18,7 @@ $(document).ready(function () {
         ],
         language: {
             zeroRecords: '抱歉,没有检索到数据',
+            loadingRecords: '加载中......',
             search: '查询：',  // 将英文search改为中文
             searchPlaceholder: '请输入用户名手机号',//搜索框提示功能
             lengthMenu: '每页&nbsp;_MENU_&nbsp;条',
