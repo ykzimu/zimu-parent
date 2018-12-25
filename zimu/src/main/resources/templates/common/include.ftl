@@ -37,7 +37,7 @@
 <script type="text/javascript" src="${ctx}/webjars/metisMenu/metisMenu.min.js"></script>
 <script type="text/javascript" src="${ctx}/webjars/zTree/js/jquery.ztree.all.min.js"></script>
 <!--static-->
-<script type="text/javascript" src="${ctx}/static/echarts/4.0.2/echarts.min.js"></script>
+<script type="text/javascript" src="${ctx}/static/echarts/4.2.0/echarts.min.js"></script>
 <script type="text/javascript" src="${ctx}/static/echarts/themes/macarons.js"></script>
 <script type="text/javascript" src="${ctx}/static/jquery-jbox/0.5.3/jBox.all.min.js"></script>
 <script type="text/javascript" src="${ctx}/static/js/main.js"></script>
