@@ -10,7 +10,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.0.RELEASE</version>
+        <version>2.1.1.RELEASE</version>
     </parent>
     <modules>
         <module>zimu</module>
@@ -20,9 +20,9 @@
     <properties>
         <mybatis.spring.version>1.3.2</mybatis.spring.version>
         <druid.spring.version>1.1.10</druid.spring.version>
-        <pagehelper.spring.version>1.2.5</pagehelper.spring.version>
-        <fastjson.version>1.2.47</fastjson.version>
-        <poi.version>3.17</poi.version>
+        <pagehelper.spring.version>1.2.10</pagehelper.spring.version>
+        <fastjson.version>1.2.54</fastjson.version>
+        <poi.version>4.0.1</poi.version>
 
         <!--webjars start-->
         <webjars.locator.version>0.34</webjars.locator.version>
