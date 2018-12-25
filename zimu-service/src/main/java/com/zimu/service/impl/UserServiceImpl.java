@@ -418,7 +418,7 @@ public class UserServiceImpl implements UserService {
             example.setOrderByClause(orderByClause);
         }
 
-        PageHelper.startPage(searchInfo.getPageNum(), searchInfo.getPageSize());
+        //PageHelper.startPage(searchInfo.getPageNum(), searchInfo.getPageSize());
         List<UserEntity> list = userEntityMapper.selectByExample(example);
         PageInfo<UserEntity> page = new PageInfo<UserEntity>(list);
         return page;

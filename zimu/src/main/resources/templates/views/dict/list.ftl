@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>用户列表</title>
-    <script type="text/javascript" src="${ctxStatic}/js/dict_list.js?v2"></script>
+    <script type="text/javascript" src="${ctxStatic}/js/dict_list.js?v9"></script>
 </head>
 <body>
 <form class="form-horizontal">

@@ -236,13 +236,11 @@ public class AdminController {
      */
     @GetMapping("/dict/listData")
     @ResponseBody
-    public DataTablesView dictListData(SearchInfo searchInfo) {
-        DataTablesView<UserEntity> dataTablesView = new DataTablesView<UserEntity>();
+    public JsonView dictListData(SearchInfo searchInfo) {
+        JsonView jsonView=new JsonView();
         PageInfo<UserEntity> page = userService.getUsers(searchInfo);
-        dataTablesView.setITotalDisplayRecords(page.getPageSize());
-        dataTablesView.setITotalRecords(page.getTotal());
-        dataTablesView.setAaData(page.getList());
-        return dataTablesView;
+        jsonView.setData(page);
+        return jsonView;
     }
 
 }
