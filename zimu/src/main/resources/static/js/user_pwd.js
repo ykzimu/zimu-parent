@@ -27,10 +27,7 @@ $(document).ready(function () {
 
     $("#btnConfirm").click(function () {
 
-        $("#spinnerModal").modal({
-            backdrop: 'static',
-            keyboard: false
-        });
+        globalSpinnerModal.show();
         $(this).attr("disabled", true);
 
         //参数
@@ -38,7 +35,7 @@ $(document).ready(function () {
         //url
         var url = $("#ctx").val() + "/user/updPwd";
         $.post(url, params, function (data) {
-            $("#spinnerModal").modal("hide");
+            globalSpinnerModal.hide();
             var message = "修改成功！"
             if (data.msg.code == '0000') {
                 $("#password").attr("disabled", true);

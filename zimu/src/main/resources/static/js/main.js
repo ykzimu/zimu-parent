@@ -9,6 +9,23 @@ var logOutModel = null;
 //全局消息提示框
 var jBoxMsgModel = null;
 
+//全局遮罩(boot)
+var globalSpinnerModal = {
+    show: function () {
+        $("#spinnerModal").show();
+        $(".modal-backdrop").show();
+        $("#spinnerModal").modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    },
+    hide: function () {
+        $("#spinnerModal").modal("hide");
+        $("#spinnerModal").hide();
+        $(".modal-backdrop").hide();
+    }
+};
+
 /**
  * 默认配置
  */
@@ -47,11 +64,12 @@ $(document).ready(function () {
             minWidth: '360px',
             maxWidth: '500px',
             animation: {open: 'slide:top', close: 'slide:top'},
-            onOpen:(function () {
-            	$("#spinnerModal").modal("hide");
+            onOpen: (function () {
+                globalSpinnerModal.hide();
             }),
-            onClose:(function () {
-                $("#spinnerModal").modal("hide");
+            onClose: (function () {
+                globalSpinnerModal.hide();
             })
         });
 });
+

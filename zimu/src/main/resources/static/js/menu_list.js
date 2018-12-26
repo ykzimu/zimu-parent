@@ -63,10 +63,7 @@ function saveSort() {
     }
 
     //加载动画
-    $("#spinnerModal").modal({
-        backdrop: 'static',
-        keyboard: false
-    });
+    globalSpinnerModal.show();
 
     //排序
     var url = $("#ctx").val() + "/admin/menu/sort";
@@ -109,10 +106,7 @@ function showIcon(item, cnt) {
 
 function changeMenuStatus(id, delFlag, isShow) {
     //加载动画
-    $("#spinnerModal").modal({
-        backdrop: 'static',
-        keyboard: false
-    });
+    globalSpinnerModal.show();
     //排序
     var url = $("#ctx").val() + "/admin/menu/change";
     $.post(url, {id: id, delFlag: delFlag, isShow: isShow}, function (data) {

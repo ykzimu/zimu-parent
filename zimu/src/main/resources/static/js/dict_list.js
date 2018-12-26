@@ -3,7 +3,7 @@ $(document).ready(function () {
 
     $('#myTable').DataTable({
         serverSide: true,
-        processing: true,
+        //processing: true,
         searching: true,
         ajax: {
             url: "/admin/dict/listDataTable",
@@ -44,6 +44,13 @@ $(document).ready(function () {
                 return '<input class="checkchild" type="checkbox"/>';
             }
         }]*/
+    }).on('processing.dt', function (e, settings, processing) {
+        if (processing) {
+            //加载动画
+            globalSpinnerModal.show();
+        } else {
+            globalSpinnerModal.hide();
+        }
     });
 
 });

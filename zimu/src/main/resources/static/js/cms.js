@@ -6,10 +6,7 @@ $(document).ready(function () {
         var href = $(this).attr("href");
         var clazz = $(this).attr("class");
         if (href != '' && href != 'javascript:void(0)' && clazz.indexOf("has-arrow") == -1) {
-            $("#spinnerModal").modal({
-                backdrop: 'static',
-                keyboard: false
-            });
+            globalSpinnerModal.show();
         }
     });
 
