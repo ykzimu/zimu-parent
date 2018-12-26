@@ -41,8 +41,6 @@ public class DataTablesHandlerMethodArgumentResolver implements HandlerMethodArg
         Enumeration<String> names = request.getParameterNames();
         while (names.hasMoreElements()) {
             String name = names.nextElement();
-            log.info("name:{}", name);
-
             Matcher cm = cp.matcher(name);
             if (cm.matches()) {
                 columnsSize++;
