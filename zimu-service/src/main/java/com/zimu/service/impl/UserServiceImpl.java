@@ -1,13 +1,9 @@
 package com.zimu.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import com.zimu.domain.info.DataTablesInfo;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -426,11 +422,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageInfo<UserEntity> getUsers(DataTablesInfo dataTablesInfo){
+    public PageInfo<UserEntity> getUsers(DataTablesInfo dataTablesInfo) {
+        UserEntityExample example = new UserEntityExample();
+        String keyword = dataTablesInfo.getSearch().getValue();
+        if (StringUtils.isNotBlank(keyword)) {
+            keyword = "%" + keyword + "%";
+            example.or().andUsernameLike(keyword).andDelFlagEqualTo(0);
+            example.or().andNicknameLike(keyword).andDelFlagEqualTo(0);
+            example.or().andRealnameLike(keyword).andDelFlagEqualTo(0);
+            example.or().andEmailLike(keyword).andDelFlagEqualTo(0);
+            example.or().andMobileLike(keyword).andDelFlagEqualTo(0);
+        } else {
+            example.createCriteria().andDelFlagEqualTo(0);
+        }
+
+        List<DataTablesInfo.Order> orderList = dataTablesInfo.getOrder();
+        List<DataTablesInfo.Column> columnList = dataTablesInfo.getColumns();
+        if (CollectionUtils.isNotEmpty(orderList)) {
+            StringBuffer buffer = new StringBuffer();
+            orderList.forEach(order -> {
+                String name = columnList.get(order.getColumn()).getName();
+                String dir = order.getDir();
+                buffer.append(", " + name + " " + dir);
+            });
+            String orderBy = buffer.substring(1);
+            example.setOrderByClause(orderBy);
+        }
         PageHelper.startPage(dataTablesInfo.getPageNum(), dataTablesInfo.getPageSize());
-        List<UserEntity> list = userEntityMapper.selectByExample(null);
-        PageInfo<UserEntity> page = new PageInfo<UserEntity>(list);
-        return page;
+        List<UserEntity> list = userEntityMapper.selectByExample(example);
+        return new PageInfo<UserEntity>(list);
     }
 
     @Override

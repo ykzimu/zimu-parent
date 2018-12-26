@@ -3,6 +3,7 @@ package com.zimu.config;
 import com.zimu.filter.MySiteMeshFilter;
 import com.zimu.interceptor.HttpServletInterceptor;
 import com.zimu.interceptor.MenuInterceptor;
+import com.zimu.resolver.DataTablesHandlerMethodArgumentResolver;
 import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
 import org.jasig.cas.client.util.HttpServletRequestWrapperFilter;
@@ -22,8 +23,11 @@ import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
 
 @Configuration
 @EnableConfigurationProperties({WebMvcProperties.class})
@@ -47,6 +51,12 @@ public class ZimuWebConfig implements WebMvcConfigurer {
             .excludePathPatterns(webMvcProperties.getStaticPathPattern());
         registry.addInterceptor(new MenuInterceptor()).excludePathPatterns(webMvcProperties.getStaticPathPattern());
     }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(new DataTablesHandlerMethodArgumentResolver());
+    }
+
 
     /**
      * MySiteMeshFilter 用于模板生产

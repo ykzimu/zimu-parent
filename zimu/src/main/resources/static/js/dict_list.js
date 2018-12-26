@@ -2,33 +2,26 @@ $(document).ready(function () {
 
 
     $('#myTable').DataTable({
-        serverSide:true,
-        processing:true,
-        "searching": true,
+        serverSide: true,
+        processing: true,
+        searching: true,
         ajax: {
             url: "/admin/dict/listDataTable",
-            type: "GET"/*,
-            dataSrc: function (result) {
-
-                result.draw = result.data.pageSize;
-                result.recordsTotal = result.data.total;
-                result.recordsFiltered = result.data.size;
-               return result.data.list;
-            }*/
+            type: "POST"
         },
         columns: [
             //{data: '<input class="checkchild" type="checkbox"/>'},
-            {data: "id"},
-            {data: "id"},
-            {data: "username"},
-            {data: "username"},
-            {data: "username"},
-            {data: "username"}
+            {name: "id", data: "id", orderable: false},
+            {name: "username", data: "username"},
+            {name: "nickname", data: "nickname"},
+            {name: "realname", data: "realname"},
+            {name: "email", data: "email"},
+            {name: "mobile", data: "mobile"}
         ],
         language: {
             zeroRecords: '抱歉,没有检索到数据',
             loadingRecords: '加载中......',
-            processing:'加载中xxxxxx',
+            //processing: '加载中xxxxxx',
             search: '查询：',  // 将英文search改为中文
             searchPlaceholder: '请输入用户名手机号',//搜索框提示功能
             lengthMenu: '每页&nbsp;_MENU_&nbsp;条',

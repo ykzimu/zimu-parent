@@ -2,6 +2,7 @@ package com.zimu.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.zimu.common.exception.ValidationException;
+import com.zimu.common.utils.HttpServletManager;
 import com.zimu.common.utils.IdUtils;
 import com.zimu.domain.entity.MenuEntity;
 import com.zimu.domain.entity.RoleEntity;
@@ -20,7 +21,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -234,7 +238,7 @@ public class AdminController {
     @GetMapping("/dict/listData")
     @ResponseBody
     public JsonView dictListData(SearchInfo searchInfo) {
-        JsonView jsonView=new JsonView();
+        JsonView jsonView = new JsonView();
         PageInfo<UserEntity> page = userService.getUsers(searchInfo);
         jsonView.setData(page);
         return jsonView;
@@ -245,12 +249,13 @@ public class AdminController {
      *
      * @return ModelAndView
      */
-    @GetMapping("/dict/listDataTable")
+    @PostMapping("/dict/listDataTable")
     @ResponseBody
     public DataTablesView dictListDataTable(DataTablesInfo dataTablesInfo) {
 
+        HttpServletRequest request = HttpServletManager.getRequest();
         PageInfo<UserEntity> page = userService.getUsers(dataTablesInfo);
-        DataTablesView<UserEntity> dataTablesView=new DataTablesView(page);
+        DataTablesView<UserEntity> dataTablesView = new DataTablesView(page);
         dataTablesView.setDraw(dataTablesInfo.getDraw());
         return dataTablesView;
     }
