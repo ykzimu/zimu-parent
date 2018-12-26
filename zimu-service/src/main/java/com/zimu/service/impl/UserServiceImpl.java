@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.zimu.domain.info.DataTablesInfo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -418,8 +419,16 @@ public class UserServiceImpl implements UserService {
             example.setOrderByClause(orderByClause);
         }
 
-        //PageHelper.startPage(searchInfo.getPageNum(), searchInfo.getPageSize());
+        PageHelper.startPage(searchInfo.getPageNum(), searchInfo.getPageSize());
         List<UserEntity> list = userEntityMapper.selectByExample(example);
+        PageInfo<UserEntity> page = new PageInfo<UserEntity>(list);
+        return page;
+    }
+
+    @Override
+    public PageInfo<UserEntity> getUsers(DataTablesInfo dataTablesInfo){
+        PageHelper.startPage(dataTablesInfo.getPageNum(), dataTablesInfo.getPageSize());
+        List<UserEntity> list = userEntityMapper.selectByExample(null);
         PageInfo<UserEntity> page = new PageInfo<UserEntity>(list);
         return page;
     }

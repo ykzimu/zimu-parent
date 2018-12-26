@@ -6,10 +6,7 @@ import com.zimu.common.utils.IdUtils;
 import com.zimu.domain.entity.MenuEntity;
 import com.zimu.domain.entity.RoleEntity;
 import com.zimu.domain.entity.UserEntity;
-import com.zimu.domain.info.DataTablesView;
-import com.zimu.domain.info.JsonView;
-import com.zimu.domain.info.SearchInfo;
-import com.zimu.domain.info.SelectInfo;
+import com.zimu.domain.info.*;
 import com.zimu.service.MenuService;
 import com.zimu.service.RequestMappingService;
 import com.zimu.service.RoleService;
@@ -241,6 +238,21 @@ public class AdminController {
         PageInfo<UserEntity> page = userService.getUsers(searchInfo);
         jsonView.setData(page);
         return jsonView;
+    }
+
+    /**
+     * 数据字典
+     *
+     * @return ModelAndView
+     */
+    @GetMapping("/dict/listDataTable")
+    @ResponseBody
+    public DataTablesView dictListDataTable(DataTablesInfo dataTablesInfo) {
+
+        PageInfo<UserEntity> page = userService.getUsers(dataTablesInfo);
+        DataTablesView<UserEntity> dataTablesView=new DataTablesView(page);
+        dataTablesView.setDraw(dataTablesInfo.getDraw());
+        return dataTablesView;
     }
 
 }

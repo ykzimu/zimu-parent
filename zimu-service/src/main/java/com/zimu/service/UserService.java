@@ -2,6 +2,7 @@ package com.zimu.service;
 
 import com.github.pagehelper.PageInfo;
 import com.zimu.domain.entity.UserEntity;
+import com.zimu.domain.info.DataTablesInfo;
 import com.zimu.domain.info.SearchInfo;
 import com.zimu.domain.info.UserInfo;
 
@@ -24,6 +25,8 @@ public interface UserService {
     Boolean registerUser(UserEntity userEntity) throws Exception;
 
     PageInfo<UserEntity> getUsers(SearchInfo searchInfo);
+
+    PageInfo<UserEntity> getUsers(DataTablesInfo dataTablesInfo);
 
     int deleteUserByIds(List<Long> userIds);
 

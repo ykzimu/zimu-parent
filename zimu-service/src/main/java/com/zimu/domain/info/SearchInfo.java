@@ -1,47 +1,34 @@
 package com.zimu.domain.info;
 
+import lombok.Data;
+
+@Data
 public class SearchInfo {
 
+    /**
+     * 关键字
+     */
     private String keyword;
+
+    /**
+     * 排序字段
+     */
     private String fieldName;
+
+    /**
+     * 排序方式
+     */
     private String sortType;
+
+    /**
+     * 页码
+     */
     private Integer pageNum;
+
+    /**
+     * 每页大小
+     */
     private Integer pageSize;
-
-    public Integer getPageSize() {
-        if (pageSize == null) {
-            pageSize = 10;
-        }
-        return pageSize;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
-    }
-
-    public String getFieldName() {
-        return fieldName;
-    }
-
-    public void setFieldName(String fieldName) {
-        this.fieldName = fieldName;
-    }
-
-    public String getSortType() {
-        return sortType;
-    }
-
-    public void setSortType(String sortType) {
-        this.sortType = sortType;
-    }
 
     public Integer getPageNum() {
         if (pageNum == null) {
@@ -50,8 +37,11 @@ public class SearchInfo {
         return pageNum;
     }
 
-    public void setPageNum(Integer pageNum) {
-        this.pageNum = pageNum;
+    public Integer getPageSize() {
+        if (pageSize == null) {
+            pageSize = 10;
+        }
+        return pageSize;
     }
 }
 
