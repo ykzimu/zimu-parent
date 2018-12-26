@@ -29,78 +29,83 @@ public class DataTablesHandlerMethodArgumentResolver implements HandlerMethodArg
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
 
-        HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
-
-        int columnsSize = 0;
-        int orderSize = 0;
-        Pattern cp = Pattern.compile(COLUMNS_REGEX);
-        Pattern op = Pattern.compile(ORDER_REGEX);
-
-        Enumeration<String> names = request.getParameterNames();
-        while (names.hasMoreElements()) {
-            String name = names.nextElement();
-            Matcher cm = cp.matcher(name);
-            if (cm.matches()) {
-                columnsSize++;
-            }
-
-            Matcher om = op.matcher(name);
-            if (om.matches()) {
-                orderSize++;
-            }
-        }
-
-        List<DataTablesInfo.Column> columns = new ArrayList<>(columnsSize);
-        for (int i = 0; i < columnsSize; i++) {
-
-            DataTablesInfo.Column column = new DataTablesInfo.Column();
-            DataTablesInfo.Search search = new DataTablesInfo.Search();
-
-            String data = request.getParameter("columns[" + i + "][data]");
-            column.setData(data);
-
-            String name = request.getParameter("columns[" + i + "][name]");
-            column.setName(name);
-
-            String searchable = request.getParameter("columns[" + i + "][searchable]");
-            column.setSearchable(Boolean.valueOf(searchable));
-
-            String orderable = request.getParameter("columns[" + i + "][orderable]");
-            column.setOrderable(Boolean.valueOf(orderable));
-
-            String value = request.getParameter("columns[" + i + "][search][value]");
-            search.setValue(value);
-
-            String regex = request.getParameter("columns[" + i + "][search][regex]");
-            search.setRegex(Boolean.valueOf(regex));
-
-            column.setSearch(search);
-            columns.add(column);
-        }
-
-
-        List<DataTablesInfo.Order> order = new ArrayList<>(orderSize);
-        for (int i = 0; i < orderSize; i++) {
-            DataTablesInfo.Order o = new DataTablesInfo.Order();
-            String dir = request.getParameter("order[" + i + "][dir]");
-            o.setDir(dir);
-            String column = request.getParameter("order[" + i + "][column]");
-            o.setColumn(Integer.parseInt(column));
-            order.add(o);
-        }
-
         DataTablesInfo dataTablesInfo = new DataTablesInfo();
-        dataTablesInfo.setDraw(Long.valueOf(request.getParameter("draw")));
-        dataTablesInfo.setStart(Integer.valueOf(request.getParameter("start")));
-        dataTablesInfo.setLength(Integer.valueOf(request.getParameter("length")));
+        try {
+            HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
 
-        DataTablesInfo.Search search = new DataTablesInfo.Search();
-        search.setValue(request.getParameter("search[value]"));
-        search.setRegex(Boolean.valueOf(request.getParameter("search[regex]")));
-        dataTablesInfo.setSearch(search);
+            int columnsSize = 0;
+            int orderSize = 0;
+            Pattern cp = Pattern.compile(COLUMNS_REGEX);
+            Pattern op = Pattern.compile(ORDER_REGEX);
 
-        dataTablesInfo.setColumns(columns);
-        dataTablesInfo.setOrder(order);
+            Enumeration<String> names = request.getParameterNames();
+            while (names.hasMoreElements()) {
+                String name = names.nextElement();
+                Matcher cm = cp.matcher(name);
+                if (cm.matches()) {
+                    columnsSize++;
+                }
+
+                Matcher om = op.matcher(name);
+                if (om.matches()) {
+                    orderSize++;
+                }
+            }
+
+            List<DataTablesInfo.Column> columns = new ArrayList<>(columnsSize);
+            for (int i = 0; i < columnsSize; i++) {
+
+                DataTablesInfo.Column column = new DataTablesInfo.Column();
+                DataTablesInfo.Search search = new DataTablesInfo.Search();
+
+                String data = request.getParameter("columns[" + i + "][data]");
+                column.setData(data);
+
+                String name = request.getParameter("columns[" + i + "][name]");
+                column.setName(name);
+
+                String searchable = request.getParameter("columns[" + i + "][searchable]");
+                column.setSearchable(Boolean.valueOf(searchable));
+
+                String orderable = request.getParameter("columns[" + i + "][orderable]");
+                column.setOrderable(Boolean.valueOf(orderable));
+
+                String value = request.getParameter("columns[" + i + "][search][value]");
+                search.setValue(value);
+
+                String regex = request.getParameter("columns[" + i + "][search][regex]");
+                search.setRegex(Boolean.valueOf(regex));
+
+                column.setSearch(search);
+                columns.add(column);
+            }
+
+
+            List<DataTablesInfo.Order> order = new ArrayList<>(orderSize);
+            for (int i = 0; i < orderSize; i++) {
+                DataTablesInfo.Order o = new DataTablesInfo.Order();
+                String dir = request.getParameter("order[" + i + "][dir]");
+                o.setDir(dir);
+                String column = request.getParameter("order[" + i + "][column]");
+                o.setColumn(Integer.parseInt(column));
+                order.add(o);
+            }
+
+
+            dataTablesInfo.setDraw(Long.valueOf(request.getParameter("draw")));
+            dataTablesInfo.setStart(Long.valueOf(request.getParameter("start")));
+            dataTablesInfo.setLength(Integer.valueOf(request.getParameter("length")));
+
+            DataTablesInfo.Search search = new DataTablesInfo.Search();
+            search.setValue(request.getParameter("search[value]"));
+            search.setRegex(Boolean.valueOf(request.getParameter("search[regex]")));
+            dataTablesInfo.setSearch(search);
+
+            dataTablesInfo.setColumns(columns);
+            dataTablesInfo.setOrder(order);
+        } catch (Exception e) {
+            log.error("DataTablesInfo 转换失败！", e);
+        }
         return dataTablesInfo;
     }
 }

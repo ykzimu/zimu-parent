@@ -39,7 +39,7 @@ public class DataTablesInfo {
 
     private Long draw;
 
-    private Integer start;
+    private Long start;
 
     private Integer length;
 
@@ -60,17 +60,17 @@ public class DataTablesInfo {
     private Integer pageSize;
 
     public Integer getPageNum() {
-        pageNum = getStart() / getLength() + 1;
-        return pageNum;
+        Long pN = getStart() / getLength() + 1L;
+        return pN.intValue();
     }
 
     public Integer getPageSize() {
         return getLength();
     }
 
-    public Integer getStart() {
+    public Long getStart() {
         if (start == null) {
-            start = 0;
+            start = 0L;
         }
         return start;
     }
