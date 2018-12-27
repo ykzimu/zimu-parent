@@ -33,7 +33,11 @@ $(document).ready(function () {
             },
             infoEmpty: '没有数据!',
             infoFiltered: "(从_MAX_条数据检索)"
-        }
+        },
+        //jQueryUI
+        scrollY: 410,
+        scrollCollapse: true,
+        jQueryUI: true
     });
 
 });
