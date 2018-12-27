@@ -8,7 +8,8 @@
 <link type="text/css" rel="stylesheet" href="${ctx}/webjars/font-awesome/css/all.min.css"/>
 <link type="text/css" rel="stylesheet" href="${ctx}/webjars/bootstrap-datepicker/css/bootstrap-datepicker.min.css"/>
 <link type="text/css" rel="stylesheet" href="${ctx}/webjars/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css"/>
-<link type="text/css" rel="stylesheet" href="${ctx}/webjars/datatables/css/jquery.dataTables.min.css"/>
+<#--<link type="text/css" rel="stylesheet" href="${ctx}/webjars/datatables/css/jquery.dataTables.min.css"/>-->
+<#--请勿添加jquery.dataTables.min.css与dataTables.bootstrap4.min.css冲突-->
 <link type="text/css" rel="stylesheet" href="${ctx}/webjars/datatables/css/dataTables.bootstrap4.min.css"/>
 <link type="text/css" rel="stylesheet" href="${ctx}/webjars/select2/css/select2.min.css"/>
 <link type="text/css" rel="stylesheet" href="${ctx}/webjars/metisMenu/metisMenu.min.css"/>

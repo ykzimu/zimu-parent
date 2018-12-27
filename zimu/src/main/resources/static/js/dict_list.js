@@ -4,6 +4,7 @@ $(document).ready(function () {
         serverSide: true,
         processing: true,
         searching: true,
+        pagingType: "full_numbers",
         ajax: {
             url: "/admin/dict/listDataTable",
             type: "POST"
@@ -35,9 +36,8 @@ $(document).ready(function () {
             infoFiltered: "(从_MAX_条数据检索)"
         },
         //jQueryUI
-        scrollY: 410,
-        scrollCollapse: true,
-        jQueryUI: true
+        scrollY: 330,
+        scrollCollapse: true
     });
 
 });
