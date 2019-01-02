@@ -22,10 +22,10 @@ import com.zimu.service.RequestMappingService;
 @Component
 public class MuziApplicationListener implements ApplicationListener<ContextRefreshedEvent> {
 
-	@Autowired
-	private CommonComponent commonComponent;
+    @Autowired
+    private CommonComponent commonComponent;
 
-	@Autowired
+    @Autowired
     private WebApplicationContext webApplicationConnect;
 
     @Autowired
@@ -34,11 +34,12 @@ public class MuziApplicationListener implements ApplicationListener<ContextRefre
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-	@Override
-	public void onApplicationEvent(ContextRefreshedEvent event) {
-		List<SelectInfo> pageSizeInfos = commonComponent.getPageSizeList();
-		ServletContext servletContext = webApplicationConnect.getServletContext();
-		servletContext.setAttribute("pageSizeInfos", pageSizeInfos);
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+
+        List<SelectInfo> pageSizeInfos = commonComponent.getPageSizeList();
+        ServletContext servletContext = webApplicationConnect.getServletContext();
+        servletContext.setAttribute("pageSizeInfos", pageSizeInfos);
         ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
 
         //防止集群同时操作数据库

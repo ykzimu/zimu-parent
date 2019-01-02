@@ -3,6 +3,7 @@ package com.zimu.config;
 import com.zimu.filter.MySiteMeshFilter;
 import com.zimu.interceptor.HttpServletInterceptor;
 import com.zimu.interceptor.MenuInterceptor;
+import com.zimu.listener.MuziServletContextListener;
 import com.zimu.resolver.DataTablesHandlerMethodArgumentResolver;
 import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
@@ -76,6 +77,13 @@ public class ZimuWebConfig implements WebMvcConfigurer {
     public ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> addSingleSignOutHttpSessionListener() {
         ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> servletListenerRegistrationBean = new ServletListenerRegistrationBean<>();
         servletListenerRegistrationBean.setListener(new SingleSignOutHttpSessionListener());
+        return servletListenerRegistrationBean;
+    }
+
+    @Bean
+    public ServletListenerRegistrationBean<MuziServletContextListener> addMuziServletContextListener() {
+        ServletListenerRegistrationBean<MuziServletContextListener> servletListenerRegistrationBean = new ServletListenerRegistrationBean<>();
+        servletListenerRegistrationBean.setListener(new MuziServletContextListener());
         return servletListenerRegistrationBean;
     }
 
