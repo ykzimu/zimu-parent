@@ -16,6 +16,7 @@ public class DataTablesView<T> implements Serializable {
     private Long recordsFiltered;
     private List<T> data;
     private String error;
+    private Object extendData;
 
     public DataTablesView(PageInfo<T> pageInfo) {
         this.recordsTotal = pageInfo.getTotal();

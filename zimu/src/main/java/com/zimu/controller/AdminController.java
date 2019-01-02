@@ -252,11 +252,8 @@ public class AdminController {
     @PostMapping("/dict/listDataTable")
     @ResponseBody
     public DataTablesView dictListDataTable(DataTablesInfo dataTablesInfo) {
-
-        HttpServletRequest request = HttpServletManager.getRequest();
         PageInfo<UserEntity> page = userService.getUsers(dataTablesInfo);
         DataTablesView<UserEntity> dataTablesView = new DataTablesView(page);
-        dataTablesView.setDraw(dataTablesInfo.getDraw());
         return dataTablesView;
     }
 
