@@ -10,6 +10,8 @@ public class MySiteMeshFilter extends ConfigurableSiteMeshFilter {
             //
             .addDecoratorPath("/admin/*", "/layouts/cms")
             //
+            .addDecoratorPath("/quartz/*", "/layouts/cms")
+            //
             .addDecoratorPath("/home", "/layouts/cms")
             //
             .addDecoratorPath("/user/*", "/layouts/cms")
