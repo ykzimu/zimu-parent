@@ -12,27 +12,26 @@ import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 @Configuration
-@Profile("dev")
 public class QuartzConfig {
 
 
-    @Bean(name = "zimuJobDetail")
-    public JobDetailFactoryBean monthJobDetailFactoryBean() {
-        JobDetailFactoryBean jobDetailFactoryBean = new JobDetailFactoryBean();
-        jobDetailFactoryBean.setJobClass(ZimuScheduledJob.class);
-        jobDetailFactoryBean.setDurability(true);
-        return jobDetailFactoryBean;
-    }
-
-
-    @Bean(name = "zimuCronTrigger")
-    public CronTriggerFactoryBean monthCronTriggerFactoryBean(@Autowired @Qualifier("zimuJobDetail") JobDetail jobDetail) {
-        CronTriggerFactoryBean cronTriggerFactoryBean = new CronTriggerFactoryBean();
-        cronTriggerFactoryBean.setJobDetail(jobDetail);
-
-        //测试用
-        cronTriggerFactoryBean.setCronExpression("*/10 * * * * ?");
-        return cronTriggerFactoryBean;
-    }
+//    @Bean(name = "zimuJobDetail")
+//    public JobDetailFactoryBean monthJobDetailFactoryBean() {
+//        JobDetailFactoryBean jobDetailFactoryBean = new JobDetailFactoryBean();
+//        jobDetailFactoryBean.setJobClass(ZimuScheduledJob.class);
+//        jobDetailFactoryBean.setDurability(true);
+//        return jobDetailFactoryBean;
+//    }
+//
+//
+//    @Bean(name = "zimuCronTrigger")
+//    public CronTriggerFactoryBean monthCronTriggerFactoryBean(@Autowired @Qualifier("zimuJobDetail") JobDetail jobDetail) {
+//        CronTriggerFactoryBean cronTriggerFactoryBean = new CronTriggerFactoryBean();
+//        cronTriggerFactoryBean.setJobDetail(jobDetail);
+//
+//        //测试用
+//        cronTriggerFactoryBean.setCronExpression("*/10 * * * * ?");
+//        return cronTriggerFactoryBean;
+//    }
 
 }
