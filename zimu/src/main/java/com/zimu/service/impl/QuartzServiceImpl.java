@@ -117,24 +117,25 @@ public class QuartzServiceImpl implements QuartzService {
             jobDataMap.put("name", name);
 
 
-            JobDetailImpl jobDetail = new JobDetailImpl();
-            jobDetail.setKey(jobKey);
-            jobDetail.setJobClass(beanClazz.getClass());
-            jobDetail.setJobDataMap(jobDataMap);
-            jobDetail.setDurability(true);
-            jobDetail.setDescription(description);
+            JobDetailImpl jdi = new JobDetailImpl();
+            jdi.setKey(jobKey);
+            jdi.setJobClass(beanClazz.getClass());
+            jdi.setJobDataMap(jobDataMap);
+            jdi.setDurability(true);
+            jdi.setDescription(description);
 
 
             CronTriggerImpl cti = new CronTriggerImpl();
-            cti.setJobKey(jobDetail.getKey());
+            cti.setJobKey(jdi.getKey());
             cti.setKey(triggerKey);
             cti.setJobDataMap(jobDataMap);
             cti.setStartTime(startTime);
+            cti.setEndTime(endTime);
             cti.setCronExpression(cron);
             cti.setDescription(description);
 
 
-            scheduler.scheduleJob(jobDetail, cti);
+            scheduler.scheduleJob(jdi, cti);
         } catch (Exception e) {
             log.error("", e);
             return false;
