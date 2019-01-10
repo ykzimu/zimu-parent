@@ -1,6 +1,14 @@
 spring:
   mvc:
     static-path-pattern: /static/**
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: false
+        fixed:
+          enabled: false
+          version: v1.0.0
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://mysql.qinbeixian.com:3306/zimu?useUnicode=true&characterEncoding=UTF-8&useSSL=false
@@ -8,10 +16,8 @@ spring:
     password: yksyc316497
     driver-class-name: com.mysql.cj.jdbc.Driver
     name: muziDataSource
-  freemarker:
+  thymeleaf:
     cache: false
-    expose-spring-macro-helpers: false
-    request-context-attribute: request
   redis:
     host: redis.qinbeixian.com
     password: yksyc316497

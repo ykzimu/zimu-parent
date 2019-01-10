@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="common_header(title,links,styles,scripts,metas)">
+
+    <title th:replace="${title}">首页</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <th:block th:if="${metas !=null}">
+        <th:block th:replace="${metas}"/>
+    </th:block>
+
+    <!--css start-->
+    <!--webjars-->
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.min.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap-datepicker/css/bootstrap-datepicker.min.css}"/>
+    <link type="text/css" rel="stylesheet"
+          th:href="@{/webjars/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/datatables/css/dataTables.bootstrap4.min.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/select2/css/select2.min.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/metisMenu/metisMenu.min.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/animate.css/animate.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/zTree/css/metroStyle/metroStyle.css}"/>
+    <!--static-->
+    <link type="text/css" rel="stylesheet" th:href="@{/static/jquery-jbox/0.5.3/jBox.all.min.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/static/css/demo/mm-vertical.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/static/css/demo/mm-horizontal.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/static/css/main.css}"/>
+    <!--css end-->
+
+    <th:block th:if="${links !=null}">
+        <th:block th:replace="${links}"/>
+    </th:block>
+    <th:block th:if="${styles !=null}">
+        <th:block th:replace="${styles}"/>
+    </th:block>
+
+    <!--js start-->
+    <!--webjars-->
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/jquery-cookie/jquery.cookie.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap-datepicker/js/bootstrap-datepicker.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js}"></script>
+    <script th:src="@{/webjars/datatables/js/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/webjars/datatables/js/dataTables.bootstrap4.min.js}"></script>
+    <script th:src="@{/webjars/select2/js/select2.full.min.js}"></script>
+    <script th:src="@{/webjars/select2/js/i18n/zh-CN.js}"></script>
+    <script th:src="@{/webjars/metisMenu/metisMenu.min.js}"></script>
+    <script th:src="@{/webjars/zTree/js/jquery.ztree.all.min.js}"></script>
+    <!--static-->
+    <script th:src="@{/static/echarts/4.2.0/echarts.min.js}"></script>
+    <script th:src="@{/static/echarts/themes/macarons.js}"></script>
+    <script th:src="@{/static/jquery-jbox/0.5.3/jBox.all.min.js}"></script>
+    <script th:src="@{/static/js/main.js}"></script>
+    <!--js end-->
+
+    <!--引入非通用js或自定义js-->
+    <th:block th:if="${scripts !=null}">
+        <th:block th:replace="${scripts}"/>
+    </th:block>
+
+</head>
+</html>
