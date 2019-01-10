@@ -1,5 +1,6 @@
 package com.zimu.domain.info;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import lombok.Data;
 
@@ -16,7 +17,7 @@ public class DataTablesView<T> implements Serializable {
     private Long recordsFiltered;
     private List<T> data;
     private String error;
-    private Object extendData;
+    private JSONObject extendData;
 
     public DataTablesView(PageInfo<T> pageInfo) {
         this.recordsTotal = pageInfo.getTotal();

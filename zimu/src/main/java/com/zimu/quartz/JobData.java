@@ -1,5 +1,6 @@
 package com.zimu.quartz;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
@@ -8,6 +9,7 @@ import org.quartz.Trigger;
 import java.util.Date;
 
 @Data
+@AllArgsConstructor
 public class JobData {
 
     private String name;
