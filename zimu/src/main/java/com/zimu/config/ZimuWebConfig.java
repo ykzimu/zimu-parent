@@ -64,14 +64,14 @@ public class ZimuWebConfig implements WebMvcConfigurer {
      *
      * @return FilterRegistrationBean
      */
-    @Bean
+ /*   @Bean
     public FilterRegistrationBean<MySiteMeshFilter> addMySiteMeshFilter() {
         FilterRegistrationBean<MySiteMeshFilter> filterRegistrationBean = new FilterRegistrationBean<MySiteMeshFilter>();
         filterRegistrationBean.setFilter(new MySiteMeshFilter());
         filterRegistrationBean.setName("siteMeshFilter");
         filterRegistrationBean.addUrlPatterns("/*");
         return filterRegistrationBean;
-    }
+    }*/
 
     @Bean
     public ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> addSingleSignOutHttpSessionListener() {
