@@ -27,9 +27,16 @@
         <webjars.locator.version>0.34</webjars.locator.version>
         <jquery.version>3.3.1</jquery.version>
         <jquery.cookie.version>1.4.1-1</jquery.cookie.version>
+        <jquery.inputmask.version>4.0.5</jquery.inputmask.version>
+        <jquery.knob.version>1.2.11</jquery.knob.version>
+        <jquery.treetable.version>3.2.0</jquery.treetable.version>
+        <jquery.slimscroll.version>1.3.8</jquery.slimscroll.version>
+        <jquery.sparkline.version>2.1.2</jquery.sparkline.version>
         <bootstrap.version>4.1.3</bootstrap.version>
         <bootstrap.datepicker.version>1.8.0</bootstrap.datepicker.version>
         <bootstrap.timepicker.version>0.5.2</bootstrap.timepicker.version>
+        <bootstrap.daterangepicker.version>3.0.3</bootstrap.daterangepicker.version>
+        <bootstrap.colorpicker.version>2.5.1</bootstrap.colorpicker.version>
         <bootstrap.select.version>1.13.3</bootstrap.select.version>
         <bootstrap.slider.version>10.0.2</bootstrap.slider.version>
         <select2.version>4.0.5</select2.version>
@@ -47,6 +54,12 @@
         <icheck.version>1.0.2</icheck.version>
         <morrisjs.version>0.5.1</morrisjs.version>
         <fastclick.version>1.0.6</fastclick.version>
+        <flot.version>0.8.3-1</flot.version>
+        <fullcalendar.version>3.9.0</fullcalendar.version>
+        <jvectormap.version>2.0.4</jvectormap.version>
+        <pace.version>1.0.2</pace.version>
+        <highlightjs.version>9.8.0</highlightjs.version>
+        <echarts.version>4.1.0</echarts.version>
 
         <!--webjars end-->
 
@@ -234,67 +247,67 @@
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>bootstrap-daterangepicker</artifactId>
-                <version>3.0.3</version>
+                <version>${bootstrap.daterangepicker.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars.bowergithub.farbelous</groupId>
                 <artifactId>bootstrap-colorpicker</artifactId>
-                <version>2.5.1</version>
+                <version>${bootstrap.colorpicker.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>flot</artifactId>
-                <version>0.8.3-1</version>
+                <version>${flot.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>fullcalendar</artifactId>
-                <version>3.9.0</version>
+                <version>${fullcalendar.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>jquery.inputmask</artifactId>
-                <version>4.0.5</version>
+                <version>${jquery.inputmask.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>jvectormap</artifactId>
-                <version>2.0.4</version>
+                <version>${jvectormap.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>jquery-knob</artifactId>
-                <version>1.2.11</version>
+                <version>${jquery.knob.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>pace</artifactId>
-                <version>1.0.2</version>
+                <version>${pace.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars.bowergithub.ludo</groupId>
                 <artifactId>jquery-treetable</artifactId>
-                <version>3.2.0</version>
+                <version>${jquery.treetable.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>jQuery-slimScroll</artifactId>
-                <version>1.3.8</version>
+                <version>${jquery.slimscroll.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>jquery.sparkline</artifactId>
-                <version>2.1.2</version>
+                <version>${jquery.sparkline.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>highlightjs</artifactId>
-                <version>9.8.0</version>
+                <version>${highlightjs.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>echarts</artifactId>
-                <version>4.1.0</version>
+                <version>${echarts.version}</version>
             </dependency>
 
             <dependency>
