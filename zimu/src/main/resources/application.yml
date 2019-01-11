@@ -32,7 +32,7 @@ spring:
 #  session:
 #    store-type: REDIS
   messages:
-    basename: i18n/messages/messages
+    basename: i18n/messages/messages,i18n/system/messages
   quartz:
     job-store-type: JDBC
     jdbc:
