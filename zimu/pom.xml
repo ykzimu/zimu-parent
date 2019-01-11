@@ -399,6 +399,11 @@
             <artifactId>bootstrap-timepicker</artifactId>
             <version>${bootstrap.timepicker.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>fastclick</artifactId>
+            <version>${fastclick.version}</version>
+        </dependency>
 
 
     </dependencies>

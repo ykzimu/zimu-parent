@@ -46,6 +46,7 @@
         <jqueryui.version>1.12.1</jqueryui.version>
         <icheck.version>1.0.2</icheck.version>
         <morrisjs.version>0.5.1</morrisjs.version>
+        <fastclick.version>1.0.6</fastclick.version>
 
         <!--webjars end-->
 
@@ -224,6 +225,11 @@
                 <groupId>org.webjars</groupId>
                 <artifactId>morrisjs</artifactId>
                 <version>${morrisjs.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>fastclick</artifactId>
+                <version>${fastclick.version}</version>
             </dependency>
 
             <dependency>
