@@ -5,7 +5,7 @@ spring:
     chain:
       strategy:
         content:
-          enabled: false
+          enabled: true
         fixed:
           enabled: false
           version: v1.0.0
