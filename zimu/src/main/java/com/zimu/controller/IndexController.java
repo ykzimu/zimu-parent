@@ -120,6 +120,18 @@ public class IndexController {
 		return mv;
 	}
 
+    /**
+     * 注册页
+     *
+     * @return ModelAndView
+     */
+    @GetMapping("/home2")
+    public ModelAndView home2() {
+        // 视图
+        ModelAndView mv = new ModelAndView("/views/home2");
+        return mv;
+    }
+
 	/**
 	 * 注册页
 	 *
