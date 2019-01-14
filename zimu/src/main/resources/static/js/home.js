@@ -17,17 +17,26 @@ $(document).ready(function () {
             return;
         }
         addTabPanel($(this));
-        window.history.pushState("","","#"+dataHref);//添加路由
-    })
+        window.history.pushState("", "", "#" + dataHref);//添加路由
+    });
+
+    var hash = location.hash;
+    if (hash != null && hash !== '') {
+        hash = hash.substring(1);
+        var a = $("[data-href='" + hash + "']");
+        if (a != null && a.length > 0) {
+            $(a[0]).click();
+        }
+    }
 
 
 });
 
 function addTabPanel(item) {
     var title = item.attr("title");
-    var dataTabId=item.attr("data-tab-id");
+    var dataTabId = item.attr("data-tab-id");
     var dataHref = item.attr("data-href");
-    var html='<iframe id="'+dataTabId+'-frame" src="'+dataHref+'" width="100%" height="100%" frameborder="0"></iframe>';
-    var tabitem={id: dataTabId, title: title, html: html, closable: true};
+    var html = '<iframe id="' + dataTabId + '-frame" src="' + dataHref + '" width="100%" height="100%" frameborder="0"></iframe>';
+    var tabitem = {id: dataTabId, title: title, html: html, closable: true};
     tabpanel.addTab(tabitem);
 }
