@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="/common/include::common_header(~{::title},~{::link},~{::style},~{::script},~{::meta})">
+    <title th:text="${status}"></title>
+
+    <script type="text/javascript" th:src="@{/static/jquery-countdown/2.2.0/jquery.countdown.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/error.js}"></script>
+</head>
+<body>
+<form class="form-horizontal">
+    <div class="container">
+        <div class="row form-group justify-content-center text-white">
+            <div class="row form-group col-sm-4 justify-content-center">
+                <div class="row form-group col-sm-12" style="height: 50px;">
+                </div>
+                <div class="row form-group col-sm-12">
+                    <label class="col text-center text-danger h1" th:text="${status}"></label>
+                </div>
+                <div class="row form-group col-sm-12 justify-content-center">
+                    <span id="countSpan" class="text-warning"></span>&nbsp;秒后自动跳转至&nbsp;<a th:href="@{/home}">首页</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>

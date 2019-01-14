@@ -13,7 +13,7 @@ function countdown(untilDateTime) {
         var iSec = parseInt(cntSec);
         $(this).html(iSec);
         if (0 == iSec) {
-            window.location.href = $("#ctx").val() + "/home";
+           // window.location.href = $("#ctx").val() + "/home";
         }
     });
 }
