@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="/common/include::common_header(~{::title},~{::link},~{::style},~{::script},~{::meta})">
+    <title>用户列表</title>
+    <script type="text/javascript" th:src="@{/static/js/dict_list.js}"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <form class="form-horizontal">
+        <div class="form-group">
+        </div>
+        <div class="form-group">
+            <div class="form-group">
+                <table class="table table-sm table-striped table-bordered table-hover" id="myTable">
+                    <thead class="thead-light ">
+                    <tr>
+                        <th scope="col">序号</th>
+                        <th scope="col">账户</th>
+                        <th scope="col">昵称</th>
+                        <th scope="col">姓名</th>
+                        <th scope="col">邮箱</th>
+                        <th scope="col">手机</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

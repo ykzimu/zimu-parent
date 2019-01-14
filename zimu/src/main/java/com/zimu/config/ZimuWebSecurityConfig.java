@@ -75,6 +75,7 @@ public class ZimuWebSecurityConfig extends WebSecurityConfigurerAdapter {
         //
         registry.anyRequest().authenticated()//
             .and().logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll()//
+            .and().headers().frameOptions().disable()//
             // oauth2Login登录
             .and().oauth2Login().loginPage("/auth/login").defaultSuccessUrl("/").userInfoEndpoint()
             .customUserType(UserInfo.class, "github").customUserType(UserInfo.class, "baidu")// .userAuthoritiesMapper(userAuthoritiesMapper())
