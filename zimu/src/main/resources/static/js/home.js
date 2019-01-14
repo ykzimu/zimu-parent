@@ -24,7 +24,7 @@ $(document).ready(function () {
             var hash = location.hash;
             if (hash != null && hash !== '') {
                 var w = hash.indexOf('?');
-                if (w > 1) {
+                if (w !== -1) {
                     dataHref = dataHref + hash.substring(w);
                 }
             }
@@ -43,7 +43,7 @@ $(document).ready(function () {
     var hash = location.hash;
     if (hash != null && hash !== '') {
         var w = hash.indexOf('?');
-        if (w != -1) {
+        if (w !== -1) {
             hash = hash.substring(1, w);
         } else {
             hash = hash.substring(1);
