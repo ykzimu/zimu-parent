@@ -7,6 +7,7 @@ $(document).ready(function () {
         renderTo: 'mainTab',
         //border:'none',
         active: 0,
+        autoResizable:true,
         //maxLength : 10,
         items: [
             {id: 'tabpanel-home', title: '首页', html: '首页', closable: false}
