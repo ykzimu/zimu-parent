@@ -34,7 +34,7 @@ $(document).ready(function () {
         var title = $(this).attr("title");
         $("title").html(title);
         var dataTabId = $(this).attr("data-tab-id");
-        var html = '<iframe id="' + dataTabId + '-frame" src="' + dataHref + '" width="100%" height="100%" frameborder="0"></iframe>';
+        var html = '<iframe id="' + dataTabId + 'Frame" src="' + dataHref + '" width="100%" height="100%" frameborder="0"></iframe>';
         var tabitem = {id: dataTabId, title: title, html: html, closable: true};
         tabpanel.addTab(tabitem);
         window.history.pushState("", "", "#" + dataHref);//添加路由
@@ -61,7 +61,7 @@ $(document).ready(function () {
         if (screenfull.enabled) {
             screenfull.toggle();
         }
-    })
+    });
 
 
     $.contextMenu({
@@ -69,30 +69,34 @@ $(document).ready(function () {
         selector: "#mainTab ul li",
         // define the elements of the menu
         zIndex: 1000000,
-        width: 150,
         items: {
             refresh: {
-                name: "刷新标签", callback: function (e, key, currentMenuData) {
+                name: "刷新标签", callback: function (e, currentMenuData, key) {
                     var id = key.$trigger[0].id;
                     refresh(id);
                 }
             },
             closeOther: {
-                name: "关闭其他", callback: function (e, key, currentMenuData) {
+                name: "关闭其他", callback: function (e, currentMenuData, key) {
                     var id = key.$trigger[0].id;
                     closeOther(id);
                 }
             },
             closeLeft: {
-                name: "关闭左侧", callback: function (e, key, currentMenuData) {
+                name: "关闭左侧", callback: function (e, currentMenuData, key) {
                     var id = key.$trigger[0].id;
                     closeLeft(id);
                 }
             },
             closeRight: {
-                name: "关闭右侧", callback: function (e, key, currentMenuData) {
+                name: "关闭右侧", callback: function (e, currentMenuData, key) {
                     var id = key.$trigger[0].id;
                     closeRight(id);
+                }
+            }
+            , closeAll: {
+                name: "关闭全部", callback: function (e, currentMenuData, key) {
+                    closeAll();
                 }
             }
         }
@@ -104,22 +108,29 @@ $(document).ready(function () {
 function refresh(id) {
     var posision = tabpanel.getTabPosision(id);
     tabpanel.refresh(posision);
+    tabpanel.show(posision, true);
 }
 
 function closeOther(id) {
     var posision = tabpanel.getTabPosision(id);
     var tabsCount = tabpanel.getTabsCount();
-    for (var i = tabsCount - 1; i > 0; i--) {
+    for (var i = tabsCount - 1; i >= 0; i--) {
         if (i !== posision) {
-            tabpanel.kill(i);
+            var closable = tabpanel.getClosable(i);
+            if (closable) {
+                tabpanel.kill(i);
+            }
         }
     }
 }
 
 function closeLeft(id) {
     var posision = tabpanel.getTabPosision(id);
-    for (var i = posision - 1; i > 0; i--) {
-        tabpanel.kill(i);
+    for (var i = posision - 1; i >= 0; i--) {
+        var closable = tabpanel.getClosable(i);
+        if (closable) {
+            tabpanel.kill(i);
+        }
     }
 }
 
@@ -127,6 +138,19 @@ function closeRight(id) {
     var posision = tabpanel.getTabPosision(id);
     var tabsCount = tabpanel.getTabsCount();
     for (var i = tabsCount - 1; i > posision; i--) {
-        tabpanel.kill(i);
+        var closable = tabpanel.getClosable(i);
+        if (closable) {
+            tabpanel.kill(i);
+        }
+    }
+}
+
+function closeAll() {
+    var tabsCount = tabpanel.getTabsCount();
+    for (var i = tabsCount - 1; i >= 0; i--) {
+        var closable = tabpanel.getClosable(i);
+        if (closable) {
+            tabpanel.kill(i);
+        }
     }
 }
