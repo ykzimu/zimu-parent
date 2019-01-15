@@ -105,12 +105,20 @@ $(document).ready(function () {
 
 });
 
+/**
+ *  刷新标签
+ * @param id
+ */
 function refresh(id) {
     var posision = tabpanel.getTabPosision(id);
     tabpanel.refresh(posision);
     tabpanel.show(posision, true);
 }
 
+/**
+ * 关闭其他标签
+ * @param id
+ */
 function closeOther(id) {
     var posision = tabpanel.getTabPosision(id);
     var tabsCount = tabpanel.getTabsCount();
@@ -124,6 +132,10 @@ function closeOther(id) {
     }
 }
 
+/**
+ * 关闭左侧标签
+ * @param id
+ */
 function closeLeft(id) {
     var posision = tabpanel.getTabPosision(id);
     for (var i = posision - 1; i >= 0; i--) {
@@ -134,6 +146,10 @@ function closeLeft(id) {
     }
 }
 
+/**
+ * 关闭右侧标签
+ * @param id
+ */
 function closeRight(id) {
     var posision = tabpanel.getTabPosision(id);
     var tabsCount = tabpanel.getTabsCount();
@@ -145,6 +161,9 @@ function closeRight(id) {
     }
 }
 
+/**
+ * 关闭全部标签
+ */
 function closeAll() {
     var tabsCount = tabpanel.getTabsCount();
     for (var i = tabsCount - 1; i >= 0; i--) {
