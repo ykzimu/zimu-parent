@@ -527,8 +527,8 @@ TabPanel.prototype = {
       var iframes = this.tabs[position].content.find('iframe');
       if(iframes.length>0)
       {
-        var frameId = this.tabs[position].id+'Frame';
-        this.iterateFlush(window.frames[frameId]);
+          var frameId = this.tabs[position].id+'-frame';
+          window.frames[frameId].src=window.frames[frameId].src;
       }
     }
   },

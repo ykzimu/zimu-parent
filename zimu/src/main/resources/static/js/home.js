@@ -7,7 +7,7 @@ $(document).ready(function () {
         renderTo: 'mainTab',
         //border:'none',
         active: 0,
-        autoResizable:true,
+        autoResizable: true,
         //maxLength : 10,
         items: [
             {id: 'tabpanel-home', title: '首页', html: '首页', closable: false}
@@ -64,4 +64,69 @@ $(document).ready(function () {
     })
 
 
+    $.contextMenu({
+        // define which elements trigger this menu
+        selector: "#mainTab ul li",
+        // define the elements of the menu
+        zIndex: 1000000,
+        width: 150,
+        items: {
+            refresh: {
+                name: "刷新标签", callback: function (e, key, currentMenuData) {
+                    var id = key.$trigger[0].id;
+                    refresh(id);
+                }
+            },
+            closeOther: {
+                name: "关闭其他", callback: function (e, key, currentMenuData) {
+                    var id = key.$trigger[0].id;
+                    closeOther(id);
+                }
+            },
+            closeLeft: {
+                name: "关闭左侧", callback: function (e, key, currentMenuData) {
+                    var id = key.$trigger[0].id;
+                    closeLeft(id);
+                }
+            },
+            closeRight: {
+                name: "关闭右侧", callback: function (e, key, currentMenuData) {
+                    var id = key.$trigger[0].id;
+                    closeRight(id);
+                }
+            }
+        }
+        // there's more, have a look at the demos and docs...
+    });
+
 });
+
+function refresh(id) {
+    var posision = tabpanel.getTabPosision(id);
+    tabpanel.refresh(posision);
+}
+
+function closeOther(id) {
+    var posision = tabpanel.getTabPosision(id);
+    var tabsCount = tabpanel.getTabsCount();
+    for (var i = tabsCount - 1; i > 0; i--) {
+        if (i !== posision) {
+            tabpanel.kill(i);
+        }
+    }
+}
+
+function closeLeft(id) {
+    var posision = tabpanel.getTabPosision(id);
+    for (var i = posision - 1; i > 0; i--) {
+        tabpanel.kill(i);
+    }
+}
+
+function closeRight(id) {
+    var posision = tabpanel.getTabPosision(id);
+    var tabsCount = tabpanel.getTabsCount();
+    for (var i = tabsCount - 1; i > posision; i--) {
+        tabpanel.kill(i);
+    }
+}
