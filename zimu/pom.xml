@@ -451,7 +451,6 @@
 			<artifactId>echarts</artifactId>
 		</dependency>
 
-
 	</dependencies>
 
 	<build>

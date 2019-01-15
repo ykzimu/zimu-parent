@@ -57,5 +57,11 @@ $(document).ready(function () {
         }
     }
 
+    $("#fullScreen").click(function () {
+        if (screenfull.enabled) {
+            screenfull.toggle();
+        }
+    })
+
 
 });
