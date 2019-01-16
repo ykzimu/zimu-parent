@@ -3,11 +3,16 @@ var search = "";
 var initFlag = false;
 $(document).ready(function () {
 
+    $(window).resize(function () {
+        zimuOnload(null);
+    });
+
     tabpanel = new TabPanel({
         renderTo: 'mainTab',
         //border:'none',
         active: 0,
         autoResizable: true,
+        scrolled: true,
         //maxLength : 10,
         items: [
             {id: 'tabpanel-home', title: '首页', html: '首页', closable: false}
@@ -34,11 +39,12 @@ $(document).ready(function () {
         var title = $(this).attr("title");
         $("title").html(title);
         var dataTabId = $(this).attr("data-tab-id");
-        var html = '<iframe id="' + dataTabId + 'Frame" src="' + dataHref + '" width="100%" height="100%" frameborder="0"></iframe>';
+        var html = '<iframe id="' + dataTabId + 'Frame" src="' + dataHref + '" width="100%" height="100%" frameborder="0" onload="zimuOnload(this)"></iframe>';
         var tabitem = {id: dataTabId, title: title, html: html, closable: true};
         tabpanel.addTab(tabitem);
         window.history.pushState("", "", "#" + dataHref);//添加路由
         initFlag = false;
+
     });
 
     var hash = location.hash;
@@ -61,6 +67,11 @@ $(document).ready(function () {
         if (screenfull.enabled) {
             screenfull.toggle();
         }
+    });
+
+    $("#testBtn").click(function () {
+        var doc = document.getElementById("tabpanel-12Frame");
+        zimuOnload(doc)
     });
 
 
@@ -101,10 +112,6 @@ $(document).ready(function () {
             }
         }
         // there's more, have a look at the demos and docs...
-    });
-
-    $("#xxxxxxxxxxx").click(function () {
-        tabpanel.resize();
     });
 
 });
@@ -176,4 +183,19 @@ function closeAll() {
             tabpanel.kill(i);
         }
     }
+}
+
+function zimuOnload(item) {
+    var htmlH = $("html").height();
+    var headerH = $(".wrapper .main-header").outerHeight();
+
+    var minH= $("#mainContent").css("min-height");
+    if(minH=='0px'){
+        $("#mainContent").height(htmlH - headerH);
+        tabpanel.resize();
+    }else {
+       // $("#mainContent").height(minH);
+    }
+    tabpanel.resize();
+
 }

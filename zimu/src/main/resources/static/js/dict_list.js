@@ -36,8 +36,9 @@ $(document).ready(function () {
             infoFiltered: "(从_MAX_条数据检索)"
         },
         //jQueryUI
-        scrollY: 330,
-        scrollCollapse: true
+        //scrollY: 330,
+       // scrollY: 830,
+        scrollCollapse: false
     });
 
 });
