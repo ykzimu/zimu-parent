@@ -103,6 +103,10 @@ $(document).ready(function () {
         // there's more, have a look at the demos and docs...
     });
 
+    $("#xxxxxxxxxxx").click(function () {
+        tabpanel.resize();
+    });
+
 });
 
 /**
