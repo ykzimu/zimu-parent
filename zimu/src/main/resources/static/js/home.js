@@ -3,9 +3,13 @@ var search = "";
 var initFlag = false;
 $(document).ready(function () {
 
-    $(window).resize(function () {
-        zimuOnload(null);
+    /**
+     * 请勿删除，与jq.resize.js结合使用
+     */
+    $("aside").resize(function () {
+
     });
+
 
     tabpanel = new TabPanel({
         renderTo: 'mainTab',
@@ -39,7 +43,7 @@ $(document).ready(function () {
         var title = $(this).attr("title");
         $("title").html(title);
         var dataTabId = $(this).attr("data-tab-id");
-        var html = '<iframe id="' + dataTabId + 'Frame" src="' + dataHref + '" width="100%" height="100%" frameborder="0" onload="zimuOnload(this)"></iframe>';
+        var html = '<iframe id="' + dataTabId + 'Frame" src="' + dataHref + '" width="100%" height="100%" frameborder="0" onload="iframeOnload(this)"></iframe>';
         var tabitem = {id: dataTabId, title: title, html: html, closable: true};
         tabpanel.addTab(tabitem);
         window.history.pushState("", "", "#" + dataHref);//添加路由
@@ -68,12 +72,6 @@ $(document).ready(function () {
             screenfull.toggle();
         }
     });
-
-    $("#testBtn").click(function () {
-        var doc = document.getElementById("tabpanel-12Frame");
-        zimuOnload(doc)
-    });
-
 
     $.contextMenu({
         // define which elements trigger this menu
@@ -185,17 +183,16 @@ function closeAll() {
     }
 }
 
-function zimuOnload(item) {
+/**
+ * 首次加载iframe时会触发此方法
+ * @param item
+ */
+function iframeOnload(item) {
     var htmlH = $("html").height();
     var headerH = $(".wrapper .main-header").outerHeight();
-
-    var minH= $("#mainContent").css("min-height");
-    if(minH=='0px'){
+    var minH = $("#mainContent").css("min-height");
+    if (minH === '0px') {
         $("#mainContent").height(htmlH - headerH);
         tabpanel.resize();
-    }else {
-       // $("#mainContent").height(minH);
     }
-    tabpanel.resize();
-
 }

@@ -35,9 +35,7 @@ $(document).ready(function () {
             infoEmpty: '没有数据!',
             infoFiltered: "(从_MAX_条数据检索)"
         },
-        //jQueryUI
-        //scrollY: 330,
-       // scrollY: 830,
+        autoWidth:false,//关闭自动调节，与父iframe有冲突
         scrollCollapse: false
     });
 
