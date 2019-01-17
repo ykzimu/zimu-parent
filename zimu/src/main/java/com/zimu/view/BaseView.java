@@ -15,7 +15,7 @@ public abstract class BaseView {
     /**
      * 构建ModelAndView
      */
-    public ModelAndView mv() {
+    public ModelAndView view() {
         ModelAndView mv = new ModelAndView(this.viewName());
         Field[] fields = this.getClass().getDeclaredFields();
         for (Field field : fields) {

@@ -9,6 +9,7 @@ import com.zimu.domain.info.JsonView;
 import com.zimu.domain.info.SelectInfo;
 import com.zimu.service.MenuService;
 import com.zimu.service.RequestMappingService;
+import com.zimu.view.admin.MenuAddView;
 import com.zimu.view.admin.MenuListView;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +41,7 @@ public class MenuController {
     @GetMapping("/list")
     public ModelAndView list() {
         // 视图
-        ModelAndView mv = MenuListView.builder().build().mv();
-        return mv;
+        return MenuListView.builder().build().view();
     }
 
     /**
@@ -52,9 +52,8 @@ public class MenuController {
     @PostMapping("/listData")
     @ResponseBody
     public DataTablesView listData(DataTablesInfo dataTablesInfo) {
-        PageInfo<UserEntity> page = null;
-        DataTablesView<UserEntity> dataTablesView = new DataTablesView(page);
-        return dataTablesView;
+        PageInfo<UserEntity> page = new PageInfo<>();
+        return new DataTablesView<>(page);
     }
 
     /**
@@ -65,7 +64,7 @@ public class MenuController {
     @GetMapping("/add")
     public ModelAndView add(Long id) {
         // 视图
-        ModelAndView mv = new ModelAndView("/views/menu/add");
+        ModelAndView mv = new ModelAndView();
         if (id == null) {
             mv.setViewName("redirect:/admin/menu/list");
             return mv;
@@ -75,9 +74,13 @@ public class MenuController {
             mv.setViewName("redirect:/admin/menu/list");
             return mv;
         }
+
         List<SelectInfo> list = requestMappingService.getUrls();
-        mv.addObject("menuInfo", menuEntity);
-        mv.addObject("menuHrefs", list);
+
+        mv = MenuAddView.builder()//
+            .menuHrefs(list)//
+            .menuInfo(menuEntity)//
+            .build().view();
         return mv;
     }
 
