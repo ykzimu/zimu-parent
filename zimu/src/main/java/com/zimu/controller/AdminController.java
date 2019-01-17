@@ -39,8 +39,6 @@ public class AdminController {
     @Resource
     private RoleService roleService;
 
-    @Resource
-    private RequestMappingService requestMappingService;
 
     /**
      * 用户列表页
@@ -81,131 +79,6 @@ public class AdminController {
     }
 
     /**
-     * 菜单列表
-     *
-     * @return ModelAndView
-     */
-    @GetMapping("/menu/list")
-    public ModelAndView menuList() {
-        // 视图
-        ModelAndView mv = new ModelAndView("/views/menu/list");
-        PageInfo<MenuEntity> page = menuService.getMenus();
-        mv.addObject("page", page);
-        return mv;
-    }
-
-    /**
-     * 添加菜单
-     *
-     * @return ModelAndView
-     */
-    @GetMapping("/menu/add")
-    public ModelAndView addMenu(Long id) {
-        // 视图
-        ModelAndView mv = new ModelAndView("/views/menu/add");
-        if (id == null) {
-            mv.setViewName("redirect:/admin/menu/list");
-            return mv;
-        }
-        MenuEntity menuEntity = menuService.getMenuById(id);
-        if (id != 0L && menuEntity == null) {
-            mv.setViewName("redirect:/admin/menu/list");
-            return mv;
-        }
-        List<SelectInfo> list = requestMappingService.getUrls();
-        mv.addObject("menuInfo", menuEntity);
-        mv.addObject("menuHrefs", list);
-        return mv;
-    }
-
-    /**
-     * 添加菜单
-     *
-     * @return ModelAndView
-     */
-    @PostMapping("/menu/save")
-    public ModelAndView saveMenu(MenuEntity menuEntity) {
-        // 视图
-        ModelAndView mv = new ModelAndView("redirect:/success");
-        menuService.saveMenu(menuEntity);
-        mv.addObject("message", "添加成功！");
-        return mv;
-    }
-
-    /**
-     * 修改菜单
-     *
-     * @return ModelAndView
-     */
-    @GetMapping("/menu/edit")
-    public ModelAndView editMenu(Long id) {
-        // 视图
-        ModelAndView mv = new ModelAndView("/views/menu/edit");
-        if (id == null) {
-            mv.setViewName("redirect:/admin/menu/list");
-            return mv;
-        }
-        MenuEntity menuEntity = menuService.getMenuById(id);
-        if (menuEntity == null) {
-            mv.setViewName("redirect:/admin/menu/list");
-            return mv;
-        }
-        List<SelectInfo> list = requestMappingService.getUrls();
-        mv.addObject("menuInfo", menuEntity);
-        mv.addObject("menuHrefs", list);
-        return mv;
-    }
-
-    /**
-     * 更新菜单
-     *
-     * @return ModelAndView
-     */
-    @PostMapping(value = "/menu/update")
-    public ModelAndView updateMenu(MenuEntity menuEntity) {
-        // 视图
-        ModelAndView mv = new ModelAndView("redirect:/success");
-        menuService.updateMenu(menuEntity);
-        mv.addObject("message", "更新成功！");
-        return mv;
-    }
-
-    /**
-     * 添加菜单
-     *
-     * @return ModelAndView
-     */
-    @PostMapping("/menu/change")
-    @ResponseBody
-    public JsonView deleteMenu(Long id, Boolean delFlag, Boolean isShow) {
-
-        JsonView jsonView = new JsonView();
-        Object data = menuService.changeMenuStatusById(id, delFlag, isShow);
-        jsonView.setData(data);
-        return jsonView;
-
-    }
-
-    /**
-     * 保存菜单排序
-     *
-     * @return ModelAndView
-     */
-    @PostMapping("/menu/sort")
-    @ResponseBody
-    public JsonView sortMenu(String value) {
-        JsonView jsonView = new JsonView();
-
-        // 空不做操作
-        if (StringUtils.isBlank(value)) {
-            return jsonView;
-        }
-
-        menuService.sortMenu(value);
-        return jsonView;
-    }
-
-    /**
      * 角色列表
      *
      * @return ModelAndView
@@ -235,23 +108,9 @@ public class AdminController {
      *
      * @return ModelAndView
      */
-    @GetMapping("/dict/listData")
+    @PostMapping("/dict/listData")
     @ResponseBody
-    public JsonView dictListData(SearchInfo searchInfo) {
-        JsonView jsonView = new JsonView();
-        PageInfo<UserEntity> page = userService.getUsers(searchInfo);
-        jsonView.setData(page);
-        return jsonView;
-    }
-
-    /**
-     * 数据字典
-     *
-     * @return ModelAndView
-     */
-    @PostMapping("/dict/listDataTable")
-    @ResponseBody
-    public DataTablesView dictListDataTable(DataTablesInfo dataTablesInfo) {
+    public DataTablesView dictListData(DataTablesInfo dataTablesInfo) {
         PageInfo<UserEntity> page = userService.getUsers(dataTablesInfo);
         DataTablesView<UserEntity> dataTablesView = new DataTablesView(page);
         return dataTablesView;
