@@ -99,27 +99,12 @@
 
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a id="testBtn" title="test" class="nav-link"  href="javascript:void(0);">
-                    <i class="fas fa-arrows-alt"></i>
-                </a>
-            </li>
             <!-- Messages Dropdown Menu -->
             <li class="nav-item">
                 <a id="fullScreen" title="全屏/非全屏" class="nav-link"  href="javascript:void(0);">
                     <i class="fas fa-arrows-alt"></i>
                 </a>
             </li>
-   <!--         <li class="nav-item">
-                <a title="全屏" class="nav-link"  href="#">
-                    <i class="fas fa-expand-arrows-alt"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a title="全屏" class="nav-link"  href="#">
-                    <i class="fas fa-compress-arrows-alt"></i>
-                </a>
-            </li>-->
 
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
@@ -217,7 +202,7 @@
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <aside class="main-sidebar sidebar-light-primary elevation-4">
         <!-- Brand Logo -->
         <a href="#" class="brand-link">
             &nbsp;&nbsp;&nbsp;
@@ -248,7 +233,7 @@
                          with font-awesome or any other icon font library -->
                     <li th:each="menuInfo,menuInfoStat:${session.leftMenus}"
                         th:class="${#lists.isEmpty(menuInfo.childList)}?'nav-item':'nav-item has-treeview'"
-                        th:classappend="${menuInfoStat.first} ?'menu-open'">
+                        th:classappend="${menuInfoStat.first} ?''">
 
                         <a th:title="${menuInfo.menuName}" href="javascript:void(0)" class="nav-link"
                            th:classappend="${menuInfoStat.first} ?'active'"
