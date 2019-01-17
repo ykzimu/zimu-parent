@@ -1,5 +1,10 @@
 $(document).ready(function () {
 
+    $("#addBtn").click(function () {
+        childAddTab(this);
+    });
+
+
     //点击左侧菜单
     $("table tbody tr td:first-child a").click(function () {
         var clazz = $(this).children("i").attr("class");
@@ -156,5 +161,4 @@ function chageIcon(id, delFlag, isShow) {
             item.children("i").addClass("fa-play-circle");
         }
     }
-    
 }

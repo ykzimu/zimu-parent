@@ -73,3 +73,14 @@ $(document).ready(function () {
         });
 });
 
+function childAddTab(item) {
+    var dataHref = $(item).attr("data-href");
+    if (dataHref == null || dataHref === '' || dataHref === 'javascript:void(0)') {
+        return;
+    }
+    var title = $(item).attr("title");
+    var dataTabId = $(item).attr("data-tab-id");
+    window.parent.document.title=title;
+    window.parent.addTab(title,dataTabId,dataHref);
+    window.parent.history.replaceState("", "", "#" + dataHref);//添加路由
+}

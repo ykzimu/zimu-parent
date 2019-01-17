@@ -31,9 +31,7 @@ $(document).ready(function () {
         var title = $(this).attr("title");
         $("title").html(title);
         var dataTabId = $(this).attr("data-tab-id");
-        var html = '<iframe id="' + dataTabId + 'Frame" src="' + dataHref + '" width="100%" height="100%" frameborder="0" onload="iframeOnload(this)"></iframe>';
-        var tabitem = {id: dataTabId, title: title, html: html, closable: true};
-        tabpanel.addTab(tabitem);
+        addTab(title,dataTabId,dataHref);
         window.history.replaceState("", "", "#" + dataHref);//添加路由
     });
 
@@ -187,4 +185,10 @@ function initWithHash() {
             $(a[0]).click();
         }
     }
+}
+
+function addTab(title,dataTabId,dataHref) {
+    var html = '<iframe id="' + dataTabId + 'Frame" src="' + dataHref + '" width="100%" height="100%" frameborder="0" onload="iframeOnload(null)"></iframe>';
+    var tabitem = {id: dataTabId, title: title, html: html, closable: true};
+    tabpanel.addTab(tabitem);
 }
