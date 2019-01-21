@@ -200,3 +200,17 @@ function addTab(title, dataTabId, dataHref) {
     var tabitem = {id: dataTabId, title: title, html: html, closable: true};
     tabpanel.addTab(tabitem);
 }
+
+function killTabByUrl(url) {
+
+    var id = $("iframe[src='" + url + "']").attr("id");
+    if (id != null) {
+        var len = id.lastIndexOf("Frame");
+        var tabId = id.substring(0, len);
+        var posision = tabpanel.getTabPosision(tabId);
+        if (posision != null) {
+            tabpanel.kill(posision);
+        }
+    }
+
+}
