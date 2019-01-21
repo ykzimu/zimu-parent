@@ -95,7 +95,7 @@ $(document).ready(function () {
 function refresh(id) {
     var posision = tabpanel.getTabPosision(id);
     tabpanel.refresh(posision);
-    tabpanel.show(posision, true);
+    tabpanel.show(posision, false);
 }
 
 /**
@@ -210,4 +210,8 @@ function killTabByUrl(url) {
         }
     }
 
+}
+
+function showIndex(posision) {
+    tabpanel.show(posision, false);
 }
