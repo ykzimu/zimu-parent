@@ -11,6 +11,11 @@ $(document).ready(function () {
     });
 
 
+    //默认首页
+    var dashboardTitle = '仪表盘';
+    var dashboardDataTabId = 'tabpanel-25';
+    var dashboardDataHref = '/admin/dashboard/index';
+    var dashboardHtml = '<iframe id="' + dashboardDataTabId + 'Frame" src="' + dashboardDataHref + '" width="100%" height="100%" frameborder="0" onload="iframeOnload(null)"></iframe>';
     tabpanel = new TabPanel({
         renderTo: 'mainTab',
         //border:'none',
@@ -19,7 +24,7 @@ $(document).ready(function () {
         scrolled: true,
         //maxLength : 10,
         items: [
-            {id: 'tabpanel-5', title: '主页', html: '主页', closable: false}
+            {id: dashboardDataTabId, title: dashboardTitle, html: dashboardHtml, closable: false}
         ]
     });
 
@@ -28,11 +33,14 @@ $(document).ready(function () {
         if (dataHref == null || dataHref === '' || dataHref === 'javascript:void(0)') {
             return;
         }
+
         var title = $(this).attr("title");
-        $("title").html(title);
         var dataTabId = $(this).attr("data-tab-id");
-        addTab(title,dataTabId,dataHref);
-        window.history.replaceState("", "", "#" + dataHref);//添加路由
+        addTab(title, dataTabId, dataHref);
+        if (dataHref.indexOf('/admin/dashboard/index') === -1) {
+            $("title").html(title);
+            window.history.replaceState("", "", "#" + dataHref);//添加路由
+        }
     });
 
     initWithHash();
@@ -187,7 +195,7 @@ function initWithHash() {
     }
 }
 
-function addTab(title,dataTabId,dataHref) {
+function addTab(title, dataTabId, dataHref) {
     var html = '<iframe id="' + dataTabId + 'Frame" src="' + dataHref + '" width="100%" height="100%" frameborder="0" onload="iframeOnload(null)"></iframe>';
     var tabitem = {id: dataTabId, title: title, html: html, closable: true};
     tabpanel.addTab(tabitem);
