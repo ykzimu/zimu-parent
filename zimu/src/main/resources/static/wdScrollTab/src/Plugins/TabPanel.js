@@ -245,6 +245,7 @@ TabPanel.prototype = {
   
   //move to visible position/////////////////////////////////////////////////////////
   moveToSee : function(position){
+      this.showHtmlTitleAndHash(position);
     if(this.scrolled)
     {
       var liWhere = this.tabWidth * position;
@@ -813,5 +814,26 @@ TabPanel.prototype = {
       }
       this.resize();
     }
-  }
+  },
+
+    //自定义方法
+    showHtmlTitleAndHash: function (position) {
+        var title = this.getTitle(position);
+        $("title").html(title);
+        var content = this.getContent(position);
+        var src = $(content).attr("src");
+        var hash = "#";
+        if (position !== 0) {
+            hash = hash + src;
+        } else {
+            if (initFlag) {
+                var lHash = location.hash;
+                if (lHash != null && lHash !== '' && lHash !== '#') {
+                    hash = lHash;
+                }
+            }
+        }
+        window.history.replaceState("", "", hash);//添加路由
+    }
+  
 };

@@ -10,6 +10,7 @@ $(document).ready(function () {
 
     });
 
+    initFlag=true;
 
     //默认首页
     var dashboardTitle = '仪表盘';
@@ -33,14 +34,9 @@ $(document).ready(function () {
         if (dataHref == null || dataHref === '' || dataHref === 'javascript:void(0)') {
             return;
         }
-
         var title = $(this).attr("title");
         var dataTabId = $(this).attr("data-tab-id");
         addTab(title, dataTabId, dataHref);
-        if (dataHref.indexOf('/admin/dashboard/index') === -1) {
-            $("title").html(title);
-            window.history.replaceState("", "", "#" + dataHref);//添加路由
-        }
     });
 
     initWithHash();
@@ -180,7 +176,7 @@ function iframeOnload(item) {
  */
 function initWithHash() {
     var hash = location.hash;
-    if (hash != null && hash !== '') {
+    if (hash != null && hash !== '' && hash !== '#') {
         var w = hash.indexOf('?');
         if (w !== -1) {
             hash = hash.substring(1, w);
@@ -193,6 +189,7 @@ function initWithHash() {
             $(a[0]).click();
         }
     }
+    initFlag=false;
 }
 
 function addTab(title, dataTabId, dataHref) {
