@@ -231,7 +231,7 @@
                     data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
-                    <li th:each="menuInfo,menuInfoStat:${session.leftMenus}"
+                    <li th:each="menuInfo,menuInfoStat:${session.SPRING_SECURITY_CONTEXT?.authentication?.principal?.menuInfos}"
                         th:class="${#lists.isEmpty(menuInfo.childList)}?'nav-item':'nav-item has-treeview'"
                         th:classappend="${menuInfoStat.first} ?''">
 

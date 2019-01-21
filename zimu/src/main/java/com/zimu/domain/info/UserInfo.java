@@ -1,17 +1,20 @@
 package com.zimu.domain.info;
 
+import com.zimu.domain.entity.UserEntity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-
-import com.zimu.domain.entity.UserEntity;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class UserInfo extends UserEntity implements UserDetails, OAuth2User {
 
     private static final long serialVersionUID = 1L;
@@ -26,18 +29,11 @@ public class UserInfo extends UserEntity implements UserDetails, OAuth2User {
 
     private List<MenuInfo> menuInfos;
 
-    public void setAttributes(Map<String, Object> attributes) {
-        this.attributes = attributes;
-    }
-
     @Override
     public Map<String, Object> getAttributes() {
         return attributes;
     }
 
-    public void setAuthorities(Set<? extends GrantedAuthority> authorities) {
-        this.authorities = authorities;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -94,14 +90,6 @@ public class UserInfo extends UserEntity implements UserDetails, OAuth2User {
         }
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     @Override
     public String getName() {
         if (StringUtils.isBlank(name)) {
@@ -110,15 +98,4 @@ public class UserInfo extends UserEntity implements UserDetails, OAuth2User {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<MenuInfo> getMenuInfos() {
-        return menuInfos;
-    }
-
-    public void setMenuInfos(List<MenuInfo> menuInfos) {
-        this.menuInfos = menuInfos;
-    }
 }

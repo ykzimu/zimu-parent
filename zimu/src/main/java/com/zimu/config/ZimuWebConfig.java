@@ -1,8 +1,6 @@
 package com.zimu.config;
 
-import com.zimu.filter.MySiteMeshFilter;
 import com.zimu.interceptor.HttpServletInterceptor;
-import com.zimu.interceptor.MenuInterceptor;
 import com.zimu.listener.MuziServletContextListener;
 import com.zimu.resolver.DataTablesHandlerMethodArgumentResolver;
 import org.jasig.cas.client.session.SingleSignOutFilter;
@@ -13,7 +11,6 @@ import org.jasig.cas.client.validation.Cas30ServiceTicketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +23,6 @@ import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
@@ -51,7 +47,6 @@ public class ZimuWebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new HttpServletInterceptor())
             .excludePathPatterns(webMvcProperties.getStaticPathPattern());
-        registry.addInterceptor(new MenuInterceptor()).excludePathPatterns(webMvcProperties.getStaticPathPattern());
     }
 
     @Override
@@ -73,7 +68,6 @@ public class ZimuWebConfig implements WebMvcConfigurer {
         filterRegistrationBean.addUrlPatterns("/*");
         return filterRegistrationBean;
     }*/
-
     @Bean
     public ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> addSingleSignOutHttpSessionListener() {
         ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> servletListenerRegistrationBean = new ServletListenerRegistrationBean<>();
