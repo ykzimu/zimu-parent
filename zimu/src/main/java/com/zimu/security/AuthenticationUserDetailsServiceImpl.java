@@ -6,6 +6,7 @@ import com.zimu.domain.entity.UserEntity;
 import com.zimu.domain.info.MenuInfo;
 import com.zimu.domain.info.UserInfo;
 import com.zimu.service.UserService;
+import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
@@ -27,6 +28,9 @@ public class AuthenticationUserDetailsServiceImpl
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MenuComponent menuComponent;
 
     @Override
     public UserDetails loadUserDetails(CasAssertionAuthenticationToken token) throws UsernameNotFoundException {
@@ -55,7 +59,6 @@ public class AuthenticationUserDetailsServiceImpl
 
 
             //左侧菜单
-            MenuComponent menuComponent = SpringContextUtils.getBean(MenuComponent.class);
             List<MenuInfo> menuInfos = menuComponent.getMenus(userInfo.getId());
             userInfo.setMenuInfos(menuInfos);
 
