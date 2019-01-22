@@ -6,7 +6,7 @@ $(document).ready(function () {
         searching: true,
         pagingType: "full_numbers",
         ajax: {
-            url: "/admin/dict/listData",
+            url: contextPath + "/admin/dict/listData",
             type: "POST"
         },
         columns: [
@@ -35,7 +35,7 @@ $(document).ready(function () {
             infoEmpty: '没有数据!',
             infoFiltered: "(从_MAX_条数据检索)"
         },
-        autoWidth:false,//关闭自动调节，与父iframe有冲突
+        autoWidth: false,//关闭自动调节，与父iframe有冲突
         scrollCollapse: false
     });
 

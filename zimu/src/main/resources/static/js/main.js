@@ -8,6 +8,8 @@
 var logOutModel = null;
 //全局消息提示框
 var jBoxMsgModel = null;
+//工程名
+var contextPath = null;
 
 //全局遮罩(boot)
 var globalSpinnerModal = {
@@ -30,6 +32,12 @@ var globalSpinnerModal = {
  * 默认配置
  */
 $(document).ready(function () {
+
+    if (contextPath == null) {
+        var metaContextPath = $("meta[name='context-path']");
+        contextPath = metaContextPath.attr("content");
+        contextPath = contextPath.substring(0, contextPath.length - 1);
+    }
 
     $('#navMenu').metisMenu();
 

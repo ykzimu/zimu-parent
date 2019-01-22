@@ -10,12 +10,12 @@ $(document).ready(function () {
 
     });
 
-    initFlag=true;
+    initFlag = true;
 
     //默认首页
     var dashboardTitle = '仪表盘';
     var dashboardDataTabId = 'tabpanel-25';
-    var dashboardDataHref = '/admin/dashboard/index';
+    var dashboardDataHref = contextPath + '/admin/dashboard/index';
     var dashboardHtml = '<iframe id="' + dashboardDataTabId + 'Frame" src="' + dashboardDataHref + '" width="100%" height="100%" frameborder="0" onload="iframeOnload(null)"></iframe>';
     tabpanel = new TabPanel({
         renderTo: 'mainTab',
@@ -189,7 +189,7 @@ function initWithHash() {
             $(a[0]).click();
         }
     }
-    initFlag=false;
+    initFlag = false;
 }
 
 function addTab(title, dataTabId, dataHref) {

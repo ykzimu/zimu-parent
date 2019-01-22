@@ -80,7 +80,7 @@ cas:
     login: ${cas.server.host}/login
     logout: ${cas.server.host}/logout
   service:
-    host: http://localhost:8080
+    host: http://localhost:8080/zimu
     login: /login
     logout: /logout
 logging:
