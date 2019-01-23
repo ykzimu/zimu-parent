@@ -31,7 +31,8 @@ $(document).ready(function () {
             defaultContent: '<a href="#" class="text-primary" title="编辑"><i class="fas fa-fw fa-edit"></i>编辑</a>'
         }],
         select: {
-            style: 'multi'
+            style: 'multi',
+            selector: 'td:first-child'
         },
         order: [[2, 'asc']],
         language: {
