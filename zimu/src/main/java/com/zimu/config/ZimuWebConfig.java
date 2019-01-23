@@ -19,8 +19,11 @@ import org.springframework.security.cas.authentication.CasAssertionAuthenticatio
 import org.springframework.security.cas.authentication.CasAuthenticationProvider;
 import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -54,20 +57,23 @@ public class ZimuWebConfig implements WebMvcConfigurer {
         resolvers.add(new DataTablesHandlerMethodArgumentResolver());
     }
 
-
     /**
-     * MySiteMeshFilter 用于模板生产
+     * 添加监听器
      *
-     * @return FilterRegistrationBean
+     * @return RequestContextListener
      */
- /*   @Bean
-    public FilterRegistrationBean<MySiteMeshFilter> addMySiteMeshFilter() {
-        FilterRegistrationBean<MySiteMeshFilter> filterRegistrationBean = new FilterRegistrationBean<MySiteMeshFilter>();
-        filterRegistrationBean.setFilter(new MySiteMeshFilter());
-        filterRegistrationBean.setName("siteMeshFilter");
-        filterRegistrationBean.addUrlPatterns("/*");
-        return filterRegistrationBean;
-    }*/
+    @Bean
+    public ServletListenerRegistrationBean<RequestContextListener> addRequestContextListener() {
+        ServletListenerRegistrationBean<RequestContextListener> servletListenerRegistrationBean = new ServletListenerRegistrationBean<>();
+        servletListenerRegistrationBean.setListener(new RequestContextListener());
+        return servletListenerRegistrationBean;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Bean
     public ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> addSingleSignOutHttpSessionListener() {
         ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> servletListenerRegistrationBean = new ServletListenerRegistrationBean<>();
