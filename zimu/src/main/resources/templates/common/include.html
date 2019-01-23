@@ -15,7 +15,8 @@
     <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link type="text/css" rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.min.css}"/>
     <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap-datepicker/css/bootstrap-datepicker.min.css}"/>
-    <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css}"/>
+    <link type="text/css" rel="stylesheet"
+          th:href="@{/webjars/bootstrap-datepicker/css/bootstrap-datepicker.standalone.min.css}"/>
     <link type="text/css" rel="stylesheet" th:href="@{/webjars/datatables/css/dataTables.bootstrap4.min.css}"/>
     <link type="text/css" rel="stylesheet" th:href="@{/webjars/select2/css/select2.min.css}"/>
     <link type="text/css" rel="stylesheet" th:href="@{/webjars/metisMenu/metisMenu.min.css}"/>
@@ -28,6 +29,11 @@
     <link type="text/css" rel="stylesheet" th:href="@{/static/css/demo/mm-horizontal.css}"/>
     <link type="text/css" rel="stylesheet" th:href="@{/static/css/main.css}"/>
     <!--css end-->
+
+    <link type="text/css" rel="stylesheet"
+          href="https://cdn.datatables.net/select/1.2.7/css/select.dataTables.min.css"/>
+    <link type="text/css" rel="stylesheet"
+          href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css"/>
 
     <th:block th:if="${links !=null}">
         <th:block th:replace="${links}"/>
@@ -51,6 +57,10 @@
     <script th:src="@{/webjars/metisMenu/metisMenu.min.js}"></script>
     <script th:src="@{/webjars/zTree/js/jquery.ztree.all.min.js}"></script>
     <script th:src="@{/webjars/echarts/echarts.min.js}"></script>
+
+    <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+
 
     <!--static-->
     <script th:src="@{/static/echarts/themes/macarons.js}"></script>

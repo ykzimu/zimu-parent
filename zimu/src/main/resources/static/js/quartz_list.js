@@ -10,14 +10,30 @@ $(document).ready(function () {
             type: "POST"
         },
         columns: [
-            //{data: '<input class="checkchild" type="checkbox"/>'},
+            {},
             {name: "id", data: "id", orderable: false},
             {name: "username", data: "username"},
             {name: "nickname", data: "nickname"},
             {name: "realname", data: "realname"},
             {name: "email", data: "email"},
-            {name: "mobile", data: "mobile"}
+            {name: "mobile", data: "mobile"},
+            {}
         ],
+        columnDefs: [{
+            orderable: false,
+            className: 'select-checkbox',
+            targets: 0,
+            defaultContent: ''
+        }, {
+            orderable: false,
+            targets: -1,
+            class: 'text-center',
+            defaultContent: '<a href="#" class="text-primary" title="编辑"><i class="fas fa-fw fa-edit"></i>编辑</a>'
+        }],
+        select: {
+            style: 'multi'
+        },
+        order: [[2, 'asc']],
         language: {
             zeroRecords: '抱歉,没有检索到数据',
             loadingRecords: '加载中......',
@@ -35,9 +51,8 @@ $(document).ready(function () {
             infoEmpty: '没有数据!',
             infoFiltered: "(从_MAX_条数据检索)"
         },
-        //jQueryUI
-        scrollY: 330,
-        scrollCollapse: true
+        autoWidth: false,//关闭自动调节，与父iframe有冲突
+        scrollCollapse: false
     });
 
 });

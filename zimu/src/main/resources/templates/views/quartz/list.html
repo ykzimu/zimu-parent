@@ -5,23 +5,29 @@
     <script type="text/javascript" th:src="@{/static/js/quartz_list.js}"></script>
 </head>
 <body>
-<form class="form-horizontal">
-    <div class="form-group">
+<div class="container-fluid">
+    <form class="form-horizontal">
         <div class="form-group">
-            <table class="table table-sm table-striped table-bordered table-hover" id="myTable">
-                <thead class="thead-light ">
-                <tr>
-                    <th scope="col">序号</th>
-                    <th scope="col">账户</th>
-                    <th scope="col">昵称</th>
-                    <th scope="col">姓名</th>
-                    <th scope="col">邮箱</th>
-                    <th scope="col">手机</th>
-                </tr>
-                </thead>
-            </table>
         </div>
-    </div>
-</form>
+        <div class="form-group">
+            <div class="form-group">
+                <table class="table table-sm table-striped table-bordered table-hover" id="myTable">
+                    <thead class="thead-light ">
+                    <tr>
+                        <th scope="col" class="text-center"></th>
+                        <th scope="col">序号</th>
+                        <th scope="col">账户</th>
+                        <th scope="col">昵称</th>
+                        <th scope="col">姓名</th>
+                        <th scope="col">邮箱</th>
+                        <th scope="col">手机</th>
+                        <th scope="col">操作</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
 </html>
