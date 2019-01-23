@@ -529,7 +529,8 @@ TabPanel.prototype = {
       if(iframes.length>0)
       {
           var frameId = this.tabs[position].id+'Frame';
-          window.frames[frameId].src=window.frames[frameId].src;
+          window.frames[frameId].contentWindow.location.reload(true);
+          //this.iterateFlush();
       }
     }
   },

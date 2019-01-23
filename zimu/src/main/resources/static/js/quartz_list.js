@@ -6,7 +6,7 @@ $(document).ready(function () {
         searching: true,
         pagingType: "full_numbers",
         ajax: {
-            url: "/admin/dict/listDataTable",
+            url: contextPath + "/admin/dict/listData",
             type: "POST"
         },
         columns: [

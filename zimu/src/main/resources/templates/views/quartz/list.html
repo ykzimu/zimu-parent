@@ -1,11 +1,8 @@
-<#assign ctx=request.getContextPath()>
-<#assign ctxStatic=request.getContextPath()+"/static">
-
 <!DOCTYPE html>
-<html>
-<head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="/common/include::common_header(~{::title},~{::link},~{::style},~{::script},~{::meta})">
     <title>用户列表</title>
-    <script type="text/javascript" src="${ctxStatic}/js/quartz_list.js?v9"></script>
+    <script type="text/javascript" th:src="@{/static/js/quartz_list.js}"></script>
 </head>
 <body>
 <form class="form-horizontal">
@@ -14,7 +11,6 @@
             <table class="table table-sm table-striped table-bordered table-hover" id="myTable">
                 <thead class="thead-light ">
                 <tr>
-                <#-- <th scope="col" class="text-center"><input type="checkbox" value="0"></th>-->
                     <th scope="col">序号</th>
                     <th scope="col">账户</th>
                     <th scope="col">昵称</th>
@@ -25,7 +21,6 @@
                 </thead>
             </table>
         </div>
-    <#--<#include "../../common/page.ftl">-->
     </div>
 </form>
 </body>

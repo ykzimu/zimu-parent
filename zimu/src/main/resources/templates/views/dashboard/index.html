@@ -2,14 +2,74 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:include="/common/include::common_header(~{::title},~{::link},~{::style},~{::script},~{::meta})">
     <title>仪表盘</title>
+
+    <script th:src="@{/static/js/dashboard_index.js}"></script>
 </head>
 <body>
 <div class="container-fluid">
     <form class="form-horizontal">
-        <div class="form-group">
+        <div class="row form-group">
         </div>
-        <div class="form-group">
-            仪表盘首页
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-desktop"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">CPU</span>
+                        <span class="info-box-number">
+                  10
+                  <small>%</small>
+                </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-google-p"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">喜欢</span>
+                        <span class="info-box-number">41,410</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+
+            <!-- fix for small devices only -->
+            <div class="clearfix hidden-md-up"></div>
+
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-success elevation-1"><i class="fa fa-shopping-cart"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">销售</span>
+                        <span class="info-box-number">760</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                    <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-users"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">新用户</span>
+                        <span class="info-box-number">2,000</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
         </div>
     </form>
 </div>

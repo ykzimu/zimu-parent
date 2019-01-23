@@ -128,3 +128,7 @@ div.dataTables_wrapper div.dataTables_processing {
     color: white;
     background: rgba(0, 0, 0, 0.5) !important;
 }
+
+body{
+    background-color: #f4f6f8;
+}
