@@ -19,21 +19,50 @@ $(document).ready(function () {
             {name: "mobile", data: "mobile"},
             {}
         ],
-        columnDefs: [{
-            orderable: false,
-            className: 'select-checkbox',
-            targets: 0,
-            defaultContent: ''
-        }, {
-            orderable: false,
-            targets: -1,
-            class: 'text-center',
-            defaultContent: '<a href="#" class="text-primary" title="编辑"><i class="fas fa-fw fa-edit"></i>编辑</a>'
-        }],
-        select: {
-            style: 'multi',
-            selector: 'td:first-child'
-        },
+        columnDefs: [
+            {
+                orderable: false,
+                //className: 'select-checkbox',
+                className: ' text-center',
+                targets: 0,
+                title: '<input type="checkbox">',
+                defaultContent: '<input type="checkbox">'
+            },
+            {
+                targets: 1,
+                title: '序号'
+            }, {
+                targets: 2,
+                title: '账户'
+            }, {
+                targets: 3,
+                title: '昵称'
+            },
+            {
+                targets: 4,
+                title: '姓名'
+            },
+            {
+                targets: 5,
+                title: '邮箱'
+            },
+            {
+                targets: 6,
+                title: '手机'
+            },
+            {
+                orderable: false,
+                targets: -1,
+                title: '操作',
+                class: 'text-center',
+                defaultContent: '<a href="#" class="text-primary" title="编辑"><i class="fas fa-fw fa-edit"></i>编辑</a>'
+            }
+        ],
+        /*      select: {
+                  style: 'multi',
+                  selector: 'td:first-child'
+              },*/
+
         order: [[2, 'asc']],
         language: {
             zeroRecords: '抱歉,没有检索到数据',
@@ -53,7 +82,50 @@ $(document).ready(function () {
             infoFiltered: "(从_MAX_条数据检索)"
         },
         autoWidth: false,//关闭自动调节，与父iframe有冲突
-        scrollCollapse: false
+        scrollCollapse: false,
+        initComplete: function () {
+
+        },
+        drawCallback: function (settings) {
+            $("#myTable thead tr th:first-child input:checkbox").prop("checked", false);
+            var len = settings.aoData.length;
+            if (len === 0) {
+                $("#myTable thead tr th:first-child input:checkbox").attr("disabled", true);
+            } else {
+                $("#myTable thead tr th:first-child input:checkbox").attr("disabled", false);
+            }
+        }
+    });
+
+
+    $(document).on('change', '#myTable thead tr th:first-child input:checkbox', function () {
+        var isChecked = $(this).is(":checked");
+
+        if (isChecked) {
+            $("#myTable tbody tr td:first-child input:checkbox").prop("checked", true);
+            $("#myTable tbody tr").addClass("table-success");
+        } else {
+            $("#myTable tbody tr td:first-child input:checkbox").prop("checked", false);
+            $("#myTable tbody tr").removeClass("table-success")
+        }
+    });
+
+    $(document).on('click', '#myTable tbody tr td:first-child input:checkbox', function () {
+
+        var isChecked = $(this).is(":checked");
+        if (isChecked) {
+            $(this).parents("tr").addClass("table-success");
+        } else {
+            $(this).parents("tr").removeClass("table-success");
+        }
+
+        var lenAll = $("#myTable tbody tr td:first-child input:checkbox").length;
+        var lenChecked = $("#myTable tbody tr td:first-child input:checkbox:checked").length;
+        if (lenAll === lenChecked) {
+            $("#myTable thead tr th:first-child input:checkbox").prop("checked", true);
+        } else {
+            $("#myTable thead tr th:first-child input:checkbox").prop("checked", false);
+        }
     });
 
 });

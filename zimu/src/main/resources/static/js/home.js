@@ -52,6 +52,7 @@ $(document).ready(function () {
         selector: "#mainTab ul li",
         // define the elements of the menu
         zIndex: 1000000,
+        height:'100%',
         items: {
             refresh: {
                 name: "刷新标签", callback: function (e, currentMenuData, key) {

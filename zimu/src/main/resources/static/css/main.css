@@ -132,3 +132,7 @@ div.dataTables_wrapper div.dataTables_processing {
 body{
     background-color: #f4f6f8;
 }
+
+table.dataTable.table-sm>thead>tr>th {
+     padding-right: 0px;
+}
