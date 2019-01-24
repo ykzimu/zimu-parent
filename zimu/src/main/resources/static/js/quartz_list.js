@@ -11,7 +11,7 @@ $(document).ready(function () {
         },
         columns: [
             {},
-            {name: "id", data: "id", orderable: false},
+            {},
             {name: "username", data: "username"},
             {name: "nickname", data: "nickname"},
             {name: "realname", data: "realname"},
@@ -29,8 +29,13 @@ $(document).ready(function () {
                 defaultContent: '<input type="checkbox">'
             },
             {
+                orderable: false,
                 targets: 1,
-                title: '序号'
+                title: '序号',
+                className: ' text-center',
+                render: function (data, type, row, meta) {
+                    return meta.row + 1 + meta.settings._iDisplayStart;
+                }
             }, {
                 targets: 2,
                 title: '账户'
@@ -94,6 +99,11 @@ $(document).ready(function () {
             } else {
                 $("#myTable thead tr th:first-child input:checkbox").attr("disabled", false);
             }
+
+            /*   var api = this.api();
+               api.column(1).nodes().each(function(cell, i) {
+                   cell.innerHTML = i + 1;
+               });*/
         }
     });
 
@@ -126,6 +136,10 @@ $(document).ready(function () {
         } else {
             $("#myTable thead tr th:first-child input:checkbox").prop("checked", false);
         }
+    });
+
+    $(document).on('click', '#myTable tbody tr td:first-child', function () {
+       //alert("a");
     });
 
 });

@@ -76,8 +76,8 @@
       </table>-->
 
 
-        <table tableName="qrtz_job_details" domainObjectName="QrtzJobDetails">
-
+        <table tableName="t_dev_database" domainObjectName="DevDatabase">
+            <generatedKey column="id" sqlStatement="MySql" identity="true" />
         </table>
 
 	</context>

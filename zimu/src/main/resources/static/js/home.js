@@ -52,7 +52,7 @@ $(document).ready(function () {
         selector: "#mainTab ul li",
         // define the elements of the menu
         zIndex: 1000000,
-        height:'100%',
+        height: '100%',
         items: {
             refresh: {
                 name: "刷新标签", callback: function (e, currentMenuData, key) {
@@ -85,6 +85,13 @@ $(document).ready(function () {
             }
         }
         // there's more, have a look at the demos and docs...
+    });
+
+    $("#golabRefeshId").click(function () {
+        $.getJSON(contextPath + "/public/refesh", {}, function () {
+            window.location.reload(true);
+        });
+
     });
 
 });
