@@ -40,8 +40,8 @@ public class QuartzController {
         JsonView jsonView = new JsonView();
         try {
 
-            List<SelectInfo> selectInfoList = quartzService.beansList();
-            jsonView.setData(selectInfoList);
+            //List<SelectInfo> selectInfoList = quartzService.beansList();
+            //jsonView.setData(selectInfoList);
         } catch (Exception e) {
             log.error("", e);
         }
