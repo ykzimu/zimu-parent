@@ -26,7 +26,7 @@ public class AddressComponentImpl implements AddressComponent {
     private DictAddressEntityMapper dictAddressEntityMapper;
 
     @SuppressWarnings("rawtypes")
-	@Autowired
+    @Autowired
     private RedisTemplate redisTemplate;
 
 
@@ -34,11 +34,11 @@ public class AddressComponentImpl implements AddressComponent {
      * 获取信息
      */
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public List<AddressInfo> getList(AddressLevel level, String code) {
 
         // 返回数据
-        List<AddressInfo> list = new ArrayList<AddressInfo>();
+        List<AddressInfo> list = new ArrayList<>();
         AddressInfo addressInfo = new AddressInfo();
         addressInfo.setCode("");
         addressInfo.setName("请选择");
@@ -123,7 +123,7 @@ public class AddressComponentImpl implements AddressComponent {
      * 添加所有缓存
      */
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public void addAllCache() {
 
         // 不推荐使用循环查询操作，原因是效率低下
@@ -142,7 +142,7 @@ public class AddressComponentImpl implements AddressComponent {
 
         // 处理结果
         int size = addressList.size();
-        List<AddressInfo> list = new ArrayList<AddressInfo>();
+        List<AddressInfo> list = new ArrayList<>();
         AddressInfo addressInfo = null;
         DictAddressEntity dictAddressEntity = null;
         DictAddressEntity lastDictAddressEntity = null;
@@ -163,7 +163,7 @@ public class AddressComponentImpl implements AddressComponent {
                     }
                     // 插入缓存
                     los.rightPushAll(rediskey, prefixWithBlank(list));
-                    list = new ArrayList<AddressInfo>();
+                    list = new ArrayList<>();
                 }
             }
             list.add(addressInfo);
@@ -180,7 +180,7 @@ public class AddressComponentImpl implements AddressComponent {
     }
 
     public List<AddressInfo> prefixWithBlank(List<AddressInfo> list) {
-        List<AddressInfo> newList = new ArrayList<AddressInfo>();
+        List<AddressInfo> newList = new ArrayList<>();
         AddressInfo addressInfo = new AddressInfo();
         addressInfo.setCode("");
         addressInfo.setName("请选择");
@@ -193,7 +193,7 @@ public class AddressComponentImpl implements AddressComponent {
      * 删除所有缓存
      */
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public void delALlCache() {
         // 获取所有地址key
         Set<String> keys = redisTemplate.keys(RedisKeys.KEY_ADDRESS_ALL + "*");

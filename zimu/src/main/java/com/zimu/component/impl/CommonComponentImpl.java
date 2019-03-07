@@ -33,7 +33,7 @@ public class CommonComponentImpl implements CommonComponent {
 
 	@Override
     public List<SelectInfo> getPageSizeList() {
-		List<SelectInfo> list = new ArrayList<SelectInfo>();
+		List<SelectInfo> list = new ArrayList<>();
 
 		SelectInfo selectInfo = new SelectInfo();
 		selectInfo.setId("10");

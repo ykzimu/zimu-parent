@@ -1,6 +1,5 @@
 package com.zimu.service;
 
-import com.zimu.domain.info.SelectInfo;
 import com.zimu.quartz.JobData;
 import org.quartz.SchedulerException;
 
@@ -8,8 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 public interface QuartzService {
-
-    List<SelectInfo> beansList() throws SchedulerException;
 
     List<JobData> jobList() throws SchedulerException;
 

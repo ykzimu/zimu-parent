@@ -67,9 +67,7 @@ public class ZimuWebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(staticConfig.getUrlPatterns()).permitAll();
 
         // 遍历数据库中变更的权限
-        Iterator<Map.Entry<String, String[]>> iterator = roleMenus.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<String, String[]> entry = iterator.next();
+        for (Map.Entry<String, String[]> entry : roleMenus.entrySet()) {
             registry = registry.antMatchers(entry.getKey()).hasAnyRole(entry.getValue());
         }
         //

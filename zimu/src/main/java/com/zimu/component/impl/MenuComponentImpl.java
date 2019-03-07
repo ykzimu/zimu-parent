@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -58,10 +59,9 @@ public class MenuComponentImpl implements MenuComponent {
         if (userRoleEntities == null || userRoleEntities.isEmpty()) {
             return menuInfos;
         }
-        List<Long> roleIds = new ArrayList<>();
-        for (UserRoleEntity userRoleEntity : userRoleEntities) {
-            roleIds.add(userRoleEntity.getRoleId());
-        }
+
+        //获取roleIds
+        List<Long> roleIds = userRoleEntities.stream().map(UserRoleEntity::getRoleId).collect(Collectors.toList());
 
         //获取菜单
         RoleMenuEntityExample roleMenuEntityExample = new RoleMenuEntityExample();
@@ -70,10 +70,9 @@ public class MenuComponentImpl implements MenuComponent {
         if (roleMenuEntities == null || roleMenuEntities.isEmpty()) {
             return menuInfos;
         }
-        List<Long> menuIds = new ArrayList<>();
-        for (RoleMenuEntity roleMenuEntity : roleMenuEntities) {
-            menuIds.add(roleMenuEntity.getMenuId());
-        }
+
+        //获取menuIds
+        List<Long> menuIds = roleMenuEntities.stream().map(RoleMenuEntity::getMenuId).collect(Collectors.toList());
 
         //查询所有菜单
         MenuEntityExample example = new MenuEntityExample();
@@ -82,10 +81,8 @@ public class MenuComponentImpl implements MenuComponent {
         List<MenuEntity> list = menuEntityMapper.selectByExample(example);
 
         //用于快速判定是否有子元素
-        Set<Long> sets = new HashSet<>();
-        for (MenuEntity menuEntity : list) {
-            sets.add(menuEntity.getParentId());
-        }
+        Set<Long> sets = list.stream().map(MenuEntity::getParentId).collect(Collectors.toSet());
+
         menuInfos = menuInfos(list, sets, 1);
         return menuInfos;
     }
@@ -248,8 +245,7 @@ public class MenuComponentImpl implements MenuComponent {
         }
 
         //递归排序
-        List<MenuEntity> resultList = sortMenuList(list, sets, 1);
-        return resultList;
+        return sortMenuList(list, sets, 1);
     }
 
 
