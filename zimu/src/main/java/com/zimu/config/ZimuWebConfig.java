@@ -3,16 +3,21 @@ package com.zimu.config;
 import com.zimu.interceptor.HttpServletInterceptor;
 import com.zimu.listener.MuziServletContextListener;
 import com.zimu.resolver.DataTablesHandlerMethodArgumentResolver;
+import org.hibernate.validator.HibernateValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.validation.MessageInterpolatorFactory;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.validation.Validator;
 import java.util.List;
 
 @Configuration
@@ -42,6 +47,14 @@ public class ZimuWebConfig implements WebMvcConfigurer {
         ServletListenerRegistrationBean<MuziServletContextListener> servletListenerRegistrationBean = new ServletListenerRegistrationBean<>();
         servletListenerRegistrationBean.setListener(new MuziServletContextListener());
         return servletListenerRegistrationBean;
+    }
+
+    @Bean
+    public Validator defaultValidator(MessageSource messageSource) {
+        LocalValidatorFactoryBean factoryBean = new LocalValidatorFactoryBean();
+        factoryBean.setValidationMessageSource(messageSource);
+        factoryBean.setProviderClass(HibernateValidator.class);
+        return factoryBean;
     }
 
 }
