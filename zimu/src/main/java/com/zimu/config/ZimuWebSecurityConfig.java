@@ -149,7 +149,7 @@ public class ZimuWebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> addSingleSignOutHttpSessionListener() {
+    public ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> singleSignOutHttpSessionListener() {
         ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> servletListenerRegistrationBean = new ServletListenerRegistrationBean<>();
         servletListenerRegistrationBean.setListener(new SingleSignOutHttpSessionListener());
         return servletListenerRegistrationBean;

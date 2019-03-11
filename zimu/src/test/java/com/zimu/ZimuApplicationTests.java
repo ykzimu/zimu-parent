@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import com.muzi.config.MuziAutoConfiguration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class ZimuApplicationTests {
 
     @Autowired
     private ApplicationContext applicationContext;
+
+    @Autowired(required = false)
+    private MuziAutoConfiguration muziAutoConfiguration;
 
     @Test
     public void contextLoads() {
