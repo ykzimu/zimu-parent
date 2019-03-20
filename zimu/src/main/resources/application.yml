@@ -67,6 +67,7 @@ mybatis:
   mapper-locations: classpath:com/zimu/dao/mapper/*.xml
   type-aliases-package: com.zimu.domain.entity
 memcached:
+  enabled: true
   servers: memcached.qinbeixian.com:11211
   protocol: BINARY
   op-timeout: 1000

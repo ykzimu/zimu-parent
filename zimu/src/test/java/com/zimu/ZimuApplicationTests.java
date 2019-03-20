@@ -1,5 +1,6 @@
 package com.zimu;
 
+import net.spy.memcached.MemcachedClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class ZimuApplicationTests {
 
     @Autowired
     private ApplicationContext applicationContext;
+
+    @Autowired
+    private MemcachedClient memcachedClient;
 
 
     @Test
