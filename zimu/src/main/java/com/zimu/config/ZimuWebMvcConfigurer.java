@@ -17,7 +17,7 @@ import javax.validation.Validator;
 import java.util.List;
 
 @Configuration
-public class ZimuWebConfig implements WebMvcConfigurer {
+public class ZimuWebMvcConfigurer implements WebMvcConfigurer {
 
     @Autowired
     private WebMvcProperties webMvcProperties;

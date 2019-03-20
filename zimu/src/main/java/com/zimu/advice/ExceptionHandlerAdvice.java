@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Locale;
 
-@RestControllerAdvice("com.zimu.controller")
+@RestControllerAdvice
 public class ExceptionHandlerAdvice {
 
     @ExceptionHandler(value = {AuthenticationException.class, ValidationException.class, BusinessException.class,

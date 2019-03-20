@@ -28,12 +28,11 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
-import java.util.Iterator;
 import java.util.Map;
 
 @Configuration
 @EnableWebSecurity
-public class ZimuWebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class ZimuWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private RoleComponent roleComponent;

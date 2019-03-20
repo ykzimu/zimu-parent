@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 
-@RestControllerAdvice("com.zimu.controller")
+@RestControllerAdvice
 @Slf4j
 public class DataTablesResponseBodyAdvice implements ResponseBodyAdvice {
     @Override
