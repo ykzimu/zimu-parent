@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: zimu
   mvc:
     static-path-pattern: /static/**
   resources:
@@ -64,6 +66,10 @@ spring:
     type: ehcache
     ehcache:
       config: classpath:ehcache.xml
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka.qinbeixian.com:8761/eureka/
 mybatis:
   mapper-locations: classpath:com/zimu/dao/mapper/*.xml
   type-aliases-package: com.zimu.domain.entity

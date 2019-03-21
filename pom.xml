@@ -65,6 +65,8 @@
         <echarts.version>4.1.0</echarts.version>
 
         <!--webjars end-->
+
+        <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
     </properties>
     <dependencies>
         <dependency>
@@ -101,6 +103,13 @@
     </dependencies>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>

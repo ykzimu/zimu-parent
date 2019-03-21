@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -19,6 +20,7 @@ import java.security.cert.X509Certificate;
 @MapperScan("com.zimu.dao")
 @EnableCaching
 @EnableRedisHttpSession
+@EnableEurekaClient
 public class ZimuApplication {
 
     public static void main(String[] args) {
