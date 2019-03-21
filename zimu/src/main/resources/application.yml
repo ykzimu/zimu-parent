@@ -63,6 +63,9 @@ spring:
     type: ehcache
     ehcache:
       config: classpath:ehcache.xml
+  session:
+    store-type: redis
+    timeout: 2000
 mybatis:
   mapper-locations: classpath:com/zimu/dao/mapper/*.xml
   type-aliases-package: com.zimu.domain.entity

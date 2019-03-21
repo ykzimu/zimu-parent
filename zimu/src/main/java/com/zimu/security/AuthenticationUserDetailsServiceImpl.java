@@ -15,14 +15,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component("authenticationUserDetailsServiceImpl")
-public class AuthenticationUserDetailsServiceImpl
-    implements AuthenticationUserDetailsService<CasAssertionAuthenticationToken> {
+public class AuthenticationUserDetailsServiceImpl implements AuthenticationUserDetailsService<CasAssertionAuthenticationToken> {
 
     @Autowired
     private UserService userService;
@@ -31,7 +30,7 @@ public class AuthenticationUserDetailsServiceImpl
     private MenuComponent menuComponent;
 
     @Override
-    public UserDetails loadUserDetails(CasAssertionAuthenticationToken token) throws UsernameNotFoundException {
+    public UserDetails loadUserDetails(CasAssertionAuthenticationToken token) {
         try {
 
             //TODO 实现获取用户信息
@@ -43,21 +42,21 @@ public class AuthenticationUserDetailsServiceImpl
                 throw new UsernameNotFoundException("username not found.");
             }
 
+            Long id = userEntity.getId();
+
             // 查询角色信息
-            List<String> roles = userService.getRolesByUserId(userEntity.getId());
-            Set<GrantedAuthority> authorities = new HashSet<>();
-            SimpleGrantedAuthority grantedAuthority = null;
-            for (String role : roles) {
-                grantedAuthority = new SimpleGrantedAuthority(role);
-                authorities.add(grantedAuthority);
-            }
+            List<String> roles = userService.getRolesByUserId(id);
+            //左侧菜单
+            List<MenuInfo> menuInfos = menuComponent.getMenus(id);
+
+            //角色
+            Set<GrantedAuthority> authorities = roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
+
+            //构建用户信息
             UserInfo userInfo = new UserInfo();
             BeanUtils.copyProperties(userEntity, userInfo);
             userInfo.setAuthorities(authorities);
-
-
-            //左侧菜单
-            List<MenuInfo> menuInfos = menuComponent.getMenus(userInfo.getId());
+            userInfo.setAttributes(userAttributess);
             userInfo.setMenuInfos(menuInfos);
 
             return userInfo;

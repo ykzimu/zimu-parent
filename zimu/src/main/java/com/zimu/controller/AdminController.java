@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.zimu.common.exception.ValidationException;
 import com.zimu.common.utils.HttpServletManager;
 import com.zimu.common.utils.IdUtils;
+import com.zimu.common.utils.LoginUserUtils;
 import com.zimu.domain.entity.MenuEntity;
 import com.zimu.domain.entity.RoleEntity;
 import com.zimu.domain.entity.UserEntity;
@@ -111,6 +112,7 @@ public class AdminController {
     @PostMapping("/dict/listData")
     @ResponseBody
     public DataTablesView dictListData(DataTablesInfo dataTablesInfo) {
+        UserInfo userInfo = LoginUserUtils.getUserInfo();
         PageInfo<UserEntity> page = userService.getUsers(dataTablesInfo);
         DataTablesView<UserEntity> dataTablesView = new DataTablesView(page);
         return dataTablesView;

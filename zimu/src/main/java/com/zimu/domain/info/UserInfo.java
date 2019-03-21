@@ -3,29 +3,22 @@ package com.zimu.domain.info;
 import com.zimu.domain.entity.UserEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.io.Serializable;
+import java.util.*;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class UserInfo extends UserEntity implements UserDetails, OAuth2User {
+public class UserInfo extends UserEntity implements UserDetails, OAuth2User, Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Set<? extends GrantedAuthority> authorities;
+    private Set<GrantedAuthority> authorities;
 
     private Map<String, Object> attributes;
-
-    private String name;
-
-    private String login;
 
     private List<MenuInfo> menuInfos;
 
@@ -41,61 +34,33 @@ public class UserInfo extends UserEntity implements UserDetails, OAuth2User {
     }
 
     @Override
-    public String getPassword() {
-        return super.getPassword();
-    }
-
-    @Override
-    public String getUsername() {
-        return super.getUsername();
-    }
-
-    @Override
     public boolean isAccountNonExpired() {
-        Integer flag = super.getIsExpired();
-        if (flag != null && flag == 1) {
-            return false;
-        } else {
-            return true;
-        }
+        Integer flag = getIsExpired();
+        return flag == null || flag != 1;
+
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        Integer flag = super.getIsLocked();
-        if (flag != null && flag == 1) {
-            return false;
-        } else {
-            return true;
-        }
+        Integer flag = getIsLocked();
+        return flag == null || flag != 1;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        Integer flag = super.getIsCredentialsExpired();
-        if (flag != null && flag == 1) {
-            return false;
-        } else {
-            return true;
-        }
+        Integer flag = getIsCredentialsExpired();
+        return flag == null || flag != 1;
     }
 
     @Override
     public boolean isEnabled() {
-        Integer flag = super.getIsEnabled();
-        if (flag != null && flag == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        Integer flag = getIsEnabled();
+        return flag != null && flag == 1;
     }
 
     @Override
     public String getName() {
-        if (StringUtils.isBlank(name)) {
-            return this.getUsername();
-        }
-        return name;
+        return getUsername();
     }
 
 }
