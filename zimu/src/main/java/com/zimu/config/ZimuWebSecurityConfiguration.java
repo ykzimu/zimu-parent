@@ -27,13 +27,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 @Configuration
@@ -47,8 +45,8 @@ public class ZimuWebSecurityConfiguration {
     static class DefaultZimuWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
 
-        @Resource(type = UserDetailsServiceImpl.class)
-        private UserDetailsService userDetailsService;
+        @Autowired
+        private UserDetailsServiceImpl userDetailsService;
 
         @Autowired
         private RoleComponent roleComponent;
@@ -58,6 +56,9 @@ public class ZimuWebSecurityConfiguration {
 
         @Autowired
         private UserInfoOauth2UserService userInfoOAuth2UserService;
+
+        @Autowired
+        private RememberMeServices rememberMeServices;
 
         /**
          * 配置信息
@@ -84,7 +85,7 @@ public class ZimuWebSecurityConfiguration {
                 .and().oauth2Login().loginPage("/auth/login").defaultSuccessUrl("/").userInfoEndpoint()
                 .customUserType(UserInfo.class, "github").customUserType(UserInfo.class, "baidu")// .userAuthoritiesMapper(userAuthoritiesMapper())
                 .userService(userInfoOAuth2UserService).and().permitAll().and().httpBasic()//
-                .and().csrf().disable();
+                .and().csrf().disable().rememberMe().rememberMeServices(rememberMeServices);
         }
 
         /**
@@ -118,6 +119,9 @@ public class ZimuWebSecurityConfiguration {
         @Autowired
         private AuthenticationUserDetailsService<CasAssertionAuthenticationToken> authenticationUserDetailsService;
 
+        @Autowired
+        private RememberMeServices rememberMeServices;
+
 
         /**
          * 配置信息
@@ -144,7 +148,7 @@ public class ZimuWebSecurityConfiguration {
                 .and().oauth2Login().loginPage("/auth/login").defaultSuccessUrl("/").userInfoEndpoint()
                 .customUserType(UserInfo.class, "github").customUserType(UserInfo.class, "baidu")// .userAuthoritiesMapper(userAuthoritiesMapper())
                 .userService(userInfoOAuth2UserService).and().permitAll().and().httpBasic()//
-                .and().csrf().disable().rememberMe().rememberMeServices(rememberMeServices());//
+                .and().csrf().disable().rememberMe().rememberMeServices(rememberMeServices);//
 
             http.exceptionHandling().authenticationEntryPoint(this.casAuthenticationEntryPoint())//
                 .and()//
@@ -207,13 +211,6 @@ public class ZimuWebSecurityConfiguration {
             singleSignOutFilter.setCasServerUrlPrefix(this.casProperties.getServer().getHost());
             singleSignOutFilter.setIgnoreInitConfiguration(true);
             return singleSignOutFilter;
-        }
-
-        @Bean
-        public SpringSessionRememberMeServices rememberMeServices() {
-            SpringSessionRememberMeServices rememberMeServices = new SpringSessionRememberMeServices();
-            rememberMeServices.setAlwaysRemember(true);
-            return rememberMeServices;
         }
 
         @Bean
