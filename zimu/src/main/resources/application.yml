@@ -32,14 +32,14 @@ spring:
         max-wait: -1ms
         min-idle: 0
   session:
-    store-type: REDIS
+    store-type: redis
     timeout: 2000
   messages:
     basename: i18n/messages/messages,i18n/system/messages
   quartz:
-    job-store-type: JDBC
+    job-store-type: jdbc
     jdbc:
-      initialize-schema: ALWAYS
+      initialize-schema: always
   security:
     oauth2:
       client:
@@ -78,6 +78,7 @@ static:
     - /register/**
 eureka:
   client:
+    enabled: false
     service-url:
       defaultZone: http://eureka.qinbeixian.com:8761/eureka/
 mybatis:
@@ -92,6 +93,7 @@ memcached:
   failure-mode: Redistribute
   use-nagle-algorithm: false
 cas:
+  enabled: false
   server:
     host: https://cas.qinbeixian.com:8443/cas
     login: ${cas.server.host}/login
@@ -107,13 +109,4 @@ logging:
 spring:
   profiles: dev
 cas:
-  server:
-    host: https://cas.qinbeixian.com:8443/cas
-    login: ${cas.server.host}/login
-    logout: ${cas.server.host}/logout
-  service:
-    host: http://jd.qinbeixian.com:8904
-    login: /login
-    logout: /logout
-logging:
-  config: classpath:log4j2.dev.xml
+  enabled: true

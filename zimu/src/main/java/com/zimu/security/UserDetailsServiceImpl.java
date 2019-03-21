@@ -7,19 +7,17 @@ import com.zimu.domain.info.UserInfo;
 import com.zimu.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class AuthenticationUserDetailsServiceImpl implements AuthenticationUserDetailsService<CasAssertionAuthenticationToken> {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserService userService;
@@ -28,14 +26,11 @@ public class AuthenticationUserDetailsServiceImpl implements AuthenticationUserD
     private MenuComponent menuComponent;
 
     @Override
-    public UserDetails loadUserDetails(CasAssertionAuthenticationToken token) {
+    public UserDetails loadUserByUsername(String username) {
         try {
 
-            //TODO 实现获取用户信息
-            Map<String, Object> userAttributess = token.getAssertion().getPrincipal().getAttributes();
-
             // 查询用户信息
-            UserEntity userEntity = userService.getUserByUsername(token.getName());
+            UserEntity userEntity = userService.getUserByUsername(username);
             if (userEntity == null) {
                 throw new UsernameNotFoundException("username not found.");
             }
@@ -54,13 +49,10 @@ public class AuthenticationUserDetailsServiceImpl implements AuthenticationUserD
             UserInfo userInfo = new UserInfo();
             BeanUtils.copyProperties(userEntity, userInfo);
             userInfo.setAuthorities(authorities);
-            userInfo.setAttributes(userAttributess);
             userInfo.setMenuInfos(menuInfos);
-
             return userInfo;
         } catch (Exception e) {
             throw new UsernameNotFoundException("username not found.");
         }
     }
-
 }

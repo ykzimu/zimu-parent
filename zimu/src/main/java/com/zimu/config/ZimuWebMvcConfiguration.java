@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -17,7 +19,7 @@ import javax.validation.Validator;
 import java.util.List;
 
 @Configuration
-public class ZimuWebMvcConfigurer implements WebMvcConfigurer {
+public class ZimuWebMvcConfiguration implements WebMvcConfigurer {
 
     @Autowired
     private WebMvcProperties webMvcProperties;
@@ -43,6 +45,11 @@ public class ZimuWebMvcConfigurer implements WebMvcConfigurer {
         factoryBean.setValidationMessageSource(messageSource);
         factoryBean.setProviderClass(HibernateValidator.class);
         return factoryBean;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }
