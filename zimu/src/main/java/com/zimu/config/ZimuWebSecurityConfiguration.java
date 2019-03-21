@@ -34,6 +34,9 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 
 import java.util.Map;
 
+/**
+ * @author yk
+ */
 @Configuration
 @EnableWebSecurity
 public class ZimuWebSecurityConfiguration {
@@ -42,7 +45,7 @@ public class ZimuWebSecurityConfiguration {
     @Configuration
     @ConditionalOnProperty(value = "cas.enabled", havingValue = "false", matchIfMissing = true)
     @Import(UserDetailsServiceImpl.class)
-    static class DefaultZimuWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+    static class NormalWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
 
         @Autowired
