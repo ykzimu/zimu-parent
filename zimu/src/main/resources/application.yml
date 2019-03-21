@@ -66,6 +66,16 @@ spring:
     type: ehcache
     ehcache:
       config: classpath:ehcache.xml
+static:
+  url-patterns:
+    - /
+    - /index
+    - /resources/**
+    - /static/**
+    - /public/**
+    - /webjars/**
+    - /test/**
+    - /register/**
 eureka:
   client:
     service-url:
@@ -92,13 +102,18 @@ cas:
     logout: /logout
 logging:
   config: classpath:log4j2.xml
-static:
-  url-patterns:
-    - /
-    - /index
-    - /resources/**
-    - /static/**
-    - /public/**
-    - /webjars/**
-    - /test/**
-    - /register/**
+
+---
+spring:
+  profiles: dev
+cas:
+  server:
+    host: https://cas.qinbeixian.com:8443/cas
+    login: ${cas.server.host}/login
+    logout: ${cas.server.host}/logout
+  service:
+    host: http://jd.qinbeixian.com:8904
+    login: /login
+    logout: /logout
+logging:
+  config: classpath:log4j2_dev.xml

@@ -30,25 +30,25 @@
 		<Root level="INFO">
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="LogFile" />
-			<AppenderRef ref="Logstash" />
+			<!--<AppenderRef ref="Logstash" />-->
 		</Root>
-		<Logger name="com.zimu" level="DEBUG" />
-		<Logger name="org.springframework" level="INFO" />
-		<Logger name="org.apache.http" level="INFO" />
-		<Logger name="org.apache.commons" level="INFO" />
-		<Logger name="org.apache.ibatis" level="INFO" />
-		<Logger name="org.mybatis.spring" level="INFO" />
-		<Logger name="org.hibernate" level="INFO" />
-		<Logger name="org.hibernate.validator" level="INFO" />
-		<Logger name="org.jboss" level="INFO" />
-		<Logger name="org.quartz" level="INFO" />
-		<Logger name="com.alibaba" level="INFO" />
-		<Logger name="druid.sql" level="INFO" />
-		<Logger name="io.netty" level="INFO" />
-		<Logger name="io.lettuce" level="INFO" />
-		<Logger name="reactor" level="INFO" />
-		<Logger name="com.zaxxer.hikari" level="INFO" />
-		<Logger name="net.sf.ehcache" level="INFO" />
-		<Logger name="net.spy.memcached" level="INFO" />
+        <Logger name="com.zimu" level="DEBUG" />
+        <Logger name="org.springframework" level="INFO" />
+        <Logger name="org.apache.http" level="INFO" />
+        <Logger name="org.apache.commons" level="INFO" />
+        <Logger name="org.apache.ibatis" level="INFO" />
+        <Logger name="org.mybatis.spring" level="INFO" />
+        <Logger name="org.hibernate" level="INFO" />
+        <Logger name="org.hibernate.validator" level="INFO" />
+        <Logger name="org.jboss" level="INFO" />
+        <Logger name="org.quartz" level="INFO" />
+        <Logger name="com.alibaba" level="INFO" />
+        <Logger name="druid.sql" level="INFO" />
+        <Logger name="io.netty" level="INFO" />
+        <Logger name="io.lettuce" level="INFO" />
+        <Logger name="reactor" level="INFO" />
+        <Logger name="com.zaxxer.hikari" level="INFO" />
+        <Logger name="net.sf.ehcache" level="INFO" />
+        <Logger name="net.spy.memcached" level="INFO" />
 	</Loggers>
 </Configuration>  
