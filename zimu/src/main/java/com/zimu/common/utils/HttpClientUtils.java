@@ -5,14 +5,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -46,16 +50,23 @@ public class HttpClientUtils {
 
         try {
             httpClient = HttpClients.createDefault();
-            HttpPost method = new HttpPost(url);
+            HttpPost request = new HttpPost(url);
+
+
             if (jsonParam != null) {
-                // 解决中文乱码问题
-                StringEntity entity = new StringEntity(jsonParam.toString(), DEFAULT_CHARSET);
+                List<NameValuePair> list = new LinkedList<>();
+                for (Map.Entry<String, Object> entry : jsonParam.entrySet()) {
+                    BasicNameValuePair nameValuePair = new BasicNameValuePair(entry.getKey(), entry.getValue().toString());
+                    list.add(nameValuePair);
+                }
+                // 使用URL实体转换工具
+                UrlEncodedFormEntity entity = new UrlEncodedFormEntity(list, DEFAULT_CHARSET);
                 entity.setContentEncoding(DEFAULT_CHARSET);
                 entity.setContentType("application/json");
-                method.setEntity(entity);
+                request.setEntity(entity);
             }
 
-            HttpResponse response = httpClient.execute(method);
+            HttpResponse response = httpClient.execute(request);
 
             //请求发送失败
             if (response == null || response.getStatusLine() == null
@@ -104,7 +115,7 @@ public class HttpClientUtils {
                 if (StringUtils.isBlank(entry.getKey()) || StringUtils.isBlank(entry.getValue())) {
                     continue;
                 }
-                
+
                 i++;
                 if (i == 1) {
                     params.append("?");
