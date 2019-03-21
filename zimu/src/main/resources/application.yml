@@ -93,7 +93,7 @@ memcached:
   failure-mode: Redistribute
   use-nagle-algorithm: false
 cas:
-  enabled: false
+  enabled: true
   server:
     host: https://cas.qinbeixian.com:8443/cas
     login: ${cas.server.host}/login

@@ -52,7 +52,7 @@ public class ZimuWebSecurityConfiguration {
         private RoleComponent roleComponent;
 
         @Autowired
-        private StaticConfig staticConfig;
+        private StaticProperties staticProperties;
 
         @Autowired
         private UserInfoOauth2UserService userInfoOAuth2UserService;
@@ -70,7 +70,7 @@ public class ZimuWebSecurityConfiguration {
             ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http
                 .authorizeRequests()
                 // 静态资源及无需登录的资源
-                .antMatchers(staticConfig.getUrlPatterns()).permitAll();
+                .antMatchers(staticProperties.getUrlPatterns()).permitAll();
 
             // 遍历数据库中变更的权限
             for (Map.Entry<String, String[]> entry : roleMenus.entrySet()) {
@@ -114,7 +114,7 @@ public class ZimuWebSecurityConfiguration {
         private UserInfoOauth2UserService userInfoOAuth2UserService;
 
         @Autowired
-        private StaticConfig staticConfig;
+        private StaticProperties staticProperties;
 
         @Autowired
         private AuthenticationUserDetailsService<CasAssertionAuthenticationToken> authenticationUserDetailsService;
@@ -134,7 +134,7 @@ public class ZimuWebSecurityConfiguration {
             ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http
                 .authorizeRequests()
                 // 静态资源及无需登录的资源
-                .antMatchers(staticConfig.getUrlPatterns()).permitAll();
+                .antMatchers(staticProperties.getUrlPatterns()).permitAll();
 
             // 遍历数据库中变更的权限
             for (Map.Entry<String, String[]> entry : roleMenus.entrySet()) {

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "memcached")
 @Configuration
-public class MemcachedConfig {
+public class MemcachedConfiguration {
 
     private String servers;
 

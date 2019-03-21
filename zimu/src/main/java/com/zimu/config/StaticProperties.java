@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @ConfigurationProperties(prefix = "static")
-public class StaticConfig {
+public class StaticProperties {
     private String[] urlPatterns;
 }
 

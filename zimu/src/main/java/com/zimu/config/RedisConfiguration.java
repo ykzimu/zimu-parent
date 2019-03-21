@@ -11,7 +11,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.net.UnknownHostException;
 
 @Configuration
-public class RedisConfig {
+public class RedisConfiguration {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
 	@Bean
