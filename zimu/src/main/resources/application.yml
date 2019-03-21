@@ -29,8 +29,9 @@ spring:
         max-idle: 8
         max-wait: -1ms
         min-idle: 0
-#  session:
-#    store-type: REDIS
+  session:
+    store-type: REDIS
+    timeout: 2000
   messages:
     basename: i18n/messages/messages,i18n/system/messages
   quartz:
@@ -63,14 +64,10 @@ spring:
     type: ehcache
     ehcache:
       config: classpath:ehcache.xml
-  session:
-    store-type: redis
-    timeout: 2000
 mybatis:
   mapper-locations: classpath:com/zimu/dao/mapper/*.xml
   type-aliases-package: com.zimu.domain.entity
 memcached:
-  enabled: true
   servers: memcached.qinbeixian.com:11211
   protocol: BINARY
   op-timeout: 1000
@@ -91,11 +88,11 @@ logging:
   config: classpath:log4j2.xml
 static:
   url-patterns:
-  - /
-  - /index
-  - /resources/**
-  - /static/**
-  - /public/**
-  - /webjars/**
-  - /test/**
-  - /register/**
+    - /
+    - /index
+    - /resources/**
+    - /static/**
+    - /public/**
+    - /webjars/**
+    - /test/**
+    - /register/**
