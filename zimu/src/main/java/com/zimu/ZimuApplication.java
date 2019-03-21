@@ -1,6 +1,5 @@
 package com.zimu;
 
-import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,7 +19,6 @@ import java.security.cert.X509Certificate;
 @MapperScan("com.zimu.dao")
 @EnableCaching
 @EnableRedisHttpSession
-@Slf4j
 public class ZimuApplication {
 
     public static void main(String[] args) {
