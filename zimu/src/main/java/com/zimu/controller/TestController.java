@@ -1,7 +1,9 @@
 package com.zimu.controller;
 
+import com.zimu.common.utils.CommonUtils;
 import com.zimu.common.utils.LoginUserUtils;
 import com.zimu.domain.info.JsonView;
+import com.zimu.domain.info.ResultCode;
 import com.zimu.domain.info.UserInfo;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +11,7 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(value = "test")
@@ -35,7 +40,15 @@ public class TestController {
 
             @Override
             public void validate(Object target, Errors errors) {
-                errors.reject("x", "xxxxxxxxxxxxx");
+
+                if (!(target instanceof FormInput)) {
+                    return;
+                }
+                FormInput formInput = (FormInput) target;
+                boolean isMobile = CommonUtils.isMobile(formInput.getMobile());
+                if (!isMobile) {
+                    errors.reject(ResultCode.ARGUMENT_ERROR.getMsg(), "手机号有误！");
+                }
             }
         });
     }
@@ -44,14 +57,14 @@ public class TestController {
     @ResponseBody
     public JsonView myTest(@Validated FormInput formInput, BindingResult result) {
 
+
+        boolean hasErrors = result.hasErrors();
+        List<ObjectError> list = result.getAllErrors();
+        List<String> errorMsg = list.stream().map(ObjectError::getDefaultMessage).collect(Collectors.toList());
+
         JsonView jsonView = new JsonView();
-        UserInfo userInfo = LoginUserUtils.getUserInfo();
-        jsonView.setData(result.getAllErrors());
+        jsonView.setData(errorMsg);
         return jsonView;
-    }
-
-    static class FormHeader {
-
     }
 
     @Getter
