@@ -19,11 +19,6 @@ public interface BaseView {
         Field[] fields = this.getClass().getDeclaredFields();
         for (Field field : fields) {
             try {
-
-                //忽略VIEWNAME属性
-                if ("VIEWNAME".equals(field.getName())) {
-                    continue;
-                }
                 field.setAccessible(true);
                 mv.addObject(field.getName(), field.get(this));
             } catch (Exception e) {

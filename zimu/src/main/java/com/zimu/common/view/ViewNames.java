@@ -12,7 +12,7 @@ public enum ViewNames {
     MENU_ADD("/views/menu/add"),
 
     //菜单页列表
-    MENU_LIST("/views/menu/add");
+    MENU_LIST("/views/menu/list");
 
     private String viewName;
 
