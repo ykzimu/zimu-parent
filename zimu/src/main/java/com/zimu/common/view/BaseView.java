@@ -1,7 +1,6 @@
-package com.zimu.view;
+package com.zimu.common.view;
 
-import com.zimu.annotation.ViewName;
-import lombok.extern.slf4j.Slf4j;
+import com.zimu.common.view.annotation.ViewName;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.lang.reflect.Field;
@@ -16,7 +15,7 @@ public interface BaseView {
      */
     default ModelAndView view() {
         ViewName viewName = this.getClass().getAnnotation(ViewName.class);
-        ModelAndView mv = new ModelAndView(viewName.value());
+        ModelAndView mv = new ModelAndView(viewName.value().getViewName());
         Field[] fields = this.getClass().getDeclaredFields();
         for (Field field : fields) {
             try {

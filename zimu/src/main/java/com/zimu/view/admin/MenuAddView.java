@@ -1,9 +1,10 @@
 package com.zimu.view.admin;
 
-import com.zimu.annotation.ViewName;
+import com.zimu.common.view.annotation.ViewName;
 import com.zimu.domain.entity.MenuEntity;
 import com.zimu.domain.info.SelectInfo;
-import com.zimu.view.BaseView;
+import com.zimu.common.view.BaseView;
+import com.zimu.common.view.ViewNames;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,7 +14,7 @@ import java.util.List;
 @Builder
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ViewName("/views/menu/add")
+@ViewName(ViewNames.MENU_ADD)
 public class MenuAddView implements BaseView {
 
     private MenuEntity menuInfo;

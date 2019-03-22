@@ -1,7 +1,8 @@
 package com.zimu.view.admin;
 
-import com.zimu.annotation.ViewName;
-import com.zimu.view.BaseView;
+import com.zimu.common.view.annotation.ViewName;
+import com.zimu.common.view.BaseView;
+import com.zimu.common.view.ViewNames;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,7 +10,7 @@ import lombok.EqualsAndHashCode;
 @Builder
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ViewName("/views/dashboard/index")
+@ViewName(ViewNames.DASHBOARD_INDEX)
 public class DashboardIndexView implements BaseView {
 
 }
