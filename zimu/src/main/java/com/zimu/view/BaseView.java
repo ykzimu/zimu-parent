@@ -1,22 +1,22 @@
 package com.zimu.view;
 
+import com.zimu.annotation.ViewName;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.lang.reflect.Field;
 
-@Slf4j
-public abstract class BaseView {
-
-    //获取viewName
-    protected abstract String viewName();
-
+/**
+ * @author yk
+ */
+public interface BaseView {
 
     /**
      * 构建ModelAndView
      */
-    public ModelAndView view() {
-        ModelAndView mv = new ModelAndView(this.viewName());
+    default ModelAndView view() {
+        ViewName viewName = this.getClass().getAnnotation(ViewName.class);
+        ModelAndView mv = new ModelAndView(viewName.value());
         Field[] fields = this.getClass().getDeclaredFields();
         for (Field field : fields) {
             try {
@@ -28,7 +28,7 @@ public abstract class BaseView {
                 field.setAccessible(true);
                 mv.addObject(field.getName(), field.get(this));
             } catch (Exception e) {
-                log.error("反射错误!", e);
+
             }
         }
         return mv;
