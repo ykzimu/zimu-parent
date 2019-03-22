@@ -43,7 +43,7 @@ public class ZimuWebSecurityConfiguration {
 
 
     @Configuration
-    @ConditionalOnProperty(value = "cas.enabled", havingValue = "false", matchIfMissing = true)
+    @ConditionalOnProperty(prefix = "cas", name = "enabled", havingValue = "false", matchIfMissing = true)
     @Import(UserDetailsServiceImpl.class)
     static class NormalWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
@@ -88,7 +88,7 @@ public class ZimuWebSecurityConfiguration {
                 .and().oauth2Login().loginPage("/auth/login").defaultSuccessUrl("/").userInfoEndpoint()
                 .customUserType(UserInfo.class, "github").customUserType(UserInfo.class, "baidu")// .userAuthoritiesMapper(userAuthoritiesMapper())
                 .userService(userInfoOAuth2UserService).and().permitAll().and().httpBasic()//
-                .and().csrf().disable().rememberMe().rememberMeServices(rememberMeServices);
+                .and().csrf().disable().rememberMe().rememberMeServices(rememberMeServices).alwaysRemember(true);
         }
 
         /**
@@ -102,7 +102,7 @@ public class ZimuWebSecurityConfiguration {
     }
 
     @Configuration
-    @ConditionalOnProperty(value = "cas.enabled", havingValue = "true")
+    @ConditionalOnProperty(prefix = "cas", name = "enabled", havingValue = "true")
     @EnableConfigurationProperties({CasProperties.class})
     @Import(AuthenticationUserDetailsServiceImpl.class)
     static class CasWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
