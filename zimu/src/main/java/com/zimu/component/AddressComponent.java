@@ -17,10 +17,4 @@ public interface AddressComponent {
 
     List<AddressInfo> getAreaList(String code);
 
-    void addAllCache();
-
-    void delALlCache();
-
-    void refreshALlCache();
-
 }
