@@ -1,22 +1,33 @@
 package com.zimu.component.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.zimu.common.Constants;
+import com.zimu.component.RoleComponent;
+import com.zimu.dao.*;
+import com.zimu.domain.entity.*;
+import com.zimu.domain.info.RoleMenuInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.zimu.component.RoleComponent;
-import com.zimu.dao.RoleEntityMapper;
-import com.zimu.domain.info.RoleMenuInfo;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class RoleComponentImpl implements RoleComponent {
 
     @Autowired
     private RoleEntityMapper roleEntityMapper;
+
+    @Autowired
+    private UserRoleEntityMapper userRoleEntityMapper;
+
+    @Autowired
+    private GroupEntityMapper groupEntityMapper;
+
+    @Autowired
+    private GroupRoleEntityMapper groupRoleEntityMapper;
+
+    @Autowired
+    private UserGroupEntityMapper userGroupEntityMapper;
 
     // 查询表结构，构造表结构权限
     @Override
@@ -53,4 +64,79 @@ public class RoleComponentImpl implements RoleComponent {
         // 获取迭代器
         return result;
     }
+
+
+    @Override
+    public List<RoleEntity> getRolesByUserId(Long userId) {
+        return getRolesByUserIdA(userId);
+    }
+
+    /**
+     * 方法1：使用sql直接查询
+     *
+     * @param userId
+     * @return
+     */
+    private List<RoleEntity> getRolesByUserIdA(Long userId) {
+        return roleEntityMapper.selectByUserId(userId);
+    }
+
+    /**
+     * 方法2：使用sql查询，并使用java处理
+     *
+     * @param userId
+     * @return
+     */
+    private List<RoleEntity> getRolesByUserIdB(Long userId) {
+        Set<Long> roleIds = new HashSet<>();
+
+        // 查询用户角色关联表
+        UserRoleEntityExample userRoleEntityExample = new UserRoleEntityExample();
+        userRoleEntityExample.createCriteria().andUserIdEqualTo(userId).andDelFlagNotEqualTo(Constants.DEL_FLAG_OK);
+        List<UserRoleEntity> userRoleEntities = userRoleEntityMapper.selectByExample(userRoleEntityExample);
+        if (userRoleEntities != null && !userRoleEntities.isEmpty()) {
+            Set<Long> rIds = userRoleEntities.stream().map(UserRoleEntity::getRoleId).collect(Collectors.toSet());
+            roleIds.addAll(rIds);
+        }
+
+        //查询用户组信息
+        UserGroupEntityExample userGroupEntityExample = new UserGroupEntityExample();
+        userGroupEntityExample.createCriteria().andUserIdEqualTo(userId).andDelFlagNotEqualTo(Constants.DEL_FLAG_OK);
+        List<UserGroupEntity> userGroupEntities = userGroupEntityMapper.selectByExample(userGroupEntityExample);
+        if (userGroupEntities != null && !userGroupEntities.isEmpty()) {
+
+            //查询组信息
+            List<Long> groupIds = userGroupEntities.stream().map(UserGroupEntity::getGroupId).collect(Collectors.toList());
+            GroupEntityExample groupEntityExample = new GroupEntityExample();
+            groupEntityExample.createCriteria().andIdIn(groupIds).andDelFlagNotEqualTo(Constants.DEL_FLAG_OK);
+            List<GroupEntity> groupEntities = groupEntityMapper.selectByExample(groupEntityExample);
+            if (groupEntities != null && !groupEntities.isEmpty()) {
+
+                //查询组角色信息
+                List<Long> gIds = groupEntities.stream().map(GroupEntity::getId).collect(Collectors.toList());
+                GroupRoleEntityExample groupRoleEntityExample = new GroupRoleEntityExample();
+                groupRoleEntityExample.createCriteria().andGroupIdIn(gIds).andDelFlagNotEqualTo(Constants.DEL_FLAG_OK);
+                List<GroupRoleEntity> groupRoleEntities = groupRoleEntityMapper.selectByExample(groupRoleEntityExample);
+
+                if (groupRoleEntities != null && !groupRoleEntities.isEmpty()) {
+                    Set<Long> rIds = groupRoleEntities.stream().map(GroupRoleEntity::getRoleId).collect(Collectors.toSet());
+                    roleIds.addAll(rIds);
+                }
+            }
+        }
+
+        // 构造角色
+        if (roleIds.isEmpty()) {
+            return Collections.emptyList();
+        }
+        // 查询角色表
+        RoleEntityExample roleEntityExample = new RoleEntityExample();
+        roleEntityExample.createCriteria().andIdIn(new ArrayList<>(roleIds)).andDelFlagNotEqualTo(Constants.DEL_FLAG_OK);
+        List<RoleEntity> roleEntities = roleEntityMapper.selectByExample(roleEntityExample);
+        if (roleEntities == null || roleEntities.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return roleEntities;
+    }
+
 }

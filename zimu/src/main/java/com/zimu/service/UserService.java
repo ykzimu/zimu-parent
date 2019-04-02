@@ -1,6 +1,7 @@
 package com.zimu.service;
 
 import com.github.pagehelper.PageInfo;
+import com.zimu.domain.entity.RoleEntity;
 import com.zimu.domain.entity.UserEntity;
 import com.zimu.domain.info.DataTablesInfo;
 import com.zimu.domain.info.SearchInfo;
@@ -16,9 +17,7 @@ public interface UserService {
 
     UserEntity getUserByUsername(String username);
 
-    List<String> getRolesByUserId(Long userId);
-
-    List<String> getRoles(Long userId);
+    List<String> getRoleCodesByUserId(Long userId);
 
     void test();
 

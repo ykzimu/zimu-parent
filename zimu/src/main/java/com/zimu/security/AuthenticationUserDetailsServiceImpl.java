@@ -1,6 +1,8 @@
 package com.zimu.security;
 
 import com.zimu.component.MenuComponent;
+import com.zimu.component.RoleComponent;
+import com.zimu.domain.entity.RoleEntity;
 import com.zimu.domain.entity.UserEntity;
 import com.zimu.domain.info.MenuInfo;
 import com.zimu.domain.info.UserInfo;
@@ -27,6 +29,9 @@ public class AuthenticationUserDetailsServiceImpl implements AuthenticationUserD
     @Autowired
     private MenuComponent menuComponent;
 
+    @Autowired
+    private RoleComponent roleComponent;
+
     @Override
     public UserDetails loadUserDetails(CasAssertionAuthenticationToken token) {
         try {
@@ -40,15 +45,13 @@ public class AuthenticationUserDetailsServiceImpl implements AuthenticationUserD
                 throw new UsernameNotFoundException("username not found.");
             }
 
-            Long id = userEntity.getId();
-
-            // 查询角色信息
-            List<String> roles = userService.getRoles(id);
+            Long userId = userEntity.getId();
+            //查询角色信息
+            List<RoleEntity> roleEntities = roleComponent.getRolesByUserId(userId);
             //左侧菜单
-            List<MenuInfo> menuInfos = menuComponent.getMenus(id);
-
+            List<MenuInfo> menuInfos = menuComponent.getMenus(userId, roleEntities);
             //角色
-            Set<GrantedAuthority> authorities = roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
+            Set<GrantedAuthority> authorities = roleEntities.stream().map(RoleEntity::getRoleCode).map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
 
             //构建用户信息
             UserInfo userInfo = new UserInfo();

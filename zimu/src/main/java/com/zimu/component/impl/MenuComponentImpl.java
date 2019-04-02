@@ -1,10 +1,10 @@
 package com.zimu.component.impl;
 
+import com.zimu.common.Constants;
 import com.zimu.component.MenuComponent;
+import com.zimu.component.RoleComponent;
 import com.zimu.dao.MenuEntityMapper;
-import com.zimu.dao.RoleEntityMapper;
 import com.zimu.dao.RoleMenuEntityMapper;
-import com.zimu.dao.UserRoleEntityMapper;
 import com.zimu.domain.entity.*;
 import com.zimu.domain.info.MenuInfo;
 import org.apache.commons.lang.StringUtils;
@@ -25,20 +25,22 @@ public class MenuComponentImpl implements MenuComponent {
     private MenuEntityMapper menuEntityMapper;
 
     @Autowired
-    private UserRoleEntityMapper userRoleEntityMapper;
+    private RoleComponent roleComponent;
 
     @Autowired
     private RoleMenuEntityMapper roleMenuEntityMapper;
 
-    @Autowired
-    private RoleEntityMapper roleEntityMapper;
-
     @Override
     public List<MenuInfo> getMenus(Long userId) {
+        //获取角色信息
+        List<RoleEntity> roleEntities = roleComponent.getRolesByUserId(userId);
+        return getMenus(userId, roleEntities);
+    }
 
+    @Override
+    public List<MenuInfo> getMenus(Long userId, List<RoleEntity> roleEntities) {
         List<MenuInfo> menuInfos = new ArrayList<>();
         //获取角色信息
-        List<RoleEntity> roleEntities = roleEntityMapper.selectByUserId(userId);
         if (roleEntities == null || roleEntities.isEmpty()) {
             return menuInfos;
         }
@@ -48,7 +50,7 @@ public class MenuComponentImpl implements MenuComponent {
 
         //获取菜单
         RoleMenuEntityExample roleMenuEntityExample = new RoleMenuEntityExample();
-        roleMenuEntityExample.createCriteria().andRoleIdIn(roleIds);
+        roleMenuEntityExample.createCriteria().andRoleIdIn(roleIds).andDelFlagNotEqualTo(Constants.DEL_FLAG_OK);
         List<RoleMenuEntity> roleMenuEntities = roleMenuEntityMapper.selectByExample(roleMenuEntityExample);
         if (roleMenuEntities == null || roleMenuEntities.isEmpty()) {
             return menuInfos;
@@ -59,7 +61,7 @@ public class MenuComponentImpl implements MenuComponent {
 
         //查询所有菜单
         MenuEntityExample example = new MenuEntityExample();
-        example.createCriteria().andIdIn(menuIds).andMenuTypeEqualTo("LEFT_MENU").andIsShowEqualTo(1).andDelFlagEqualTo(0);
+        example.createCriteria().andIdIn(menuIds).andMenuTypeEqualTo("LEFT_MENU").andIsShowEqualTo(1).andDelFlagNotEqualTo(Constants.DEL_FLAG_OK);
         example.setOrderByClause(" menu_level ASC , menu_sort ASC ");
         List<MenuEntity> list = menuEntityMapper.selectByExample(example);
 
