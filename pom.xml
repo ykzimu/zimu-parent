@@ -25,6 +25,7 @@
         <pagehelper.spring.version>1.2.10</pagehelper.spring.version>
         <fastjson.version>1.2.56</fastjson.version>
         <poi.version>4.0.1</poi.version>
+        <pdfbox.version>2.0.14</pdfbox.version>
 
         <!--webjars start-->
         <webjars.locator.version>0.34</webjars.locator.version>
@@ -445,6 +446,21 @@
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
                 <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml-schemas</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-scratchpad</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.pdfbox</groupId>
+                <artifactId>pdfbox</artifactId>
+                <version>${pdfbox.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.thetransactioncompany</groupId>
