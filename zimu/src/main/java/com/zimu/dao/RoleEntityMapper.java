@@ -100,4 +100,7 @@ public interface RoleEntityMapper {
 
 
     List<RoleMenuInfo> selectRoleMenus(Map<String, Object> params);
+
+    List<RoleEntity> selectByUserId(@Param("userId") Long userId);
+
 }

@@ -1,15 +1,12 @@
 package com.zimu.component;
 
 
-import java.util.List;
-
-import com.zimu.common.enums.AddressLevel;
 import com.zimu.domain.info.AddressInfo;
+
+import java.util.List;
 
 
 public interface AddressComponent {
-
-    List<AddressInfo> getList(AddressLevel level, String code);
 
     List<AddressInfo> getProvinceList();
 

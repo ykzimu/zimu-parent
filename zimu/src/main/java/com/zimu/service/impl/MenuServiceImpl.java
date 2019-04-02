@@ -1,17 +1,8 @@
 package com.zimu.service.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.github.pagehelper.PageInfo;
 import com.zimu.common.enums.RoleEnum;
 import com.zimu.common.utils.LoginUserUtils;
-import com.zimu.common.utils.MenuUtils;
 import com.zimu.component.CommonComponent;
 import com.zimu.component.MenuComponent;
 import com.zimu.dao.MenuEntityMapper;
@@ -23,6 +14,13 @@ import com.zimu.domain.entity.RoleEntity;
 import com.zimu.domain.entity.RoleMenuEntity;
 import com.zimu.domain.info.UserInfo;
 import com.zimu.service.MenuService;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class MenuServiceImpl implements MenuService {
@@ -76,7 +74,6 @@ public class MenuServiceImpl implements MenuService {
                 menuEntity.setUpdateDate(new Date());
                 menuEntity.setMenuSort(Integer.parseInt(ids[1]));
                 menuEntityMapper.updateByPrimaryKeySelective(menuEntity);
-                MenuUtils.setMenuInfos(null);
             }
         }
 
@@ -86,7 +83,6 @@ public class MenuServiceImpl implements MenuService {
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
     public boolean changeMenuStatusById(Long id, Boolean delFlag, Boolean isShow) {
-        MenuUtils.setMenuInfos(null);
         MenuEntity entity = menuEntityMapper.selectByPrimaryKey(id);
         MenuEntity menuEntity = new MenuEntity();
         menuEntity.setId(id);
@@ -144,7 +140,6 @@ public class MenuServiceImpl implements MenuService {
         roleMenuEntity.setVersion(1);
         roleMenuEntityMapper.insert(roleMenuEntity);
 
-        MenuUtils.setMenuInfos(null);
         return true;
     }
 
@@ -162,7 +157,6 @@ public class MenuServiceImpl implements MenuService {
             }
         }
         menuEntityMapper.updateByPrimaryKeySelective(menuEntity);
-        MenuUtils.setMenuInfos(null);
         return true;
     }
 

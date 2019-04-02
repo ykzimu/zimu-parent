@@ -1,8 +1,20 @@
 package com.zimu.service.impl;
 
-import java.util.*;
-
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.zimu.common.Constants;
+import com.zimu.common.MessageCode;
+import com.zimu.common.enums.RoleEnum;
+import com.zimu.common.exception.BusinessException;
+import com.zimu.common.utils.CommonUtils;
+import com.zimu.common.utils.LoginUserUtils;
+import com.zimu.component.CommonComponent;
+import com.zimu.dao.*;
+import com.zimu.domain.entity.*;
 import com.zimu.domain.info.DataTablesInfo;
+import com.zimu.domain.info.SearchInfo;
+import com.zimu.domain.info.UserInfo;
+import com.zimu.service.UserService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -16,29 +28,8 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.zimu.common.MessageCode;
-import com.zimu.common.enums.RoleEnum;
-import com.zimu.common.exception.BusinessException;
-import com.zimu.common.utils.CommonUtils;
-import com.zimu.common.utils.LoginUserUtils;
-import com.zimu.component.CommonComponent;
-import com.zimu.dao.RoleEntityMapper;
-import com.zimu.dao.UserEntityMapper;
-import com.zimu.dao.UserGithubEntityMapper;
-import com.zimu.dao.UserRoleEntityMapper;
-import com.zimu.domain.entity.RoleEntity;
-import com.zimu.domain.entity.RoleEntityExample;
-import com.zimu.domain.entity.UserEntity;
-import com.zimu.domain.entity.UserEntityExample;
-import com.zimu.domain.entity.UserGithubEntity;
-import com.zimu.domain.entity.UserGithubEntityExample;
-import com.zimu.domain.entity.UserRoleEntity;
-import com.zimu.domain.entity.UserRoleEntityExample;
-import com.zimu.domain.info.SearchInfo;
-import com.zimu.domain.info.UserInfo;
-import com.zimu.service.UserService;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(rollbackFor = RuntimeException.class)
@@ -63,6 +54,15 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private GroupEntityMapper groupEntityMapper;
+
+    @Autowired
+    private GroupRoleEntityMapper groupRoleEntityMapper;
+
+    @Autowired
+    private UserGroupEntityMapper userGroupEntityMapper;
 
     @Override
     public UserEntity getUserById(Long id) {
@@ -93,34 +93,63 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<String> getRolesByUserId(Long userId) {
 
-        // 角色名
-        List<String> roleCodes = new ArrayList<>();
+        Set<Long> roleIds = new HashSet<>();
 
         // 查询用户角色关联表
         UserRoleEntityExample userRoleEntityExample = new UserRoleEntityExample();
-        userRoleEntityExample.createCriteria().andUserIdEqualTo(userId);
+        userRoleEntityExample.createCriteria().andUserIdEqualTo(userId).andDelFlagNotEqualTo(Constants.DEL_FLAG_OK);
         List<UserRoleEntity> userRoleEntities = userRoleEntityMapper.selectByExample(userRoleEntityExample);
-        if (userRoleEntities == null || userRoleEntities.isEmpty()) {
-            return roleCodes;
+        if (userRoleEntities != null && !userRoleEntities.isEmpty()) {
+            Set<Long> rIds = userRoleEntities.stream().map(UserRoleEntity::getRoleId).collect(Collectors.toSet());
+            roleIds.addAll(rIds);
         }
+
+        //查询用户组信息
+        UserGroupEntityExample userGroupEntityExample = new UserGroupEntityExample();
+        userGroupEntityExample.createCriteria().andUserIdEqualTo(userId).andDelFlagNotEqualTo(Constants.DEL_FLAG_OK);
+        List<UserGroupEntity> userGroupEntities = userGroupEntityMapper.selectByExample(userGroupEntityExample);
+        if (userGroupEntities != null && !userGroupEntities.isEmpty()) {
+
+            //查询组信息
+            List<Long> groupIds = userGroupEntities.stream().map(UserGroupEntity::getGroupId).collect(Collectors.toList());
+            GroupEntityExample groupEntityExample = new GroupEntityExample();
+            groupEntityExample.createCriteria().andIdIn(groupIds).andDelFlagNotEqualTo(Constants.DEL_FLAG_OK);
+            List<GroupEntity> groupEntities = groupEntityMapper.selectByExample(groupEntityExample);
+            if (groupEntities != null && !groupEntities.isEmpty()) {
+
+                //查询组角色信息
+                List<Long> gIds = groupEntities.stream().map(GroupEntity::getId).collect(Collectors.toList());
+                GroupRoleEntityExample groupRoleEntityExample = new GroupRoleEntityExample();
+                groupRoleEntityExample.createCriteria().andGroupIdIn(gIds).andDelFlagNotEqualTo(Constants.DEL_FLAG_OK);
+                List<GroupRoleEntity> groupRoleEntities = groupRoleEntityMapper.selectByExample(groupRoleEntityExample);
+
+                if (groupRoleEntities != null && !groupRoleEntities.isEmpty()) {
+                    Set<Long> rIds = groupRoleEntities.stream().map(GroupRoleEntity::getRoleId).collect(Collectors.toSet());
+                    roleIds.addAll(rIds);
+                }
+
+            }
+
+        }
+
 
         // 构造角色
-        List<Long> roleIds = new ArrayList<>();
-        for (UserRoleEntity userRoleEntity : userRoleEntities) {
-            roleIds.add(userRoleEntity.getRoleId());
+        if (roleIds.isEmpty()) {
+            return Collections.emptyList();
         }
-
         // 查询角色表
         RoleEntityExample roleEntityExample = new RoleEntityExample();
-        roleEntityExample.createCriteria().andIdIn(roleIds);
+        roleEntityExample.createCriteria().andIdIn(new ArrayList<>(roleIds)).andDelFlagNotEqualTo(Constants.DEL_FLAG_OK);
         List<RoleEntity> roleEntities = roleEntityMapper.selectByExample(roleEntityExample);
         if (roleEntities == null || roleEntities.isEmpty()) {
-            return roleCodes;
+            return Collections.emptyList();
         }
-        for (RoleEntity roleEntity : roleEntities) {
-            roleCodes.add(roleEntity.getRoleCode());
-        }
-        return roleCodes;
+        return roleEntities.stream().map(RoleEntity::getRoleCode).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getRoles(Long userId) {
+        return roleEntityMapper.selectByUserId(userId).stream().map(RoleEntity::getRoleCode).collect(Collectors.toList());
     }
 
     @Override
@@ -381,7 +410,7 @@ public class UserServiceImpl implements UserService {
         authorities.add(authority);
         userInfo.setAuthorities(authorities);
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userInfo, pwd,
-                authorities);
+            authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return true;
     }

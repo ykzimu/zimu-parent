@@ -38,7 +38,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             Long id = userEntity.getId();
 
             // 查询角色信息
-            List<String> roles = userService.getRolesByUserId(id);
+            List<String> roles = userService.getRoles(id);
             //左侧菜单
             List<MenuInfo> menuInfos = menuComponent.getMenus(id);
 

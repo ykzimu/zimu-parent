@@ -1,37 +1,24 @@
 package com.zimu.component.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
+import com.zimu.component.MenuComponent;
+import com.zimu.dao.MenuEntityMapper;
+import com.zimu.dao.RoleEntityMapper;
+import com.zimu.dao.RoleMenuEntityMapper;
+import com.zimu.dao.UserRoleEntityMapper;
+import com.zimu.domain.entity.*;
+import com.zimu.domain.info.MenuInfo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
-import com.zimu.common.CacheNames;
-import com.zimu.component.MenuComponent;
-import com.zimu.dao.MenuEntityMapper;
-import com.zimu.dao.RoleMenuEntityMapper;
-import com.zimu.dao.UserRoleEntityMapper;
-import com.zimu.domain.entity.MenuEntity;
-import com.zimu.domain.entity.MenuEntityExample;
-import com.zimu.domain.entity.RoleMenuEntity;
-import com.zimu.domain.entity.RoleMenuEntityExample;
-import com.zimu.domain.entity.UserRoleEntity;
-import com.zimu.domain.entity.UserRoleEntityExample;
-import com.zimu.domain.info.MenuInfo;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
-@CacheConfig(cacheNames = CacheNames.CACHE_NAME_MUZI)
 public class MenuComponentImpl implements MenuComponent {
 
     @Autowired
@@ -44,24 +31,20 @@ public class MenuComponentImpl implements MenuComponent {
     private RoleMenuEntityMapper roleMenuEntityMapper;
 
     @Autowired
-    private CacheManager cacheManager;
-
+    private RoleEntityMapper roleEntityMapper;
 
     @Override
     public List<MenuInfo> getMenus(Long userId) {
 
         List<MenuInfo> menuInfos = new ArrayList<>();
-
         //获取角色信息
-        UserRoleEntityExample userRoleEntityExample = new UserRoleEntityExample();
-        userRoleEntityExample.createCriteria().andUserIdEqualTo(userId);
-        List<UserRoleEntity> userRoleEntities = userRoleEntityMapper.selectByExample(userRoleEntityExample);
-        if (userRoleEntities == null || userRoleEntities.isEmpty()) {
+        List<RoleEntity> roleEntities = roleEntityMapper.selectByUserId(userId);
+        if (roleEntities == null || roleEntities.isEmpty()) {
             return menuInfos;
         }
 
         //获取roleIds
-        List<Long> roleIds = userRoleEntities.stream().map(UserRoleEntity::getRoleId).collect(Collectors.toList());
+        List<Long> roleIds = roleEntities.stream().map(RoleEntity::getId).collect(Collectors.toList());
 
         //获取菜单
         RoleMenuEntityExample roleMenuEntityExample = new RoleMenuEntityExample();
@@ -136,94 +119,6 @@ public class MenuComponentImpl implements MenuComponent {
         return result;
 
     }
-
-    /**
-     * 缓存数据
-     *
-     * @return 所有菜单
-     */
-    @SuppressWarnings("unchecked")
-    private List<MenuEntity> cacheMenus() {
-        Cache cache = cacheManager.getCache(CacheNames.CACHE_NAME_MUZI);
-        List<MenuEntity> cacheList = cache.get(CacheNames.CACHE_KEY_ALL_MENUS, List.class);
-        if (cacheList != null && !cacheList.isEmpty()) {
-            return cacheList;
-        }
-
-        MenuEntityExample example = new MenuEntityExample();
-        example.createCriteria().andIsShowEqualTo(1).andDelFlagEqualTo(0);
-        List<MenuEntity> list = menuEntityMapper.selectByExample(example);
-        cache.put(CacheNames.CACHE_KEY_ALL_MENUS, list);
-        return list;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public Map<String, MenuInfo> getMenuInfoMapId() {
-
-        Cache cache = cacheManager.getCache(CacheNames.CACHE_NAME_MUZI);
-        Map<String, MenuInfo> cacheMap = cache.get(CacheNames.CACHE_KEY_MENUINFO_MAP_ID, Map.class);
-        if (cacheMap != null && !cacheMap.isEmpty()) {
-            return cacheMap;
-        }
-
-        List<MenuEntity> list = cacheMenus();
-        Map<String, MenuInfo> map = new HashMap<>();
-        for (MenuEntity menuEntity : list) {
-            MenuInfo menuInfo = new MenuInfo();
-            try {
-                BeanUtils.copyProperties(menuEntity, menuInfo);
-            } catch (Exception e) {
-            }
-            map.put(menuEntity.getId().toString(), menuInfo);
-
-        }
-        cache.put(CacheNames.CACHE_KEY_MENUINFO_MAP_ID, map);
-        return map;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public Map<String, MenuInfo> getMenuInfoMapUri() {
-
-        Cache cache = cacheManager.getCache(CacheNames.CACHE_NAME_MUZI);
-        Map<String, MenuInfo> cacheMap = cache.get(CacheNames.CACHE_KEY_MENUINFO_MAP_URI, Map.class);
-        if (cacheMap != null && !cacheMap.isEmpty()) {
-            return cacheMap;
-        }
-        List<MenuEntity> list = cacheMenus();
-        Map<String, MenuInfo> map = new HashMap<>();
-        for (MenuEntity menuEntity : list) {
-
-            if (StringUtils.isBlank(menuEntity.getMenuHref()) || "javascript:void(0)".equals(menuEntity.getMenuHref().trim())) {
-                continue;
-            }
-            MenuInfo menuInfo = new MenuInfo();
-            try {
-                BeanUtils.copyProperties(menuEntity, menuInfo);
-                map.put(menuEntity.getMenuHref(), menuInfo);
-            } catch (Exception e) {
-            }
-
-
-        }
-        cache.put(CacheNames.CACHE_KEY_MENUINFO_MAP_URI, map);
-        return map;
-    }
-
-
-    @Cacheable(key = "#id")
-    @Override
-    public MenuInfo getMenuInfoById(Long id) {
-        return getMenuInfoMapId().get(id.toString());
-    }
-
-    @Cacheable(key = "#uri")
-    @Override
-    public MenuInfo getMenuInfoByUri(String uri) {
-        return getMenuInfoMapUri().get(uri);
-    }
-
 
     /**
      * 排序所有左菜单

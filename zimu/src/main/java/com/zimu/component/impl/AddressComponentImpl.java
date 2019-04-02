@@ -26,11 +26,10 @@ public class AddressComponentImpl implements AddressComponent {
     /**
      * 获取信息
      */
-    @Override
-    public List<AddressInfo> getList(AddressLevel level, String code) {
+    private List<AddressInfo> getList(AddressLevel level, String code) {
 
         // 返回数据
-        List<AddressInfo> list = new ArrayList<>();
+        final List<AddressInfo> list = new ArrayList<>();
 
         // 查询条件
         DictAddressEntityExample example = new DictAddressEntityExample();

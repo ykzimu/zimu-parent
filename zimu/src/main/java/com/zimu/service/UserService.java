@@ -18,6 +18,8 @@ public interface UserService {
 
     List<String> getRolesByUserId(Long userId);
 
+    List<String> getRoles(Long userId);
+
     void test();
 
     UserInfo getUserInfo(DefaultOAuth2User oauth2User);

@@ -76,7 +76,7 @@
       </table>-->
 
 
-        <table tableName="t_dev_database" domainObjectName="DevDatabase">
+        <table tableName="t_user_group" domainObjectName="UserGroupEntity">
             <generatedKey column="id" sqlStatement="MySql" identity="true" />
         </table>
 
