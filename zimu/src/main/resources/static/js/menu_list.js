@@ -1,164 +1,75 @@
 $(document).ready(function () {
 
-    $("#addBtn").click(function () {
-        childAddTab(this);
-    });
-
-
-    //点击左侧菜单
-    $("table tbody tr td:first-child a").click(function () {
-        var clazz = $(this).children("i").attr("class");
-        var cnt = parseInt($(this).attr("child-deep"));
-        if (clazz.indexOf("fa-angle-down") != -1) {
-            $(this).children("i").removeClass("fa-angle-down");
-            $(this).children("i").addClass("fa-angle-right");
-            hideTr($(this).parent().parent(), cnt);
-        } else {
-            $(this).children("i").removeClass("fa-angle-right");
-            $(this).children("i").addClass("fa-angle-down");
-            showIcon($(this).parent().parent(), cnt);
-            showTr($(this).parent().parent(), cnt);
-        }
-    });
-
-    //保存菜单排序
-    new jBox('Confirm', {
-        title: '确认保存',
-        cancelButton: '取消',
-        confirmButton: '确认',
-        content: '你确认要保存？',
-        attach: '#btnSave',
-        closeOnEsc: true,
-        closeOnClick: 'overlay',
-        closeButton: 'title',
-        animation: {open: 'slide:top', close: 'slide:top'}
-    });
-
-    //切换显示状态
-    new jBox('Confirm', {
-        title: '确认删除',
-        cancelButton: '取消',
-        confirmButton: '确认',
-        content: '你确认要删除？',
-        attach: 'a[name="btnDelete"]',
-        closeOnEsc: true,
-        closeOnClick: 'overlay',
-        closeButton: 'title',
-        animation: {open: 'slide:top', close: 'slide:top'}
+    $('#myTable').DataTable({
+        serverSide: true,
+        processing: true,
+        searching: false,
+        pagingType: false,
+        paging: false,
+        ordering: false,
+        ajax: {
+            url: contextPath + "/admin/menu/listData",
+            type: "POST"
+        },
+        treeGrid: {
+            left: 20,
+            expandIcon: '<span><i class="fas fa-angle-right"></i></span>',
+            collapseIcon: '<span><i class="fas fa-angle-down"></i></span>'
+        },
+        columns: [
+            //{data: '<input class="checkchild" type="checkbox"/>'},
+            {
+                className: 'treegrid-control',
+                width: "80px",
+                data: function (item) {
+                    if (item.children != null && item.children.length > 0) {
+                        return '<span><i class="fas fa-angle-right"></i></span>';
+                    }
+                    return '';
+                }
+            },
+            {
+                name: "menuName",
+                data: function (item) {
+                    return item.menuName;
+                }
+            },
+            {name: "menuType", data: "menuType"},
+            {name: "menuLevel", data: "menuLevel"},
+            {
+                name: "menuIcon",
+                data: function (item) {
+                    if (item.menuIcon == null || item.menuIcon === '') {
+                        return '';
+                    }
+                    return '<span><i class="' + item.menuIcon + '"></i></span>&nbsp;' + item.menuIcon;
+                }
+            },
+            {name: "menuDesc", data: "menuDesc"},
+            {name: "menuHref", data: "menuHref"},
+            {name: "menuSort", data: "menuSort"},
+            {name: "menuSort", data: "menuSort"},
+            {name: "menuSort", data: "menuSort"}
+        ],
+        language: {
+            zeroRecords: '抱歉,没有检索到数据',
+            loadingRecords: '加载中......',
+            processing: '加载中......',
+            search: '查询：',  // 将英文search改为中文
+            searchPlaceholder: '请输入用户名手机号',//搜索框提示功能
+            lengthMenu: '每页&nbsp;_MENU_&nbsp;条',
+            info: '_START_-_END_条记录，共_TOTAL_条',
+            paginate: {
+                next: '下一页',
+                previous: '上一页',
+                first: '首页',
+                last: '末页'
+            },
+            infoEmpty: '没有数据!',
+            infoFiltered: "(从_MAX_条数据检索)"
+        },
+        autoWidth: false,//关闭自动调节，与父iframe有冲突
+        scrollCollapse: false
     });
 
 });
-
-function saveSort() {
-    var value = "";
-    var items = $("table tbody tr td:nth-child(7) :hidden");
-    for (var i = 0; i < items.length; i++) {
-
-        //隐藏域不处理
-        var flag = $(items[i]).parents("tr").is(":hidden");
-        if (flag) {
-            continue;
-        }
-        var id = $(items[i]).val();
-        var sort = $(items[i]).next().val();
-        value = value + id + ":" + sort + ",";
-    }
-    if (value == '') {
-        return;
-    }
-
-    //加载动画
-    globalSpinnerModal.show();
-
-    //排序
-    var url = $("#ctx").val() + "/admin/menu/sort";
-    $.post(url, {value: value}, function (data) {
-
-        var message = "保存成功！";
-        if (data.msg.code != '0000') {
-            message = data.msg.message;
-        }
-        message = message + "刷新页面可查看。";
-        jBoxMsgModel.setContent(message);
-        jBoxMsgModel.open();
-    }, "json");
-
-}
-
-function hideTr(item, cnt) {
-    for (var i = 0; i < cnt; i++) {
-        item = item.next();
-    }
-    for (var i = 0; i < cnt; i++) {
-        item.hide();
-        item = item.prev();
-    }
-}
-
-function showTr(item, cnt) {
-    for (var i = 0; i < cnt; i++) {
-        item = item.next().show();
-    }
-}
-
-function showIcon(item, cnt) {
-    for (var i = 0; i < cnt; i++) {
-        item = item.next();
-        item.find("td a i").removeClass("fa-angle-right");
-        item.find("td a i").addClass("fa-angle-down");
-    }
-}
-
-function changeMenuStatus(id, delFlag, isShow) {
-    //加载动画
-    globalSpinnerModal.show();
-    //排序
-    var url = $("#ctx").val() + "/admin/menu/change";
-    $.post(url, {id: id, delFlag: delFlag, isShow: isShow}, function (data) {
-        var message = "操作成功！";
-        if (data.msg.code == '0000') {
-            chageIcon(id, delFlag, isShow);
-        }
-        jBoxMsgModel.setContent(message);
-        jBoxMsgModel.open();
-    }, "json");
-}
-
-function chageIcon(id, delFlag, isShow) {
-    var item = $("#idHidden" + id);
-    if (isShow != null) {
-        item = item.next();
-        var clazz = item.attr("class");
-        if ("text-success" == clazz.trim()) {
-            item.removeClass("text-success");
-            item.addClass("text-danger");
-            item.attr("title", "隐藏");
-            item.children("i").removeClass("fa-eye");
-            item.children("i").addClass("fa-eye-slash");
-        } else {
-            item.removeClass("text-danger");
-            item.addClass("text-success");
-            item.attr("title", "显示");
-            item.children("i").removeClass("fa-eye-slash");
-            item.children("i").addClass("fa-eye");
-        }
-    }
-
-    if (delFlag != null) {
-        item = item.next().next();
-        var clazz = item.attr("class");
-        if ("text-success" == clazz.trim()) {
-            item.removeClass("text-success");
-            item.addClass("text-danger");
-            item.attr("title", "删除");
-            item.children("i").removeClass("fa-play-circle");
-            item.children("i").addClass("fa-trash-alt");
-        } else {
-            item.removeClass("text-danger");
-            item.addClass("text-success");
-            item.attr("title", "启用");
-            item.children("i").removeClass("fa-trash-alt");
-            item.children("i").addClass("fa-play-circle");
-        }
-    }
-}

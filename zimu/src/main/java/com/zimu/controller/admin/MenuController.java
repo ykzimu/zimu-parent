@@ -3,10 +3,7 @@ package com.zimu.controller.admin;
 import com.github.pagehelper.PageInfo;
 import com.zimu.domain.entity.MenuEntity;
 import com.zimu.domain.entity.UserEntity;
-import com.zimu.domain.info.DataTablesInfo;
-import com.zimu.domain.info.DataTablesView;
-import com.zimu.domain.info.JsonView;
-import com.zimu.domain.info.SelectInfo;
+import com.zimu.domain.info.*;
 import com.zimu.service.MenuService;
 import com.zimu.service.RequestMappingService;
 import com.zimu.view.admin.MenuAddView;
@@ -52,7 +49,7 @@ public class MenuController {
     @PostMapping("/listData")
     @ResponseBody
     public DataTablesView listData(DataTablesInfo dataTablesInfo) {
-        PageInfo<UserEntity> page = new PageInfo<>();
+        PageInfo<MenuInfo> page = menuService.listData();
         return new DataTablesView<>(page);
     }
 

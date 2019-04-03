@@ -12,6 +12,7 @@ import com.zimu.domain.entity.MenuEntity;
 import com.zimu.domain.entity.RequestMappingEntity;
 import com.zimu.domain.entity.RoleEntity;
 import com.zimu.domain.entity.RoleMenuEntity;
+import com.zimu.domain.info.MenuInfo;
 import com.zimu.domain.info.UserInfo;
 import com.zimu.service.MenuService;
 import org.apache.commons.lang.StringUtils;
@@ -41,10 +42,16 @@ public class MenuServiceImpl implements MenuService {
     private CommonComponent commonComponent;
 
     @Override
+    public PageInfo<MenuInfo> listData() {
+        List<MenuInfo> list = menuComponent.listData();
+        return new PageInfo<>(list);
+    }
+
+    @Override
     public PageInfo<MenuEntity> getMenus() {
 
         List<MenuEntity> list = menuComponent.getSortMenus();
-        PageInfo<MenuEntity> pageInfo = new PageInfo<MenuEntity>(list);
+        PageInfo<MenuEntity> pageInfo = new PageInfo<>(list);
 
         return pageInfo;
     }

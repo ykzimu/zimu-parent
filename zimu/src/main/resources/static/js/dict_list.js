@@ -10,9 +10,9 @@ $(document).ready(function () {
             type: "POST"
         },
         treeGrid: {
-            'left': 10,
-            'expandIcon': '<span>+</span>',
-            'collapseIcon': '<span>-</span>'
+            left: 10,
+            expandIcon: '<span>+</span>',
+            collapseIcon: '<span>-</span>'
         },
         columns: [
             //{data: '<input class="checkchild" type="checkbox"/>'},

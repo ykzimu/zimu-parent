@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface MenuComponent {
 
+    List<MenuInfo> listData();
+
     List<MenuInfo> getMenus(Long userId);
 
     List<MenuInfo> getMenus(Long userId ,List<RoleEntity> roleEntities);

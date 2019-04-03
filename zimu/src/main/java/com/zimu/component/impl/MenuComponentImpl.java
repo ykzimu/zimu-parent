@@ -31,6 +31,18 @@ public class MenuComponentImpl implements MenuComponent {
     private RoleMenuEntityMapper roleMenuEntityMapper;
 
     @Override
+    public List<MenuInfo> listData() {
+        //查询所有菜单
+        MenuEntityExample example = new MenuEntityExample();
+        example.setOrderByClause(" menu_level ASC , menu_sort ASC ");
+        List<MenuEntity> list = menuEntityMapper.selectByExample(example);
+
+        //用于快速判定是否有子元素
+        Set<Long> sets = list.stream().map(MenuEntity::getParentId).collect(Collectors.toSet());
+        return menuInfos(list, sets, 1);
+    }
+
+    @Override
     public List<MenuInfo> getMenus(Long userId) {
         //获取角色信息
         List<RoleEntity> roleEntities = roleComponent.getRolesByUserId(userId);
@@ -114,6 +126,7 @@ public class MenuComponentImpl implements MenuComponent {
             List<MenuInfo> childList = menuInfos(childAll, sets, menuLevel + 1);
             //递归算出所有子元素，并设置子元素
             menuInfo.setChildList(childList);
+            menuInfo.setChildren(childList);
 
         }
 
