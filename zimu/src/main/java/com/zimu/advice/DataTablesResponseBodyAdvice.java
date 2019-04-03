@@ -1,6 +1,5 @@
 package com.zimu.advice;
 
-import com.zimu.common.utils.HttpServletManager;
 import com.zimu.domain.info.DataTablesView;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -8,6 +7,7 @@ import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
@@ -23,7 +23,9 @@ public class DataTablesResponseBodyAdvice implements ResponseBodyAdvice {
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        HttpServletRequest httpServletRequest = HttpServletManager.getRequest();
+
+        ServletServerHttpRequest servletServerHttpRequest = (ServletServerHttpRequest) request;
+        HttpServletRequest httpServletRequest = servletServerHttpRequest.getServletRequest();
         String drawStr = httpServletRequest.getParameter("draw");
         if (StringUtils.isNotBlank(drawStr) && StringUtils.isNumeric(drawStr)) {
             DataTablesView dataTablesView = (DataTablesView) body;

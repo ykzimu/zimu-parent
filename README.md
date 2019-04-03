@@ -5,3 +5,5 @@ spring security
 spring session
 cas
 mybatis
+redis
+memcached

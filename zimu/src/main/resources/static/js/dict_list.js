@@ -9,6 +9,11 @@ $(document).ready(function () {
             url: contextPath + "/admin/dict/listData",
             type: "POST"
         },
+        treeGrid: {
+            'left': 10,
+            'expandIcon': '<span>+</span>',
+            'collapseIcon': '<span>-</span>'
+        },
         columns: [
             //{data: '<input class="checkchild" type="checkbox"/>'},
             {name: "id", data: "id", orderable: false},
