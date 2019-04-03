@@ -12,15 +12,14 @@ $(document).ready(function () {
             type: "POST"
         },
         treeGrid: {
-            left: 20,
+            left: 35,
             expandIcon: '<span><i class="fas fa-angle-right"></i></span>',
             collapseIcon: '<span><i class="fas fa-angle-down"></i></span>'
         },
         columns: [
-            //{data: '<input class="checkchild" type="checkbox"/>'},
             {
                 className: 'treegrid-control',
-                width: "80px",
+                width: "100px",
                 data: function (item) {
                     if (item.children != null && item.children.length > 0) {
                         return '<span><i class="fas fa-angle-right"></i></span>';
@@ -29,6 +28,7 @@ $(document).ready(function () {
                 }
             },
             {
+                width: "250px",
                 name: "menuName",
                 data: function (item) {
                     return item.menuName;
