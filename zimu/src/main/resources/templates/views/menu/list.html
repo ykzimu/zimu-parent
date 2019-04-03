@@ -9,31 +9,34 @@
             <form class="form-horizontal" th:action="@{/admin/menu/list}" method="POST">
                 <div class="form-group">
                 </div>
-                <div class="form-group">
-                    <a id="addBtn" title="添加菜单" class="btn btn-success btn-sm" href="javascript:void(0)"
-                       th:attr="data-href=@{/admin/menu/add?id=0}" data-tab-id='tabpanel-17' role="button"><i
-                        class="fas fa-fw fa-plus-square"></i>添加
-                    </a>
-                </div>
-                <div class="form-group">
-                    <div class="form-group">
-                        <table class="table table-sm table-striped table-bordered table-hover" id="myTable">
-                            <thead class="thead-light ">
-                                <tr>
-                                    <th scope="col"></th>
-                                    <th scope="col">菜单名称</th>
-                                    <th scope="col">菜单类型</th>
-                                    <th scope="col">级别</th>
-                                    <th scope="col">图标</th>
-                                    <th scope="col">描述</th>
-                                    <th scope="col">链接</th>
-                                    <th scope="col">排序</th>
-                                    <th scope="col">操作</th>
-                                    <th scope="col">添加/编辑</th>
-                                </tr>
-                            </thead>
-                        </table>
+                <div class="card">
+                    <div class="card-header">
+                        <a id="addBtn" title="添加菜单" class="btn btn-success btn-sm" href="javascript:void(0)"
+                           th:attr="data-href=@{/admin/menu/add?id=0}" data-tab-id='tabpanel-17' role="button"><i
+                            class="fas fa-fw fa-plus-square"></i>添加
+                        </a>
                     </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <table class="table table-sm table-striped table-bordered table-hover" id="myTable">
+                                <thead class="thead-light ">
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">菜单名称</th>
+                                        <th scope="col">菜单类型</th>
+                                        <th scope="col">级别</th>
+                                        <th scope="col">图标</th>
+                                        <th scope="col">描述</th>
+                                        <th scope="col">链接</th>
+                                        <th scope="col">排序</th>
+                                        <th scope="col">操作</th>
+                                        <th scope="col">添加/编辑</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">底部</div>
                 </div>
             </form>
         </div>
