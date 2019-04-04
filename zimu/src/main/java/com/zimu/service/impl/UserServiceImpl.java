@@ -1,6 +1,7 @@
 package com.zimu.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -433,18 +434,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         RoleEntity roleEntity = commonComponent.getRoleByRoleCode(RoleEnum.ROLE_USER.getRoleCode());
 
         // 先删除角色（保留用户角色）
-        LambdaQueryWrapper<UserRoleEntity> wrapper = Wrappers.lambdaQuery();
+        LambdaUpdateWrapper<UserRoleEntity> wrapper = Wrappers.lambdaUpdate();
         wrapper.in(UserRoleEntity::getUserId, userIds).ne(UserRoleEntity::getRoleId, roleEntity.getId());
         userRoleMapper.delete(wrapper);
 
         // 删除用户（逻辑删除）
-        LambdaQueryWrapper<UserEntity> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.in(UserEntity::getId, userIds);
+        LambdaUpdateWrapper<UserEntity> updateWrapper = Wrappers.lambdaUpdate();
+        updateWrapper.in(UserEntity::getId, userIds);
         UserEntity userEntity = new UserEntity();
         userEntity.setDelFlag(1);
         userEntity.setUpdateBy(LoginUserUtils.getUserInfo().getId().toString());
         userEntity.setUpdateDate(new Date());
-        int cnt = userMapper.update(userEntity, queryWrapper);
+        int cnt = userMapper.update(userEntity, updateWrapper);
         return cnt;
     }
 

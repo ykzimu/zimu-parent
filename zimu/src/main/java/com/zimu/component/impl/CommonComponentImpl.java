@@ -1,6 +1,7 @@
 package com.zimu.component.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zimu.component.CommonComponent;
 import com.zimu.domain.info.SelectInfo;
 import com.zimu.entity.RoleEntity;
@@ -21,7 +22,7 @@ public class CommonComponentImpl implements CommonComponent {
     public RoleEntity getRoleByRoleCode(String roleCode) {
 
         //查询用户权限信息
-        LambdaQueryWrapper<RoleEntity> queryWrapper = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<RoleEntity> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(RoleEntity::getRoleCode, roleCode);
         List<RoleEntity> list = roleMapper.selectList(queryWrapper);
         if (list == null || list.size() != 1) {

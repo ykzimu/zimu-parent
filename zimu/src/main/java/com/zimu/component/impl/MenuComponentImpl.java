@@ -1,6 +1,7 @@
 package com.zimu.component.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zimu.common.Constants;
 import com.zimu.component.MenuComponent;
 import com.zimu.component.RoleComponent;
@@ -36,10 +37,8 @@ public class MenuComponentImpl implements MenuComponent {
     @Override
     public List<MenuInfo> listData() {
         //查询所有菜单
-        LambdaQueryWrapper<MenuEntity> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper//
-            .orderByAsc(MenuEntity::getMenuLevel)
-            .orderByAsc(MenuEntity::getMenuSort);
+        LambdaQueryWrapper<MenuEntity> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.orderByAsc(MenuEntity::getMenuLevel).orderByAsc(MenuEntity::getMenuSort);
         List<MenuEntity> list = menuMapper.selectList(queryWrapper);
 
         //用于快速判定是否有子元素
@@ -66,7 +65,7 @@ public class MenuComponentImpl implements MenuComponent {
         List<Long> roleIds = roleEntities.stream().map(RoleEntity::getId).collect(Collectors.toList());
 
         //获取菜单
-        LambdaQueryWrapper<RoleMenuEntity> qw = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<RoleMenuEntity> qw = Wrappers.lambdaQuery();
         qw.in(RoleMenuEntity::getRoleId, roleIds).ne(RoleMenuEntity::getDelFlag, Constants.DEL_FLAG_OK);
         List<RoleMenuEntity> roleMenuEntities = roleMenuMapper.selectList(qw);
         if (roleMenuEntities == null || roleMenuEntities.isEmpty()) {
@@ -77,7 +76,7 @@ public class MenuComponentImpl implements MenuComponent {
         List<Long> menuIds = roleMenuEntities.stream().map(RoleMenuEntity::getMenuId).collect(Collectors.toList());
 
         //查询所有菜单
-        LambdaQueryWrapper<MenuEntity> queryWrapper = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<MenuEntity> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper
             .in(MenuEntity::getId, menuIds)
             .eq(MenuEntity::getMenuType, "LEFT_MENU")
@@ -155,7 +154,7 @@ public class MenuComponentImpl implements MenuComponent {
     public List<MenuEntity> getSortMenus() {
 
         //查询所有菜单
-        LambdaQueryWrapper<MenuEntity> queryWrapper = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<MenuEntity> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.orderByAsc(MenuEntity::getMenuLevel).orderByAsc(MenuEntity::getMenuSort);
         List<MenuEntity> list = menuMapper.selectList(queryWrapper);
 

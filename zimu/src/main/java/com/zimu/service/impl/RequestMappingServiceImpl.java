@@ -2,6 +2,7 @@ package com.zimu.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zimu.domain.info.SelectInfo;
@@ -75,7 +76,7 @@ public class RequestMappingServiceImpl extends ServiceImpl<RequestMappingMapper,
         if (values.isEmpty()) {
             return;
         }
-        LambdaQueryWrapper<RequestMappingEntity> wrapper = Wrappers.lambdaQuery();
+        LambdaUpdateWrapper<RequestMappingEntity> wrapper = Wrappers.lambdaUpdate();
         wrapper.notIn(RequestMappingEntity::getPatterns, values);
         requestMappingMapper.delete(wrapper);
 

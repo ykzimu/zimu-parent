@@ -1,6 +1,7 @@
 package com.zimu.component.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zimu.common.CacheNames;
 import com.zimu.common.Constants;
 import com.zimu.common.enums.AddressLevel;
@@ -31,7 +32,7 @@ public class AddressComponentImpl implements AddressComponent {
 
         // 查询条件
 
-        LambdaQueryWrapper<DictAddressEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<DictAddressEntity> lambdaQueryWrapper = Wrappers.lambdaQuery();
         lambdaQueryWrapper
             .eq(DictAddressEntity::getLevel, level.getCode())
             .eq(DictAddressEntity::getParentCode, code)
