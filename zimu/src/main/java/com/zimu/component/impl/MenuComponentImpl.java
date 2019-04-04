@@ -1,12 +1,15 @@
 package com.zimu.component.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.zimu.common.Constants;
 import com.zimu.component.MenuComponent;
 import com.zimu.component.RoleComponent;
-import com.zimu.dao.MenuEntityMapper;
-import com.zimu.dao.RoleMenuEntityMapper;
-import com.zimu.domain.entity.*;
 import com.zimu.domain.info.MenuInfo;
+import com.zimu.entity.MenuEntity;
+import com.zimu.entity.RoleEntity;
+import com.zimu.entity.RoleMenuEntity;
+import com.zimu.mapper.MenuMapper;
+import com.zimu.mapper.RoleMenuMapper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,20 +25,22 @@ import java.util.stream.Collectors;
 public class MenuComponentImpl implements MenuComponent {
 
     @Autowired
-    private MenuEntityMapper menuEntityMapper;
+    private MenuMapper menuMapper;
 
     @Autowired
     private RoleComponent roleComponent;
 
     @Autowired
-    private RoleMenuEntityMapper roleMenuEntityMapper;
+    private RoleMenuMapper roleMenuMapper;
 
     @Override
     public List<MenuInfo> listData() {
         //查询所有菜单
-        MenuEntityExample example = new MenuEntityExample();
-        example.setOrderByClause(" menu_level ASC , menu_sort ASC ");
-        List<MenuEntity> list = menuEntityMapper.selectByExample(example);
+        LambdaQueryWrapper<MenuEntity> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper//
+            .orderByAsc(MenuEntity::getMenuLevel)
+            .orderByAsc(MenuEntity::getMenuSort);
+        List<MenuEntity> list = menuMapper.selectList(queryWrapper);
 
         //用于快速判定是否有子元素
         Set<Long> sets = list.stream().map(MenuEntity::getParentId).collect(Collectors.toSet());
@@ -61,9 +66,9 @@ public class MenuComponentImpl implements MenuComponent {
         List<Long> roleIds = roleEntities.stream().map(RoleEntity::getId).collect(Collectors.toList());
 
         //获取菜单
-        RoleMenuEntityExample roleMenuEntityExample = new RoleMenuEntityExample();
-        roleMenuEntityExample.createCriteria().andRoleIdIn(roleIds).andDelFlagNotEqualTo(Constants.DEL_FLAG_OK);
-        List<RoleMenuEntity> roleMenuEntities = roleMenuEntityMapper.selectByExample(roleMenuEntityExample);
+        LambdaQueryWrapper<RoleMenuEntity> qw = new LambdaQueryWrapper<>();
+        qw.in(RoleMenuEntity::getRoleId, roleIds).ne(RoleMenuEntity::getDelFlag, Constants.DEL_FLAG_OK);
+        List<RoleMenuEntity> roleMenuEntities = roleMenuMapper.selectList(qw);
         if (roleMenuEntities == null || roleMenuEntities.isEmpty()) {
             return menuInfos;
         }
@@ -72,10 +77,16 @@ public class MenuComponentImpl implements MenuComponent {
         List<Long> menuIds = roleMenuEntities.stream().map(RoleMenuEntity::getMenuId).collect(Collectors.toList());
 
         //查询所有菜单
-        MenuEntityExample example = new MenuEntityExample();
-        example.createCriteria().andIdIn(menuIds).andMenuTypeEqualTo("LEFT_MENU").andIsShowEqualTo(1).andDelFlagNotEqualTo(Constants.DEL_FLAG_OK);
-        example.setOrderByClause(" menu_level ASC , menu_sort ASC ");
-        List<MenuEntity> list = menuEntityMapper.selectByExample(example);
+        LambdaQueryWrapper<MenuEntity> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper
+            .in(MenuEntity::getId, menuIds)
+            .eq(MenuEntity::getMenuType, "LEFT_MENU")
+            .eq(MenuEntity::getIsShow, 1)
+            .ne(MenuEntity::getDelFlag, Constants.DEL_FLAG_OK)
+            .orderByAsc(MenuEntity::getMenuLevel)
+            .orderByAsc(MenuEntity::getMenuSort);
+        List<MenuEntity> list = menuMapper.selectList(queryWrapper);
+
 
         //用于快速判定是否有子元素
         Set<Long> sets = list.stream().map(MenuEntity::getParentId).collect(Collectors.toSet());
@@ -144,9 +155,9 @@ public class MenuComponentImpl implements MenuComponent {
     public List<MenuEntity> getSortMenus() {
 
         //查询所有菜单
-        MenuEntityExample example = new MenuEntityExample();
-        example.setOrderByClause(" menu_level ASC , menu_sort ASC ");
-        List<MenuEntity> list = menuEntityMapper.selectByExample(example);
+        LambdaQueryWrapper<MenuEntity> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.orderByAsc(MenuEntity::getMenuLevel).orderByAsc(MenuEntity::getMenuSort);
+        List<MenuEntity> list = menuMapper.selectList(queryWrapper);
 
         //用于快速判定是否有子元素
         Set<Long> sets = new HashSet<>();

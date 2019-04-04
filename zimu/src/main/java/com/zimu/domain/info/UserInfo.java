@@ -1,6 +1,6 @@
 package com.zimu.domain.info;
 
-import com.zimu.domain.entity.UserEntity;
+import com.zimu.entity.UserEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,7 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Data
 @EqualsAndHashCode(callSuper = false)

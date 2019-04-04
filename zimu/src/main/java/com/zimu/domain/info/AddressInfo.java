@@ -1,6 +1,6 @@
 package com.zimu.domain.info;
 
-import com.zimu.domain.entity.DictAddressEntity;
+import com.zimu.entity.DictAddressEntity;
 import lombok.Data;
 
 import java.io.Serializable;

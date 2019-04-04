@@ -17,7 +17,7 @@ import java.security.cert.X509Certificate;
 
 @SpringBootApplication
 @ServletComponentScan
-@MapperScan("com.zimu.dao")
+@MapperScan("com.zimu.mapper")
 @EnableCaching
 @EnableRedisHttpSession
 @EnableEurekaClient

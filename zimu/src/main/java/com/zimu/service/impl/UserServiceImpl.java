@@ -1,5 +1,8 @@
 package com.zimu.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zimu.common.Constants;
@@ -10,14 +13,19 @@ import com.zimu.common.utils.CommonUtils;
 import com.zimu.common.utils.LoginUserUtils;
 import com.zimu.component.CommonComponent;
 import com.zimu.component.RoleComponent;
-import com.zimu.dao.*;
-import com.zimu.domain.entity.*;
 import com.zimu.domain.info.DataTablesInfo;
 import com.zimu.domain.info.SearchInfo;
 import com.zimu.domain.info.UserInfo;
+import com.zimu.entity.RoleEntity;
+import com.zimu.entity.UserEntity;
+import com.zimu.entity.UserGithubEntity;
+import com.zimu.entity.UserRoleEntity;
+import com.zimu.mapper.UserGithubMapper;
+import com.zimu.mapper.UserMapper;
+import com.zimu.mapper.UserRoleMapper;
 import com.zimu.service.UserService;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,20 +40,27 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * <p>
+ * 用户表 服务实现类
+ * </p>
+ *
+ * @author 杨坤
+ * @since 2019-04-04
+ */
 @Service
-@Transactional(rollbackFor = RuntimeException.class)
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> implements UserService {
 
     private static final String DEFAULT_USER = "1";
 
     @Autowired
-    private UserEntityMapper userEntityMapper;
+    private UserMapper userMapper;
 
     @Autowired
-    private UserRoleEntityMapper userRoleEntityMapper;
+    private UserRoleMapper userRoleMapper;
 
     @Autowired
-    private UserGithubEntityMapper userGithubEntityMapper;
+    private UserGithubMapper userGithubMapper;
 
     @Autowired
     private CommonComponent commonComponent;
@@ -56,27 +71,18 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
-    @Override
-    public UserEntity getUserById(Long id) {
-        UserEntity userEntity = userEntityMapper.selectByPrimaryKey(id);
-        return userEntity;
-    }
-
     @Override
     public UserEntity getUserByUsername(String username) {
 
         if (StringUtils.isBlank(username)) {
             return null;
-        } else {
-            username = username.trim();
         }
-
-        UserEntityExample example = new UserEntityExample();
-        example.or().andUsernameEqualTo(username).andDelFlagNotEqualTo(1);
-        example.or().andMobileEqualTo(username).andDelFlagNotEqualTo(1);
-        example.or().andEmailEqualTo(username).andDelFlagNotEqualTo(1);
-        List<UserEntity> list = userEntityMapper.selectByExample(example);
+        username = username.trim();
+        LambdaQueryWrapper<UserEntity> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.or().eq(UserEntity::getUsername, username).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
+        queryWrapper.or().eq(UserEntity::getMobile, username).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
+        queryWrapper.or().eq(UserEntity::getEmail, username).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
+        List<UserEntity> list = userMapper.selectList(queryWrapper);
         if (list == null || list.isEmpty()) {
             return null;
         }
@@ -105,9 +111,9 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = null;
         // 默认为id
         Long githubUserId = Long.parseLong(oauth2User.getName());
-        UserGithubEntityExample example = new UserGithubEntityExample();
-        example.createCriteria().andGithubUserIdEqualTo(githubUserId);
-        List<UserGithubEntity> list = userGithubEntityMapper.selectByExample(example);
+        LambdaQueryWrapper<UserGithubEntity> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(UserGithubEntity::getGithubUserId, githubUserId);
+        List<UserGithubEntity> list = userGithubMapper.selectList(queryWrapper);
         if (list == null || list.isEmpty()) {
 
             // 插入用户基本信息
@@ -130,7 +136,7 @@ public class UserServiceImpl implements UserService {
             userEntity.setIsEnabled(1);
             userEntity.setDelFlag(0);
             userEntity.setVersion(1);
-            userEntityMapper.insert(userEntity);
+            userMapper.insert(userEntity);
 
             // 插入git用户信息
             userGithubEntity.setUserId(userEntity.getId());
@@ -138,7 +144,7 @@ public class UserServiceImpl implements UserService {
             userGithubEntity.setCreateDate(date);
             userGithubEntity.setDelFlag(0);
             userGithubEntity.setVersion(1);
-            userGithubEntityMapper.insertSelective(userGithubEntity);
+            userGithubMapper.insert(userGithubEntity);
 
             // 查询用户权限信息
             RoleEntity roleEntity = commonComponent.getRoleByRoleCode(RoleEnum.ROLE_USER.getRoleCode());
@@ -151,11 +157,11 @@ public class UserServiceImpl implements UserService {
             userRoleEntity.setCreateDate(date);
             userRoleEntity.setDelFlag(0);
             userRoleEntity.setVersion(1);
-            userRoleEntityMapper.insert(userRoleEntity);
+            userRoleMapper.insert(userRoleEntity);
         } else {
 
             // 更新用户基本信息
-            userEntity = userEntityMapper.selectByPrimaryKey(list.get(0).getUserId());
+            userEntity = userMapper.selectById(list.get(0).getUserId());
             userEntity.setNickname(userGithubEntity.getName());
             userEntity.setRealname(userGithubEntity.getName());
             userEntity.setLoginDate(date);
@@ -163,14 +169,14 @@ public class UserServiceImpl implements UserService {
             userEntity.setUpdateBy(list.get(0).getUserId().toString());
             userEntity.setUpdateDate(date);
             userEntity.setVersion(list.get(0).getVersion() + 1);
-            userEntityMapper.updateByPrimaryKey(userEntity);
+            userMapper.updateById(userEntity);
 
             // 更新git用户信息
             userGithubEntity.setId(list.get(0).getId());
             userGithubEntity.setUpdateBy(list.get(0).getUserId().toString());
             userGithubEntity.setUpdateDate(date);
             userGithubEntity.setVersion(list.get(0).getVersion() + 1);
-            userGithubEntityMapper.updateByPrimaryKeySelective(userGithubEntity);
+            userGithubMapper.updateById(userGithubEntity);
 
         }
 
@@ -327,7 +333,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setIsCredentialsExpired(0);
         userEntity.setDelFlag(0);
         userEntity.setVersion(1);
-        userEntityMapper.insert(userEntity);
+        userMapper.insert(userEntity);
 
         // 查询用户权限信息
         RoleEntity roleEntity = commonComponent.getRoleByRoleCode(RoleEnum.ROLE_USER.getRoleCode());
@@ -340,7 +346,7 @@ public class UserServiceImpl implements UserService {
         userRoleEntity.setCreateDate(date);
         userRoleEntity.setDelFlag(0);
         userRoleEntity.setVersion(1);
-        userRoleEntityMapper.insert(userRoleEntity);
+        userRoleMapper.insert(userRoleEntity);
 
         // 构建为登录状态
         UserInfo userInfo = new UserInfo();
@@ -358,51 +364,48 @@ public class UserServiceImpl implements UserService {
     @Override
     public void test() {
         PageHelper.startPage(1, 10);
-        userEntityMapper.selectByExample(null);
+        userMapper.selectList(null);
     }
 
     @Override
     public PageInfo<UserEntity> getUsers(SearchInfo searchInfo) {
 
         String keyword = searchInfo.getKeyword();
-        UserEntityExample example = new UserEntityExample();
+        LambdaQueryWrapper<UserEntity> queryWrapper = Wrappers.lambdaQuery();
         if (StringUtils.isNotBlank(keyword)) {
-            keyword = "%" + keyword + "%";
-            example.or().andUsernameLike(keyword).andDelFlagEqualTo(0);
-            example.or().andNicknameLike(keyword).andDelFlagEqualTo(0);
-            example.or().andRealnameLike(keyword).andDelFlagEqualTo(0);
-            example.or().andEmailLike(keyword).andDelFlagEqualTo(0);
-            example.or().andMobileLike(keyword).andDelFlagEqualTo(0);
+            queryWrapper.or().like(UserEntity::getUsername, keyword).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
+            queryWrapper.or().like(UserEntity::getNickname, keyword).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
+            queryWrapper.or().like(UserEntity::getRealname, keyword).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
+            queryWrapper.or().like(UserEntity::getEmail, keyword).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
+            queryWrapper.or().like(UserEntity::getMobile, keyword).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
         } else {
-            example.createCriteria().andDelFlagEqualTo(0);
+            queryWrapper.ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
         }
         if (StringUtils.isNotBlank(searchInfo.getFieldName()) && StringUtils.isNotBlank(searchInfo.getSortType())) {
             String orderByClause = " " + searchInfo.getFieldName().trim();
             if ("DESC".equals(searchInfo.getSortType().trim())) {
                 orderByClause = orderByClause + " DESC";
             }
-            example.setOrderByClause(orderByClause);
+
         }
 
         PageHelper.startPage(searchInfo.getPageNum(), searchInfo.getPageSize());
-        List<UserEntity> list = userEntityMapper.selectByExample(example);
-        PageInfo<UserEntity> page = new PageInfo<UserEntity>(list);
-        return page;
+        List<UserEntity> list = userMapper.selectList(queryWrapper);
+        return new PageInfo<>(list);
     }
 
     @Override
     public PageInfo<UserEntity> getUsers(DataTablesInfo dataTablesInfo) {
-        UserEntityExample example = new UserEntityExample();
         String keyword = dataTablesInfo.getSearch().getValue();
+        LambdaQueryWrapper<UserEntity> queryWrapper = Wrappers.lambdaQuery();
         if (StringUtils.isNotBlank(keyword)) {
-            keyword = "%" + keyword + "%";
-            example.or().andUsernameLike(keyword).andDelFlagEqualTo(0);
-            example.or().andNicknameLike(keyword).andDelFlagEqualTo(0);
-            example.or().andRealnameLike(keyword).andDelFlagEqualTo(0);
-            example.or().andEmailLike(keyword).andDelFlagEqualTo(0);
-            example.or().andMobileLike(keyword).andDelFlagEqualTo(0);
+            queryWrapper.or().like(UserEntity::getUsername, keyword).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
+            queryWrapper.or().like(UserEntity::getNickname, keyword).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
+            queryWrapper.or().like(UserEntity::getRealname, keyword).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
+            queryWrapper.or().like(UserEntity::getEmail, keyword).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
+            queryWrapper.or().like(UserEntity::getMobile, keyword).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
         } else {
-            example.createCriteria().andDelFlagEqualTo(0);
+            queryWrapper.ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
         }
 
         List<DataTablesInfo.Order> orderList = dataTablesInfo.getOrder();
@@ -415,11 +418,11 @@ public class UserServiceImpl implements UserService {
                 buffer.append(", " + name + " " + dir);
             });
             String orderBy = buffer.substring(1);
-            example.setOrderByClause(orderBy);
+            // example.setOrderByClause(orderBy);
         }
         PageHelper.startPage(dataTablesInfo.getPageNum(), dataTablesInfo.getPageSize());
-        List<UserEntity> list = userEntityMapper.selectByExample(example);
-        return new PageInfo<UserEntity>(list);
+        List<UserEntity> list = userMapper.selectList(queryWrapper);
+        return new PageInfo<>(list);
     }
 
     @Override
@@ -430,18 +433,18 @@ public class UserServiceImpl implements UserService {
         RoleEntity roleEntity = commonComponent.getRoleByRoleCode(RoleEnum.ROLE_USER.getRoleCode());
 
         // 先删除角色（保留用户角色）
-        UserRoleEntityExample userRoleEntityExample = new UserRoleEntityExample();
-        userRoleEntityExample.or().andUserIdIn(userIds).andRoleIdNotEqualTo(roleEntity.getId());
-        userRoleEntityMapper.deleteByExample(userRoleEntityExample);
+        LambdaQueryWrapper<UserRoleEntity> wrapper = Wrappers.lambdaQuery();
+        wrapper.in(UserRoleEntity::getUserId, userIds).ne(UserRoleEntity::getRoleId, roleEntity.getId());
+        userRoleMapper.delete(wrapper);
 
         // 删除用户（逻辑删除）
-        UserEntityExample example = new UserEntityExample();
-        example.or().andIdIn(userIds);
+        LambdaQueryWrapper<UserEntity> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.in(UserEntity::getId, userIds);
         UserEntity userEntity = new UserEntity();
         userEntity.setDelFlag(1);
         userEntity.setUpdateBy(LoginUserUtils.getUserInfo().getId().toString());
         userEntity.setUpdateDate(new Date());
-        int cnt = userEntityMapper.updateByExampleSelective(userEntity, example);
+        int cnt = userMapper.update(userEntity, queryWrapper);
         return cnt;
     }
 
@@ -463,7 +466,7 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = new UserEntity();
         userEntity.setId(userInfo.getId());
         userEntity.setPassword(pwd);
-        userEntityMapper.updateByPrimaryKeySelective(userEntity);
+        userMapper.updateById(userEntity);
 
         // 更新session密码
         userInfo.setPassword(pwd);

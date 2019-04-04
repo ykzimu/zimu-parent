@@ -20,10 +20,8 @@ import com.zimu.design.prototype.Prototype;
 import com.zimu.design.prototype.PrototypePhone;
 import com.zimu.design.proxy.*;
 import com.zimu.design.singleton.Singleton;
-import com.zimu.design.singleton.Singleton1;
-import com.zimu.design.singleton.Singleton2;
 import com.zimu.design.singleton.Singleton3;
-import com.zimu.domain.entity.UserEntity;
+import com.zimu.entity.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
@@ -130,7 +128,7 @@ public class DesignTest {
     @Test
     public void test4() {
 
-        long startTime=System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
 
         ExecutorService executorService = Executors.newFixedThreadPool(10);
         for (int i = 0; i < 10; i++) {
@@ -147,7 +145,7 @@ public class DesignTest {
             }
         }
 
-        System.out.println("共耗时:"+(System.currentTimeMillis()-startTime));
+        System.out.println("共耗时:" + (System.currentTimeMillis() - startTime));
 
 
    /*     Singleton singleton1 = Singleton1.getInstance();//线程不安全 不能使用

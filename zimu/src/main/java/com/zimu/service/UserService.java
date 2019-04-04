@@ -1,19 +1,24 @@
 package com.zimu.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
-import com.zimu.domain.entity.RoleEntity;
-import com.zimu.domain.entity.UserEntity;
 import com.zimu.domain.info.DataTablesInfo;
 import com.zimu.domain.info.SearchInfo;
 import com.zimu.domain.info.UserInfo;
-
+import com.zimu.entity.UserEntity;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 
 import java.util.List;
 
-public interface UserService {
-
-    UserEntity getUserById(Long id);
+/**
+ * <p>
+ * 用户表 服务类
+ * </p>
+ *
+ * @author 杨坤
+ * @since 2019-04-04
+ */
+public interface UserService extends IService<UserEntity> {
 
     UserEntity getUserByUsername(String username);
 

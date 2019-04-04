@@ -1,9 +1,15 @@
 package com.zimu.controller;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
+import com.github.pagehelper.PageInfo;
+import com.zimu.common.exception.ValidationException;
+import com.zimu.common.utils.IdUtils;
+import com.zimu.common.utils.LoginUserUtils;
+import com.zimu.domain.info.*;
+import com.zimu.entity.RoleEntity;
+import com.zimu.entity.UserEntity;
+import com.zimu.service.MenuService;
+import com.zimu.service.RoleService;
+import com.zimu.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,20 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.github.pagehelper.PageInfo;
-import com.zimu.common.exception.ValidationException;
-import com.zimu.common.utils.IdUtils;
-import com.zimu.common.utils.LoginUserUtils;
-import com.zimu.domain.entity.RoleEntity;
-import com.zimu.domain.entity.UserEntity;
-import com.zimu.domain.info.DataTablesInfo;
-import com.zimu.domain.info.DataTablesView;
-import com.zimu.domain.info.JsonView;
-import com.zimu.domain.info.SearchInfo;
-import com.zimu.domain.info.UserInfo;
-import com.zimu.service.MenuService;
-import com.zimu.service.RoleService;
-import com.zimu.service.UserService;
+import javax.annotation.Resource;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")

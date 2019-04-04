@@ -1,12 +1,18 @@
 package com.zimu.controller;
 
+import com.zimu.common.MessageCode;
+import com.zimu.common.exception.ValidationException;
 import com.zimu.common.utils.LoginUserUtils;
+import com.zimu.common.utils.ValidateCodeUtils;
 import com.zimu.component.MenuComponent;
+import com.zimu.domain.info.JsonView;
 import com.zimu.domain.info.MenuInfo;
 import com.zimu.domain.info.UserInfo;
+import com.zimu.entity.UserEntity;
+import com.zimu.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,16 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.zimu.common.MessageCode;
-import com.zimu.common.exception.ValidationException;
-import com.zimu.common.utils.ValidateCodeUtils;
-import com.zimu.domain.entity.UserEntity;
-import com.zimu.domain.info.JsonView;
-import com.zimu.service.UserService;
-
-import lombok.extern.slf4j.Slf4j;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 

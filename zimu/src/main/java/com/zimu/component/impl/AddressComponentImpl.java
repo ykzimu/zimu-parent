@@ -1,13 +1,13 @@
 package com.zimu.component.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.zimu.common.CacheNames;
 import com.zimu.common.Constants;
 import com.zimu.common.enums.AddressLevel;
 import com.zimu.component.AddressComponent;
-import com.zimu.dao.DictAddressEntityMapper;
-import com.zimu.domain.entity.DictAddressEntity;
-import com.zimu.domain.entity.DictAddressEntityExample;
 import com.zimu.domain.info.AddressInfo;
+import com.zimu.entity.DictAddressEntity;
+import com.zimu.mapper.DictAddressMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class AddressComponentImpl implements AddressComponent {
 
     @Autowired
-    private DictAddressEntityMapper dictAddressEntityMapper;
+    private DictAddressMapper dictAddressMapper;
 
     /**
      * 获取信息
@@ -30,10 +30,15 @@ public class AddressComponentImpl implements AddressComponent {
     private List<AddressInfo> getList(AddressLevel level, String code) {
 
         // 查询条件
-        DictAddressEntityExample example = new DictAddressEntityExample();
-        example.createCriteria().andLevelEqualTo(level.getCode()).andDelFlagNotEqualTo(Constants.DEL_FLAG_OK).andParentCodeEqualTo(code);
-        example.setOrderByClause("sort_no asc,code asc");
-        List<DictAddressEntity> addressList = dictAddressEntityMapper.selectByExample(example);
+
+        LambdaQueryWrapper<DictAddressEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper
+            .eq(DictAddressEntity::getLevel, level.getCode())
+            .eq(DictAddressEntity::getParentCode, code)
+            .ne(DictAddressEntity::getDelFlag, Constants.DEL_FLAG_OK)
+            .orderByAsc(DictAddressEntity::getSortNo)
+            .orderByAsc(DictAddressEntity::getCode);
+        List<DictAddressEntity> addressList = dictAddressMapper.selectList(lambdaQueryWrapper);
         return addressList.stream().map(AddressInfo::new).collect(Collectors.toList());
     }
 

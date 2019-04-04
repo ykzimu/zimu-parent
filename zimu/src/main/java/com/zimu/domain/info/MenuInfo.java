@@ -1,6 +1,6 @@
 package com.zimu.domain.info;
 
-import com.zimu.domain.entity.MenuEntity;
+import com.zimu.entity.MenuEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

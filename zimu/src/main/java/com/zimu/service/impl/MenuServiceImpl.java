@@ -1,21 +1,22 @@
 package com.zimu.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
 import com.zimu.common.enums.RoleEnum;
 import com.zimu.common.utils.LoginUserUtils;
 import com.zimu.component.CommonComponent;
 import com.zimu.component.MenuComponent;
-import com.zimu.dao.MenuEntityMapper;
-import com.zimu.dao.RequestMappingEntityMapper;
-import com.zimu.dao.RoleMenuEntityMapper;
-import com.zimu.domain.entity.MenuEntity;
-import com.zimu.domain.entity.RequestMappingEntity;
-import com.zimu.domain.entity.RoleEntity;
-import com.zimu.domain.entity.RoleMenuEntity;
 import com.zimu.domain.info.MenuInfo;
 import com.zimu.domain.info.UserInfo;
+import com.zimu.entity.MenuEntity;
+import com.zimu.entity.RequestMappingEntity;
+import com.zimu.entity.RoleEntity;
+import com.zimu.entity.RoleMenuEntity;
+import com.zimu.mapper.MenuMapper;
+import com.zimu.mapper.RequestMappingMapper;
+import com.zimu.mapper.RoleMenuMapper;
 import com.zimu.service.MenuService;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,20 +24,28 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * <p>
+ * 菜单表 服务实现类
+ * </p>
+ *
+ * @author 杨坤
+ * @since 2019-04-04
+ */
 @Service
-public class MenuServiceImpl implements MenuService {
+public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> implements MenuService {
 
     @Autowired
     private MenuComponent menuComponent;
 
     @Autowired
-    private MenuEntityMapper menuEntityMapper;
+    private MenuMapper menuMapper;
 
     @Autowired
-    private RequestMappingEntityMapper requestMappingEntityMapper;
+    private RequestMappingMapper requestMappingMapper;
 
     @Autowired
-    private RoleMenuEntityMapper roleMenuEntityMapper;
+    private RoleMenuMapper roleMenuMapper;
 
     @Autowired
     private CommonComponent commonComponent;
@@ -58,7 +67,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public MenuEntity getMenuById(Long id) {
-        return menuEntityMapper.selectByPrimaryKey(id);
+        return menuMapper.selectById(id);
     }
 
     @Override
@@ -80,7 +89,7 @@ public class MenuServiceImpl implements MenuService {
                 menuEntity.setUpdateBy(LoginUserUtils.getUserInfo().getId().toString());
                 menuEntity.setUpdateDate(new Date());
                 menuEntity.setMenuSort(Integer.parseInt(ids[1]));
-                menuEntityMapper.updateByPrimaryKeySelective(menuEntity);
+                menuMapper.updateById(menuEntity);
             }
         }
 
@@ -90,7 +99,7 @@ public class MenuServiceImpl implements MenuService {
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
     public boolean changeMenuStatusById(Long id, Boolean delFlag, Boolean isShow) {
-        MenuEntity entity = menuEntityMapper.selectByPrimaryKey(id);
+        MenuEntity entity = menuMapper.selectById(id);
         MenuEntity menuEntity = new MenuEntity();
         menuEntity.setId(id);
         if (delFlag != null && delFlag) {
@@ -99,7 +108,7 @@ public class MenuServiceImpl implements MenuService {
         if (isShow != null && isShow) {
             menuEntity.setIsShow(1 - entity.getIsShow());
         }
-        menuEntityMapper.updateByPrimaryKeySelective(menuEntity);
+        menuMapper.updateById(menuEntity);
         return true;
     }
 
@@ -113,7 +122,7 @@ public class MenuServiceImpl implements MenuService {
         Integer menuLevel = 1;
         String parentIds = "0";
         if (menuEntity.getParentId() != null) {
-            MenuEntity parentEntity = menuEntityMapper.selectByPrimaryKey(menuEntity.getParentId());
+            MenuEntity parentEntity = menuMapper.selectById(menuEntity.getParentId());
             menuLevel = parentEntity.getMenuLevel() + 1;
             parentIds = parentEntity.getParentIds() + "," + menuEntity.getParentId();
         } else {
@@ -128,13 +137,13 @@ public class MenuServiceImpl implements MenuService {
         menuEntity.setVersion(1);
 
         if (StringUtils.isNumeric(menuEntity.getMenuHref())) {
-            RequestMappingEntity requestMappingEntity = requestMappingEntityMapper.selectByPrimaryKey(Long.parseLong(menuEntity.getMenuHref()));
+            RequestMappingEntity requestMappingEntity = requestMappingMapper.selectById(Long.parseLong(menuEntity.getMenuHref()));
             if (requestMappingEntity != null) {
                 menuEntity.setMenuHref(requestMappingEntity.getPatterns());
             }
         }
 
-        menuEntityMapper.insert(menuEntity);
+        menuMapper.insert(menuEntity);
 
         //获取超级管理员角色（默认新加菜单只有超级管理员有权限）
         RoleEntity roleEntity = commonComponent.getRoleByRoleCode(RoleEnum.ROLE_SUPER_ADMIN.getRoleCode());
@@ -145,7 +154,7 @@ public class MenuServiceImpl implements MenuService {
         roleMenuEntity.setCreateDate(date);
         roleMenuEntity.setDelFlag(0);
         roleMenuEntity.setVersion(1);
-        roleMenuEntityMapper.insert(roleMenuEntity);
+        roleMenuMapper.insert(roleMenuEntity);
 
         return true;
     }
@@ -158,14 +167,13 @@ public class MenuServiceImpl implements MenuService {
         menuEntity.setUpdateBy(userInfo.getId().toString());
         menuEntity.setUpdateDate(date);
         if (StringUtils.isNumeric(menuEntity.getMenuHref())) {
-            RequestMappingEntity requestMappingEntity = requestMappingEntityMapper.selectByPrimaryKey(Long.parseLong(menuEntity.getMenuHref()));
+            RequestMappingEntity requestMappingEntity = requestMappingMapper.selectById(Long.parseLong(menuEntity.getMenuHref()));
             if (requestMappingEntity != null) {
                 menuEntity.setMenuHref(requestMappingEntity.getPatterns());
             }
         }
-        menuEntityMapper.updateByPrimaryKeySelective(menuEntity);
+        menuMapper.updateById(menuEntity);
         return true;
     }
-
 
 }

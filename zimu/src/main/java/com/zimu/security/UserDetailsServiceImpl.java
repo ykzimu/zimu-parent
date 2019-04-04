@@ -2,10 +2,10 @@ package com.zimu.security;
 
 import com.zimu.component.MenuComponent;
 import com.zimu.component.RoleComponent;
-import com.zimu.domain.entity.RoleEntity;
-import com.zimu.domain.entity.UserEntity;
 import com.zimu.domain.info.MenuInfo;
 import com.zimu.domain.info.UserInfo;
+import com.zimu.entity.RoleEntity;
+import com.zimu.entity.UserEntity;
 import com.zimu.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

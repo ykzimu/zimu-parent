@@ -1,9 +1,8 @@
 package com.zimu.controller.admin;
 
 import com.github.pagehelper.PageInfo;
-import com.zimu.domain.entity.MenuEntity;
-import com.zimu.domain.entity.UserEntity;
 import com.zimu.domain.info.*;
+import com.zimu.entity.MenuEntity;
 import com.zimu.service.MenuService;
 import com.zimu.service.RequestMappingService;
 import com.zimu.view.admin.MenuAddView;

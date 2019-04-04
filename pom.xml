@@ -117,11 +117,11 @@
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.spring.version}</version>
             </dependency>
-    <!--        <dependency>
+            <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis.spring.version}</version>
-            </dependency>-->
+            </dependency>
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
@@ -174,21 +174,21 @@
                 <artifactId>select2</artifactId>
                 <version>${select2.version}</version>
             </dependency>
-			<dependency>
-				<groupId>org.webjars</groupId>
-				<artifactId>datatables</artifactId>
-				<version>${datatables.version}</version>
-			</dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>datatables</artifactId>
+                <version>${datatables.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>datatables-buttons</artifactId>
                 <version>1.5.6</version>
             </dependency>
-			<dependency>
-				<groupId>org.webjars</groupId>
-				<artifactId>select2-bootstrap-css</artifactId>
-				<version>${select2.bootstrap.css.version}</version>
-			</dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>select2-bootstrap-css</artifactId>
+                <version>${select2.bootstrap.css.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>jqgrid</artifactId>
@@ -329,7 +329,6 @@
                 <artifactId>jQuery-contextMenu</artifactId>
                 <version>1.6.5</version>
             </dependency>
-
 
 
             <dependency>

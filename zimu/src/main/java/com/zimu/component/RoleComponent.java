@@ -1,6 +1,7 @@
 package com.zimu.component;
 
-import com.zimu.domain.entity.RoleEntity;
+
+import com.zimu.entity.RoleEntity;
 
 import java.util.List;
 import java.util.Map;

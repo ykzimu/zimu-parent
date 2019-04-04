@@ -1,9 +1,8 @@
 package com.zimu.controller;
 
+import com.zimu.component.QuartzComponent;
 import com.zimu.domain.info.JsonView;
-import com.zimu.domain.info.SelectInfo;
 import com.zimu.quartz.JobData;
-import com.zimu.service.QuartzService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -23,7 +22,7 @@ import java.util.List;
 public class QuartzController {
 
     @Autowired
-    private QuartzService quartzService;
+    private QuartzComponent quartzComponent;
 
     @Autowired
     private ApplicationContext applicationContext;
@@ -54,7 +53,7 @@ public class QuartzController {
     public JsonView jobList() {
         JsonView jsonView = new JsonView();
         try {
-            List<JobData> jobDataList = quartzService.jobList();
+            List<JobData> jobDataList = quartzComponent.jobList();
             jsonView.setData(jobDataList);
         } catch (Exception e) {
             log.error("", e);
@@ -69,7 +68,7 @@ public class QuartzController {
         JsonView jsonView = new JsonView();
         try {
             String[] beanNames = applicationContext.getBeanNamesForType(QuartzJobBean.class);
-            boolean flag = quartzService.addJob("定时统计", beanNames[0], "*/10 * * * * ?", new Date(), null, null, "我就是测试");
+            boolean flag = quartzComponent.addJob("定时统计", beanNames[0], "*/10 * * * * ?", new Date(), null, null, "我就是测试");
             jsonView.setData(flag);
         } catch (Exception e) {
             log.error("", e);

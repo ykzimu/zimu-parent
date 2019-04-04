@@ -1,10 +1,10 @@
 package com.zimu.view.admin;
 
-import com.zimu.common.view.annotation.ViewName;
-import com.zimu.domain.entity.MenuEntity;
-import com.zimu.domain.info.SelectInfo;
 import com.zimu.common.view.BaseView;
 import com.zimu.common.view.ViewNames;
+import com.zimu.common.view.annotation.ViewName;
+import com.zimu.domain.info.SelectInfo;
+import com.zimu.entity.MenuEntity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

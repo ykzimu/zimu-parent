@@ -1,39 +1,39 @@
 package com.zimu.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zimu.domain.info.SelectInfo;
+import com.zimu.entity.RequestMappingEntity;
+import com.zimu.mapper.RequestMappingMapper;
+import com.zimu.service.RequestMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import com.zimu.common.CacheNames;
-import com.zimu.dao.RequestMappingEntityMapper;
-import com.zimu.domain.entity.RequestMappingEntity;
-import com.zimu.domain.entity.RequestMappingEntityExample;
-import com.zimu.domain.info.SelectInfo;
-import com.zimu.service.RequestMappingService;
+import java.util.*;
 
+/**
+ * <p>
+ * 所有url 服务实现类
+ * </p>
+ *
+ * @author 杨坤
+ * @since 2019-04-04
+ */
 @Service
-public class RequestMappingServiceImpl implements RequestMappingService {
+public class RequestMappingServiceImpl extends ServiceImpl<RequestMappingMapper, RequestMappingEntity> implements RequestMappingService {
+
 
     @Autowired
-    private RequestMappingEntityMapper requestMappingEntityMapper;
+    private RequestMappingMapper requestMappingMapper;
 
     @Autowired
     private WebApplicationContext webApplicationConnect;
-
-    @Autowired
-    private CacheManager cacheManager;
 
     @Override
     public void initRequestMapping() {
@@ -41,7 +41,7 @@ public class RequestMappingServiceImpl implements RequestMappingService {
         Date now = new Date();
 
         //查询所有的url
-        List<RequestMappingEntity> list = requestMappingEntityMapper.selectByExample(null);
+        List<RequestMappingEntity> list = requestMappingMapper.selectList(new QueryWrapper<>());
 
 
         //获取所有请求mapping
@@ -69,15 +69,15 @@ public class RequestMappingServiceImpl implements RequestMappingService {
             entity.setVersion(1);
             entity.setUpdateDate(now);
             entity.setUpdateBy("1");
-            requestMappingEntityMapper.insert(entity);
+            requestMappingMapper.insert(entity);
         }
 
         if (values.isEmpty()) {
             return;
         }
-        RequestMappingEntityExample example = new RequestMappingEntityExample();
-        example.createCriteria().andPatternsNotIn(values);
-        requestMappingEntityMapper.deleteByExample(example);
+        LambdaQueryWrapper<RequestMappingEntity> wrapper = Wrappers.lambdaQuery();
+        wrapper.notIn(RequestMappingEntity::getPatterns, values);
+        requestMappingMapper.delete(wrapper);
 
 
     }
@@ -98,18 +98,10 @@ public class RequestMappingServiceImpl implements RequestMappingService {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-	public List<SelectInfo> getUrls() {
-
-        Cache cache = cacheManager.getCache(CacheNames.CACHE_NAME_MUZI);
-        List<SelectInfo> cacheList = cache.get(CacheNames.CACHE_KEY_URIS, List.class);
-        if (cacheList != null && !cacheList.isEmpty()) {
-            return cacheList;
-        }
-
-        RequestMappingEntityExample example = new RequestMappingEntityExample();
-        example.setOrderByClause(" patterns ASC ");
-        List<RequestMappingEntity> list = requestMappingEntityMapper.selectByExample(example);
+    public List<SelectInfo> getUrls() {
+        LambdaQueryWrapper<RequestMappingEntity> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.orderByAsc(RequestMappingEntity::getPatterns);
+        List<RequestMappingEntity> list = requestMappingMapper.selectList(queryWrapper);
         List<SelectInfo> result = new ArrayList<>();
         SelectInfo selectInfo = null;
         for (RequestMappingEntity entity : list) {
@@ -118,7 +110,6 @@ public class RequestMappingServiceImpl implements RequestMappingService {
             selectInfo.setText(entity.getPatterns());
             result.add(selectInfo);
         }
-        cache.put(CacheNames.CACHE_KEY_URIS, result);
         return result;
     }
 }

@@ -1,7 +1,7 @@
 package com.zimu.design.proxy;
 
 
-import com.zimu.domain.entity.UserEntity;
+import com.zimu.entity.UserEntity;
 
 import java.io.Serializable;
 
