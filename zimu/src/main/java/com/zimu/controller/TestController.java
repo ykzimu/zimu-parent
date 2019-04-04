@@ -73,6 +73,13 @@ public class TestController {
         return jsonView;
     }
 
+    @GetMapping(value = "delete")
+    @ResponseBody
+    public JsonView myTest() {
+        addressComponent.deleteAllCache();
+        return new JsonView();
+    }
+
     @Getter
     @Setter
     static class FormInput {
