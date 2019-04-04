@@ -1,6 +1,7 @@
 package com.zimu.component.impl;
 
 import com.zimu.common.CacheNames;
+import com.zimu.common.Constants;
 import com.zimu.common.enums.AddressLevel;
 import com.zimu.component.AddressComponent;
 import com.zimu.dao.DictAddressEntityMapper;
@@ -13,8 +14,8 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @CacheConfig(cacheNames = CacheNames.CACHE_NAME_ADDRESS)
@@ -28,31 +29,12 @@ public class AddressComponentImpl implements AddressComponent {
      */
     private List<AddressInfo> getList(AddressLevel level, String code) {
 
-        // 返回数据
-        final List<AddressInfo> list = new ArrayList<>();
-
         // 查询条件
         DictAddressEntityExample example = new DictAddressEntityExample();
-        DictAddressEntityExample.Criteria criteria = example.createCriteria();
-        criteria.andLevelEqualTo(level.getCode());
-        criteria.andDelFlagNotEqualTo(1);
-        if (level != AddressLevel.PROVINCE) {
-            criteria.andParentCodeEqualTo(code);
-        }
+        example.createCriteria().andLevelEqualTo(level.getCode()).andDelFlagNotEqualTo(Constants.DEL_FLAG_OK).andParentCodeEqualTo(code);
         example.setOrderByClause("sort_no asc,code asc");
         List<DictAddressEntity> addressList = dictAddressEntityMapper.selectByExample(example);
-        if (addressList == null || addressList.isEmpty()) {
-            return list;
-        }
-
-        // 获取信息
-        addressList.forEach(dictAddressEntity -> {
-            AddressInfo addressInfo = new AddressInfo();
-            addressInfo.setCode(dictAddressEntity.getCode());
-            addressInfo.setName(dictAddressEntity.getName());
-            list.add(addressInfo);
-        });
-        return list;
+        return addressList.stream().map(AddressInfo::new).collect(Collectors.toList());
     }
 
     /**
@@ -61,7 +43,7 @@ public class AddressComponentImpl implements AddressComponent {
     @Override
     @Cacheable(key = "#root.methodName")
     public List<AddressInfo> getProvinceList() {
-        return getList(AddressLevel.PROVINCE, null);
+        return getList(AddressLevel.PROVINCE, "0");
     }
 
     /**
@@ -88,7 +70,7 @@ public class AddressComponentImpl implements AddressComponent {
     @Override
     @CacheEvict(allEntries = true)
     public void deleteAllCache() {
-
+        //清除所有省市区缓存
     }
 
 }
