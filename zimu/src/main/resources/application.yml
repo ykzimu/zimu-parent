@@ -85,6 +85,11 @@ eureka:
 mybatis:
   mapper-locations: classpath:com/zimu/dao/mapper/*.xml
   type-aliases-package: com.zimu.domain.entity
+mybatis-plus:
+  type-aliases-package: com.zimu.entity
+  mapper-locations: classpath:com/zimu/mapper/xml/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
 memcached:
   servers: memcached.qinbeixian.com:11211
   protocol: BINARY
