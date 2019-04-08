@@ -137,7 +137,11 @@
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>${pagehelper.spring.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>p6spy</groupId>
+                <artifactId>p6spy</artifactId>
+                <version>3.8.2</version>
+            </dependency>
             <!-- webjar -->
             <dependency>
                 <groupId>org.webjars</groupId>
