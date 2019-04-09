@@ -23,7 +23,7 @@ spring:
     cache: false
   redis:
     host: redis.qinbeixian.com
-    password: yksyc316497
+    password: YKsyc@123
     port: 6379
     lettuce:
       shutdown-timeout: 100ms
@@ -41,6 +41,12 @@ spring:
     job-store-type: jdbc
     jdbc:
       initialize-schema: always
+    properties:
+      org:
+        quartz:
+          jobStore:
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+
   security:
     oauth2:
       client:
