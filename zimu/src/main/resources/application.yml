@@ -16,14 +16,14 @@ spring:
     url: jdbc:mysql://mysql.qinbeixian.com:3306/zimu?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     #url: jdbc:mysql://localhost:3306/zimu?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
     username: yangkun
-    password: yksyc316497
+    password: YKsyc@123
     driver-class-name: com.mysql.cj.jdbc.Driver
     name: muziDataSource
   thymeleaf:
     cache: false
   redis:
     host: redis.qinbeixian.com
-    password: YKsyc@123
+    password: yksyc316497
     port: 6379
     lettuce:
       shutdown-timeout: 100ms
