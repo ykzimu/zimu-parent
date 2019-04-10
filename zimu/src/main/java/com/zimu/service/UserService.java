@@ -22,6 +22,8 @@ public interface UserService extends IService<UserEntity> {
 
     UserEntity getUserByUsername(String username);
 
+    UserInfo getUserInfoByUsername(String username);
+
     List<String> getRoleCodesByUserId(Long userId);
 
     void test();

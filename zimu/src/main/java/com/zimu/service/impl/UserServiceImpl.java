@@ -13,8 +13,10 @@ import com.zimu.common.exception.BusinessException;
 import com.zimu.common.utils.CommonUtils;
 import com.zimu.common.utils.LoginUserUtils;
 import com.zimu.component.CommonComponent;
+import com.zimu.component.MenuComponent;
 import com.zimu.component.RoleComponent;
 import com.zimu.domain.info.DataTablesInfo;
+import com.zimu.domain.info.MenuInfo;
 import com.zimu.domain.info.SearchInfo;
 import com.zimu.domain.info.UserInfo;
 import com.zimu.entity.RoleEntity;
@@ -70,6 +72,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     private RoleComponent roleComponent;
 
     @Autowired
+    private MenuComponent menuComponent;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
@@ -83,11 +88,31 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         queryWrapper.or().eq(UserEntity::getUsername, username).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
         queryWrapper.or().eq(UserEntity::getMobile, username).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
         queryWrapper.or().eq(UserEntity::getEmail, username).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
-        List<UserEntity> list = userMapper.selectList(queryWrapper);
-        if (list == null || list.isEmpty()) {
+        return this.getOne(queryWrapper, false);
+    }
+
+    @Override
+    public UserInfo getUserInfoByUsername(String username) {
+        // 查询用户信息
+        UserEntity userEntity = this.getUserByUsername(username);
+        if (userEntity == null) {
             return null;
         }
-        return list.get(0);
+
+        Long userId = userEntity.getId();
+        //查询角色信息
+        List<RoleEntity> roleEntities = roleComponent.getRolesByUserId(userId);
+        //左侧菜单
+        List<MenuInfo> menuInfos = menuComponent.getMenus(userId, roleEntities);
+        //角色
+        Set<GrantedAuthority> authorities = roleEntities.stream().map(RoleEntity::getRoleCode).map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
+
+        //构建用户信息
+        UserInfo userInfo = new UserInfo();
+        BeanUtils.copyProperties(userEntity, userInfo);
+        userInfo.setAuthorities(authorities);
+        userInfo.setMenuInfos(menuInfos);
+        return userInfo;
     }
 
     @Override

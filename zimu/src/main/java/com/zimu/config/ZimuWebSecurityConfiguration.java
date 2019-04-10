@@ -2,20 +2,18 @@ package com.zimu.config;
 
 import com.zimu.component.RoleComponent;
 import com.zimu.domain.info.UserInfo;
-import com.zimu.security.AuthenticationUserDetailsServiceImpl;
-import com.zimu.security.UserDetailsServiceImpl;
 import com.zimu.security.UserInfoOauth2UserService;
 import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
 import org.jasig.cas.client.util.HttpServletRequestWrapperFilter;
 import org.jasig.cas.client.validation.Cas30ServiceTicketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.security.cas.ServiceProperties;
 import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
 import org.springframework.security.cas.authentication.CasAuthenticationProvider;
@@ -27,6 +25,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
@@ -44,12 +43,12 @@ public class ZimuWebSecurityConfiguration {
 
     @Configuration
     @ConditionalOnProperty(prefix = "cas", name = "enabled", havingValue = "false", matchIfMissing = true)
-    @Import(UserDetailsServiceImpl.class)
     static class NormalWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
 
         @Autowired
-        private UserDetailsServiceImpl userDetailsService;
+        @Qualifier("userDetailsServiceImpl")
+        private UserDetailsService userDetailsService;
 
         @Autowired
         private RoleComponent roleComponent;
@@ -104,7 +103,6 @@ public class ZimuWebSecurityConfiguration {
     @Configuration
     @ConditionalOnProperty(prefix = "cas", name = "enabled", havingValue = "true")
     @EnableConfigurationProperties({CasProperties.class})
-    @Import(AuthenticationUserDetailsServiceImpl.class)
     static class CasWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
         @Autowired
