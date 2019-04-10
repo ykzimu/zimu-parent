@@ -1,4 +1,4 @@
-package com.zimu.entity;
+package com.zimu.entity.base;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

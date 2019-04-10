@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.zimu.common.mybatisplus.engine.ZimuFreemarkerTemplateEngine;
-import com.zimu.entity.BaseEntity;
+import com.zimu.entity.base.BaseEntity;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
