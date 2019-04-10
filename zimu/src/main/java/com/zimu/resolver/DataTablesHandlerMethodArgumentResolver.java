@@ -20,6 +20,7 @@ public class DataTablesHandlerMethodArgumentResolver implements HandlerMethodArg
 
     private static final String COLUMNS_REGEX = "^columns\\[\\d+\\]\\[data\\]$";
     private static final String ORDER_REGEX = "^order\\[\\d+\\]\\[column\\]$";
+    private static final String COLUMNS = "columns[";
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -58,22 +59,22 @@ public class DataTablesHandlerMethodArgumentResolver implements HandlerMethodArg
                 DataTablesInfo.Column column = new DataTablesInfo.Column();
                 DataTablesInfo.Search search = new DataTablesInfo.Search();
 
-                String data = request.getParameter("columns[" + i + "][data]");
+                String data = request.getParameter(COLUMNS + i + "][data]");
                 column.setData(data);
 
-                String name = request.getParameter("columns[" + i + "][name]");
+                String name = request.getParameter(COLUMNS + i + "][name]");
                 column.setName(name);
 
-                String searchable = request.getParameter("columns[" + i + "][searchable]");
+                String searchable = request.getParameter(COLUMNS + i + "][searchable]");
                 column.setSearchable(Boolean.valueOf(searchable));
 
-                String orderable = request.getParameter("columns[" + i + "][orderable]");
+                String orderable = request.getParameter(COLUMNS + i + "][orderable]");
                 column.setOrderable(Boolean.valueOf(orderable));
 
-                String value = request.getParameter("columns[" + i + "][search][value]");
+                String value = request.getParameter(COLUMNS + i + "][search][value]");
                 search.setValue(value);
 
-                String regex = request.getParameter("columns[" + i + "][search][regex]");
+                String regex = request.getParameter(COLUMNS + i + "][search][regex]");
                 search.setRegex(Boolean.valueOf(regex));
 
                 column.setSearch(search);
