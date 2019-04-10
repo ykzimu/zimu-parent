@@ -54,7 +54,7 @@ public class CodeGenerator {
         //gc.setMapperName("%sEntityMapper");
         // gc.setBaseColumnList(true);
         // gc.setBaseResultMap(true);
-        gc.setDateType(DateType.ONLY_DATE);
+        gc.setDateType(DateType.TIME_PACK);
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
@@ -62,7 +62,7 @@ public class CodeGenerator {
         dsc.setUrl("jdbc:mysql://mysql.qinbeixian.com:3306/zimu?useUnicode=true&characterEncoding=UTF-8&useSSL=false");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("yangkun");
-        dsc.setPassword("yksyc316497");
+        dsc.setPassword("YKsyc@123");
         mpg.setDataSource(dsc);
 
         // 包配置
@@ -120,8 +120,7 @@ public class CodeGenerator {
         strategy.setEntityLombokModel(true);
         //strategy.setRestControllerStyle(true);
         //strategy.setSuperControllerClass("com.baomidou.ant.common.BaseController");
-        //strategy.setInclude(scanner("表名"));
-        strategy.setExclude("persistent_logins", "qrtz_blob_triggers", "qrtz_calendars", "qrtz_cron_triggers", "qrtz_fired_triggers", "qrtz_job_details", "qrtz_locks", "qrtz_paused_trigger_grps", "qrtz_scheduler_state", "qrtz_simple_triggers", "qrtz_simprop_triggers", "qrtz_triggers");
+        strategy.setInclude("^t_.*");
         // strategy.setSuperEntityColumns("id");
         strategy.setControllerMappingHyphenStyle(false);
         strategy.setTablePrefix("t_");
