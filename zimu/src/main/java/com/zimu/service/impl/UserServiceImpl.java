@@ -10,6 +10,7 @@ import com.zimu.common.Constants;
 import com.zimu.common.MessageCode;
 import com.zimu.common.enums.RoleEnum;
 import com.zimu.common.exception.BusinessException;
+import com.zimu.common.mybatisplus.enums.DelFlagEnum;
 import com.zimu.common.utils.CommonUtils;
 import com.zimu.common.utils.LoginUserUtils;
 import com.zimu.component.CommonComponent;
@@ -161,7 +162,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
             userEntity.setIsExpired(0);
             userEntity.setIsCredentialsExpired(0);
             userEntity.setIsEnabled(1);
-            userEntity.setDelFlag(0);
+            userEntity.setDelFlag(DelFlagEnum.NO);
             userEntity.setVersion(1);
             userMapper.insert(userEntity);
 
@@ -169,7 +170,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
             userGithubEntity.setUserId(userEntity.getId());
             userGithubEntity.setCreateBy("1");
             userGithubEntity.setCreateDate(date);
-            userGithubEntity.setDelFlag(0);
+            userGithubEntity.setDelFlag(DelFlagEnum.NO);
             userGithubEntity.setVersion(1);
             userGithubMapper.insert(userGithubEntity);
 
@@ -182,7 +183,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
             userRoleEntity.setRoleId(roleEntity.getId());
             userRoleEntity.setCreateBy(DEFAULT_USER);
             userRoleEntity.setCreateDate(date);
-            userRoleEntity.setDelFlag(0);
+            userRoleEntity.setDelFlag(DelFlagEnum.NO);
             userRoleEntity.setVersion(1);
             userRoleMapper.insert(userRoleEntity);
         } else {
@@ -358,7 +359,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         userEntity.setIsEnabled(1);
         userEntity.setIsExpired(0);
         userEntity.setIsCredentialsExpired(0);
-        userEntity.setDelFlag(0);
+        userEntity.setDelFlag(DelFlagEnum.NO);
         userEntity.setVersion(1);
         userMapper.insert(userEntity);
 
@@ -371,7 +372,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         userRoleEntity.setRoleId(roleEntity.getId());
         userRoleEntity.setCreateBy(DEFAULT_USER);
         userRoleEntity.setCreateDate(date);
-        userRoleEntity.setDelFlag(0);
+        userRoleEntity.setDelFlag(DelFlagEnum.NO);
         userRoleEntity.setVersion(1);
         userRoleMapper.insert(userRoleEntity);
 
@@ -464,7 +465,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         LambdaUpdateWrapper<UserEntity> updateWrapper = Wrappers.lambdaUpdate();
         updateWrapper.in(UserEntity::getId, userIds);
         UserEntity userEntity = new UserEntity();
-        userEntity.setDelFlag(1);
+        userEntity.setDelFlag(DelFlagEnum.YES);
         userEntity.setUpdateBy(LoginUserUtils.getUserInfo().getId().toString());
         userEntity.setUpdateDate(LocalDateTime.now());
         int cnt = userMapper.update(userEntity, updateWrapper);

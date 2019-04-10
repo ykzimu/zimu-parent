@@ -1,12 +1,9 @@
 package com.zimu.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.Version;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
+import com.zimu.entity.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -20,18 +17,12 @@ import lombok.experimental.Accessors;
  * @since 2019-04-10
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("t_dict_address")
-public class DictAddressEntity implements Serializable {
+public class DictAddressEntity extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
-
-    /**
-     * 主键
-     */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
 
     /**
      * code码
@@ -62,43 +53,6 @@ public class DictAddressEntity implements Serializable {
      */
     @TableField("sort_no")
     private Integer sortNo;
-
-    /**
-     * 删除标记：1：已删除，0：未删除
-     */
-    @TableField("del_flag")
-    private Integer delFlag;
-
-    /**
-     * 创建者
-     */
-    @TableField("create_by")
-    private String createBy;
-
-    /**
-     * 创建时间
-     */
-    @TableField("create_date")
-    private LocalDateTime createDate;
-
-    /**
-     * 更新者
-     */
-    @TableField("update_by")
-    private String updateBy;
-
-    /**
-     * 更新时间
-     */
-    @TableField("update_date")
-    private LocalDateTime updateDate;
-
-    /**
-     * 版本号
-     */
-    @TableField("version")
-    @Version
-    private Integer version;
 
 
 }

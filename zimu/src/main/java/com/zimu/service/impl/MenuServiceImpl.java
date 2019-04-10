@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zimu.common.enums.RoleEnum;
+import com.zimu.common.mybatisplus.enums.DelFlagEnum;
 import com.zimu.common.utils.LoginUserUtils;
 import com.zimu.component.CommonComponent;
 import com.zimu.component.MenuComponent;
@@ -107,7 +108,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
         MenuEntity menuEntity = new MenuEntity();
         menuEntity.setId(id);
         if (delFlag != null && delFlag) {
-            menuEntity.setDelFlag(1 - entity.getDelFlag());
+            Integer v = 1 - entity.getDelFlag().getValue();
+            menuEntity.setDelFlag(DelFlagEnum.valueOf(v.toString()));
         }
         if (isShow != null && isShow) {
             menuEntity.setIsShow(1 - entity.getIsShow());
@@ -133,7 +135,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
             menuEntity.setParentId(0L);
         }
         menuEntity.setIsShow(1);
-        menuEntity.setDelFlag(0);
+        menuEntity.setDelFlag(DelFlagEnum.NO);
         menuEntity.setCreateBy(userInfo.getId().toString());
         menuEntity.setCreateDate(date);
         menuEntity.setMenuLevel(menuLevel);
@@ -156,7 +158,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
         roleMenuEntity.setMenuId(menuEntity.getId());
         roleMenuEntity.setCreateBy(userInfo.getId().toString());
         roleMenuEntity.setCreateDate(date);
-        roleMenuEntity.setDelFlag(0);
+        roleMenuEntity.setDelFlag(DelFlagEnum.NO);
         roleMenuEntity.setVersion(1);
         roleMenuMapper.insert(roleMenuEntity);
 

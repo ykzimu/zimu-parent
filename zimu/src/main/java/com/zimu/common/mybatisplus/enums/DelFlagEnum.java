@@ -2,9 +2,7 @@ package com.zimu.common.mybatisplus.enums;
 
 import com.baomidou.mybatisplus.core.enums.IEnum;
 
-import java.io.Serializable;
-
-public enum DelFlagEnum implements IEnum {
+public enum DelFlagEnum implements IEnum<Integer> {
 
     /**
      * 已删除
@@ -23,7 +21,7 @@ public enum DelFlagEnum implements IEnum {
     }
 
     @Override
-    public Serializable getValue() {
+    public Integer getValue() {
         return delFlag;
     }
 }

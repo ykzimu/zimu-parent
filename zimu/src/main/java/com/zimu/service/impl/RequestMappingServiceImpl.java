@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zimu.common.mybatisplus.enums.DelFlagEnum;
 import com.zimu.domain.info.SelectInfo;
 import com.zimu.entity.RequestMappingEntity;
 import com.zimu.mapper.RequestMappingMapper;
@@ -67,7 +68,7 @@ public class RequestMappingServiceImpl extends ServiceImpl<RequestMappingMapper,
             entity.setPatterns(pattern);
             entity.setCreateBy("1");
             entity.setCreateDate(now);
-            entity.setDelFlag(0);
+            entity.setDelFlag(DelFlagEnum.NO);
             entity.setVersion(1);
             entity.setUpdateDate(now);
             entity.setUpdateBy("1");
