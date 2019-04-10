@@ -1,5 +1,6 @@
 package com.zimu.config;
 
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.zimu.interceptor.HttpServletInterceptor;
 import com.zimu.resolver.DataTablesHandlerMethodArgumentResolver;
 import org.hibernate.validator.HibernateValidator;
@@ -58,6 +59,11 @@ public class ZimuWebMvcConfiguration implements WebMvcConfigurer {
         SpringSessionRememberMeServices rememberMeServices = new SpringSessionRememberMeServices();
         rememberMeServices.setAlwaysRemember(true);
         return rememberMeServices;
+    }
+
+    @Bean
+    public PaginationInterceptor paginationInterceptor() {
+        return new PaginationInterceptor();
     }
 
 }

@@ -42,11 +42,7 @@ spring:
     jdbc:
       initialize-schema: embedded
     properties:
-      org:
-        quartz:
-          jobStore:
-            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
-
+      org.quartz.jobStore.driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
   security:
     oauth2:
       client:
@@ -105,7 +101,7 @@ memcached:
   failure-mode: Redistribute
   use-nagle-algorithm: false
 cas:
-  enabled: true
+  enabled: false
   server:
     host: https://cas.qinbeixian.com:8443/cas
     login: ${cas.server.host}/login

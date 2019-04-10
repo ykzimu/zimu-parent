@@ -1,7 +1,7 @@
 package com.zimu.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.github.pagehelper.PageInfo;
 import com.zimu.domain.info.DataTablesInfo;
 import com.zimu.domain.info.SearchInfo;
 import com.zimu.domain.info.UserInfo;
@@ -30,9 +30,9 @@ public interface UserService extends IService<UserEntity> {
 
     Boolean registerUser(UserEntity userEntity) throws Exception;
 
-    PageInfo<UserEntity> getUsers(SearchInfo searchInfo);
+    IPage<UserEntity> getUsers(SearchInfo searchInfo);
 
-    PageInfo<UserEntity> getUsers(DataTablesInfo dataTablesInfo);
+    IPage<UserEntity> getUsers(DataTablesInfo dataTablesInfo);
 
     int deleteUserByIds(List<Long> userIds);
 

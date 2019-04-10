@@ -1,7 +1,7 @@
 package com.zimu.domain.info;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -19,9 +19,9 @@ public class DataTablesView<T> implements Serializable {
     private String error;
     private JSONObject extendData;
 
-    public DataTablesView(PageInfo<T> pageInfo) {
-        this.recordsTotal = pageInfo.getTotal();
-        this.recordsFiltered = pageInfo.getTotal();
-        this.data = pageInfo.getList();
+    public DataTablesView(IPage<T> page) {
+        this.recordsTotal = page.getTotal();
+        this.recordsFiltered = page.getTotal();
+        this.data = page.getRecords();
     }
 }

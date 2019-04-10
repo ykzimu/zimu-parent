@@ -2,10 +2,10 @@ package com.zimu.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.zimu.common.Constants;
 import com.zimu.common.MessageCode;
 import com.zimu.common.enums.RoleEnum;
@@ -364,12 +364,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
     @Override
     public void test() {
-        PageHelper.startPage(1, 10);
         userMapper.selectList(null);
     }
 
     @Override
-    public PageInfo<UserEntity> getUsers(SearchInfo searchInfo) {
+    public IPage<UserEntity> getUsers(SearchInfo searchInfo) {
 
         String keyword = searchInfo.getKeyword();
         LambdaQueryWrapper<UserEntity> queryWrapper = Wrappers.lambdaQuery();
@@ -389,14 +388,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
             }
 
         }
-
-        PageHelper.startPage(searchInfo.getPageNum(), searchInfo.getPageSize());
-        List<UserEntity> list = userMapper.selectList(queryWrapper);
-        return new PageInfo<>(list);
+        IPage<UserEntity> page = new Page<>(searchInfo.getPageNum(), searchInfo.getPageSize());
+        return userMapper.selectPage(page, queryWrapper);
     }
 
     @Override
-    public PageInfo<UserEntity> getUsers(DataTablesInfo dataTablesInfo) {
+    public IPage<UserEntity> getUsers(DataTablesInfo dataTablesInfo) {
         String keyword = dataTablesInfo.getSearch().getValue();
         LambdaQueryWrapper<UserEntity> queryWrapper = Wrappers.lambdaQuery();
         if (StringUtils.isNotBlank(keyword)) {
@@ -421,9 +418,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
             String orderBy = buffer.substring(1);
             // example.setOrderByClause(orderBy);
         }
-        PageHelper.startPage(dataTablesInfo.getPageNum(), dataTablesInfo.getPageSize());
-        List<UserEntity> list = userMapper.selectList(queryWrapper);
-        return new PageInfo<>(list);
+        IPage<UserEntity> page = new Page<>(dataTablesInfo.getPageNum(), dataTablesInfo.getPageSize());
+        return userMapper.selectPage(page, queryWrapper);
     }
 
     @Override

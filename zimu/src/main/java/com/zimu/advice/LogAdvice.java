@@ -8,7 +8,6 @@ import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Objects;
 
 @Aspect
 @Component
@@ -24,9 +23,9 @@ public class LogAdvice {
 
     @Before("logPointCut()")
     public void doBefore(JoinPoint joinPoint) {
-        HttpServletRequest httpServletRequest = HttpServletManager.getRequest();
-        log.info("RequestURI：{}", httpServletRequest.getRequestURI());
-        log.info("ParameterMap：{}", httpServletRequest.getParameterMap());
+        HttpServletRequest request = HttpServletManager.getRequest();
+        log.info("RequestURI：{}\tMethod：{}", request.getRequestURI(), request.getMethod());
+        log.info("ParameterMap：{}", request.getParameterMap());
     }
 
     @AfterReturning(returning = "ret", pointcut = "logPointCut()")
@@ -39,7 +38,7 @@ public class LogAdvice {
         long startTime = System.currentTimeMillis();
         Object obj = pjp.proceed();
         long endTime = System.currentTimeMillis();
-        log.info("耗时：{}", endTime - startTime);
+        log.info("处理耗时：{}", endTime - startTime);
         return obj;
     }
 }

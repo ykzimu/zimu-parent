@@ -1,6 +1,6 @@
 package com.zimu.controller.admin;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zimu.domain.info.*;
 import com.zimu.entity.MenuEntity;
 import com.zimu.service.MenuService;
@@ -48,7 +48,7 @@ public class MenuController {
     @PostMapping("/listData")
     @ResponseBody
     public DataTablesView listData(DataTablesInfo dataTablesInfo) {
-        PageInfo<MenuInfo> page = menuService.listData();
+        IPage<MenuInfo> page = menuService.listData();
         return new DataTablesView<>(page);
     }
 

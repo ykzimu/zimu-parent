@@ -1,9 +1,9 @@
 package com.zimu.service;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.zimu.domain.info.MenuInfo;
 import com.zimu.entity.MenuEntity;
-import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
@@ -15,9 +15,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface MenuService extends IService<MenuEntity> {
 
-    PageInfo<MenuInfo> listData();
+    IPage<MenuInfo> listData();
 
-    PageInfo<MenuEntity> getMenus();
+    IPage<MenuEntity> getMenus();
 
     MenuEntity getMenuById(Long id);
 

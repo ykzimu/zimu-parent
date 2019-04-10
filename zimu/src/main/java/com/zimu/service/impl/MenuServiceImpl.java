@@ -1,7 +1,8 @@
 package com.zimu.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageInfo;
 import com.zimu.common.enums.RoleEnum;
 import com.zimu.common.utils.LoginUserUtils;
 import com.zimu.component.CommonComponent;
@@ -51,18 +52,20 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     private CommonComponent commonComponent;
 
     @Override
-    public PageInfo<MenuInfo> listData() {
+    public IPage<MenuInfo> listData() {
         List<MenuInfo> list = menuComponent.listData();
-        return new PageInfo<>(list);
+        Page<MenuInfo> page = new Page<>();
+        page.setRecords(list);
+        return page;
     }
 
     @Override
-    public PageInfo<MenuEntity> getMenus() {
+    public IPage<MenuEntity> getMenus() {
 
         List<MenuEntity> list = menuComponent.getSortMenus();
-        PageInfo<MenuEntity> pageInfo = new PageInfo<>(list);
-
-        return pageInfo;
+        Page<MenuEntity> page = new Page<>();
+        page.setRecords(list);
+        return page;
     }
 
     @Override

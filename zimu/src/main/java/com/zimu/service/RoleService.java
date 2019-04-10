@@ -1,8 +1,8 @@
 package com.zimu.service;
 
-import com.github.pagehelper.PageInfo;
-import com.zimu.entity.RoleEntity;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zimu.entity.RoleEntity;
 
 /**
  * <p>
@@ -14,5 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface RoleService extends IService<RoleEntity> {
 
-    PageInfo<RoleEntity> getRoles();
+    IPage<RoleEntity> getRoles();
 }

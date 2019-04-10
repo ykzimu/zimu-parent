@@ -1,6 +1,6 @@
 package com.zimu.controller;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zimu.common.exception.ValidationException;
 import com.zimu.common.utils.IdUtils;
 import com.zimu.common.utils.LoginUserUtils;
@@ -45,7 +45,7 @@ public class AdminController {
 
         // 视图
         ModelAndView mv = new ModelAndView("/views/user/list");
-        PageInfo<UserEntity> page = userService.getUsers(searchInfo);
+        IPage<UserEntity> page = userService.getUsers(searchInfo);
         mv.addObject("searchInfo", searchInfo);
         mv.addObject("page", page);
         return mv;
@@ -81,7 +81,7 @@ public class AdminController {
     public ModelAndView roleList() {
         // 视图
         ModelAndView mv = new ModelAndView("/views/role/list");
-        PageInfo<RoleEntity> page = roleService.getRoles();
+        IPage<RoleEntity> page = roleService.getRoles();
         mv.addObject("page", page);
         return mv;
     }
@@ -106,7 +106,7 @@ public class AdminController {
     @ResponseBody
     public DataTablesView dictListData(DataTablesInfo dataTablesInfo) {
         UserInfo userInfo = LoginUserUtils.getUserInfo();
-        PageInfo<UserEntity> page = userService.getUsers(dataTablesInfo);
+        IPage<UserEntity> page = userService.getUsers(dataTablesInfo);
         DataTablesView<UserEntity> dataTablesView = new DataTablesView(page);
         return dataTablesView;
     }
