@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.zimu.common.mybatisplus.engine.ZimuFreemarkerTemplateEngine;
+import com.zimu.entity.BaseEntity;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -126,6 +127,8 @@ public class CodeGenerator {
         strategy.setTablePrefix("t_");
         strategy.setEntityTableFieldAnnotationEnable(true);
         strategy.setVersionFieldName("version");
+        strategy.setSuperEntityClass(BaseEntity.class);
+        strategy.setSuperEntityColumns("id", "del_flag", "create_by", "create_date", "update_by", "update_date", "version");
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new ZimuFreemarkerTemplateEngine());
         mpg.execute();

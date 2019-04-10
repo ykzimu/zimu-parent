@@ -92,6 +92,7 @@ mybatis-plus:
   mapper-locations: classpath:com/zimu/mapper/xml/*.xml
   configuration:
     map-underscore-to-camel-case: true
+  type-enums-package: com.zimu.common.mybatisplus.enums
 memcached:
   servers: memcached.qinbeixian.com:11211
   protocol: BINARY
