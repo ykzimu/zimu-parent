@@ -2,9 +2,9 @@ package com.zimu.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
 import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import lombok.Data;
@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 杨坤
- * @since 2019-04-04
+ * @since 2019-04-10
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -46,13 +46,13 @@ public class UserRoleEntity implements Serializable {
     private String createBy;
 
     @TableField("create_date")
-    private Date createDate;
+    private LocalDateTime createDate;
 
     @TableField("update_by")
     private String updateBy;
 
     @TableField("update_date")
-    private Date updateDate;
+    private LocalDateTime updateDate;
 
     @TableField("version")
     @Version

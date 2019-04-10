@@ -16,6 +16,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -39,7 +40,7 @@ public class RequestMappingServiceImpl extends ServiceImpl<RequestMappingMapper,
     @Override
     public void initRequestMapping() {
 
-        Date now = new Date();
+        LocalDateTime now = LocalDateTime.now();
 
         //查询所有的url
         List<RequestMappingEntity> list = requestMappingMapper.selectList(new QueryWrapper<>());

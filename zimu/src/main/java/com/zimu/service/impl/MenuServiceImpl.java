@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -90,7 +91,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
                 MenuEntity menuEntity = new MenuEntity();
                 menuEntity.setId(Long.parseLong(ids[0]));
                 menuEntity.setUpdateBy(LoginUserUtils.getUserInfo().getId().toString());
-                menuEntity.setUpdateDate(new Date());
+                menuEntity.setUpdateDate(LocalDateTime.now());
                 menuEntity.setMenuSort(Integer.parseInt(ids[1]));
                 menuMapper.updateById(menuEntity);
             }
@@ -119,7 +120,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     @Transactional(rollbackFor = RuntimeException.class)
     public boolean saveMenu(MenuEntity menuEntity) {
 
-        Date date = new Date();
+        LocalDateTime date = LocalDateTime.now();
 
         UserInfo userInfo = LoginUserUtils.getUserInfo();
         Integer menuLevel = 1;
@@ -165,10 +166,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
 
     @Override
     public boolean updateMenu(MenuEntity menuEntity) {
-        Date date = new Date();
         UserInfo userInfo = LoginUserUtils.getUserInfo();
         menuEntity.setUpdateBy(userInfo.getId().toString());
-        menuEntity.setUpdateDate(date);
+        menuEntity.setUpdateDate(LocalDateTime.now());
         if (StringUtils.isNumeric(menuEntity.getMenuHref())) {
             RequestMappingEntity requestMappingEntity = requestMappingMapper.selectById(Long.parseLong(menuEntity.getMenuHref()));
             if (requestMappingEntity != null) {

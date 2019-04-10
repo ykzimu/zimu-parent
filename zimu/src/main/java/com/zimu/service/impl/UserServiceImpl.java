@@ -40,6 +40,7 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -130,7 +131,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
         // ip地址
         String ip = CommonUtils.getIpAddr();
-        Date date = new Date();
+        LocalDateTime date = LocalDateTime.now();
 
         // 构造数据用于更新
         UserGithubEntity userGithubEntity = this.mapToUserGithubEntity(oauth2User.getAttributes());
@@ -342,7 +343,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         }
 
         // 新建用户
-        Date date = new Date();
+        LocalDateTime date = LocalDateTime.now();
         String pwd = userEntity.getPassword();
         String password = passwordEncoder.encode(pwd);
         userEntity.setPassword(password);
@@ -465,7 +466,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         UserEntity userEntity = new UserEntity();
         userEntity.setDelFlag(1);
         userEntity.setUpdateBy(LoginUserUtils.getUserInfo().getId().toString());
-        userEntity.setUpdateDate(new Date());
+        userEntity.setUpdateDate(LocalDateTime.now());
         int cnt = userMapper.update(userEntity, updateWrapper);
         return cnt;
     }

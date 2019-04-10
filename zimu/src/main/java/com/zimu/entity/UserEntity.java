@@ -2,9 +2,9 @@ package com.zimu.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
 import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import lombok.Data;
@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 杨坤
- * @since 2019-04-04
+ * @since 2019-04-10
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -85,7 +85,7 @@ public class UserEntity implements Serializable {
      * 注册时间
      */
     @TableField("register_date")
-    private Date registerDate;
+    private LocalDateTime registerDate;
 
     /**
      * 最近登录IP
@@ -97,7 +97,7 @@ public class UserEntity implements Serializable {
      * 最近登录时间
      */
     @TableField("login_date")
-    private Date loginDate;
+    private LocalDateTime loginDate;
 
     /**
      * 登录标记
@@ -145,7 +145,7 @@ public class UserEntity implements Serializable {
      * 创建时间
      */
     @TableField("create_date")
-    private Date createDate;
+    private LocalDateTime createDate;
 
     /**
      * 更新者
@@ -157,7 +157,7 @@ public class UserEntity implements Serializable {
      * 更新时间
      */
     @TableField("update_date")
-    private Date updateDate;
+    private LocalDateTime updateDate;
 
     /**
      * 版本号

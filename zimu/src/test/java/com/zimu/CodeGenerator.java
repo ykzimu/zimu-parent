@@ -46,7 +46,7 @@ public class CodeGenerator {
         gc.setOutputDir(projectPath + "/zimu/src/main/java");
         gc.setAuthor("杨坤");
         gc.setOpen(false);
-        gc.setFileOverride(true);
+        gc.setFileOverride(false);
         gc.setEntityName("%sEntity");
         gc.setServiceName("%sService");
         gc.setServiceImplName("%sServiceImpl");
