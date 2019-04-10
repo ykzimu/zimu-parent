@@ -424,13 +424,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         String keyword = dataTablesInfo.getSearch().getValue();
         LambdaQueryWrapper<UserEntity> queryWrapper = Wrappers.lambdaQuery();
         if (StringUtils.isNotBlank(keyword)) {
-            queryWrapper.or().like(UserEntity::getUsername, keyword).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
-            queryWrapper.or().like(UserEntity::getNickname, keyword).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
-            queryWrapper.or().like(UserEntity::getRealname, keyword).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
-            queryWrapper.or().like(UserEntity::getEmail, keyword).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
-            queryWrapper.or().like(UserEntity::getMobile, keyword).ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
+            queryWrapper.or().like(UserEntity::getUsername, keyword).ne(UserEntity::getDelFlag, DelFlagEnum.YES);
+            queryWrapper.or().like(UserEntity::getNickname, keyword).ne(UserEntity::getDelFlag, DelFlagEnum.YES);
+            queryWrapper.or().like(UserEntity::getRealname, keyword).ne(UserEntity::getDelFlag, DelFlagEnum.YES);
+            queryWrapper.or().like(UserEntity::getEmail, keyword).ne(UserEntity::getDelFlag, DelFlagEnum.YES);
+            queryWrapper.or().like(UserEntity::getMobile, keyword).ne(UserEntity::getDelFlag, DelFlagEnum.YES);
         } else {
-            queryWrapper.ne(UserEntity::getDelFlag, Constants.DEL_FLAG_OK);
+            queryWrapper.ne(UserEntity::getDelFlag, DelFlagEnum.YES);
         }
 
         List<DataTablesInfo.Order> orderList = dataTablesInfo.getOrder();

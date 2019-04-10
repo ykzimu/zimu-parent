@@ -12,13 +12,16 @@ spring:
           enabled: false
           version: v1.0.0
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
+    #type: com.alibaba.druid.pool.DruidDataSource #坑：不支持java8 time包下的属性 DruidPooledResultSet不支持 getObject导致
+    type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:mysql://mysql.qinbeixian.com:3306/zimu?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     #url: jdbc:mysql://localhost:3306/zimu?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
     username: yangkun
     password: YKsyc@123
     driver-class-name: com.mysql.cj.jdbc.Driver
     name: muziDataSource
+    hikari:
+      connection-test-query: SELECT 1
   thymeleaf:
     cache: false
   redis:
@@ -92,6 +95,7 @@ mybatis-plus:
   mapper-locations: classpath:com/zimu/mapper/xml/*.xml
   configuration:
     map-underscore-to-camel-case: true
+    default-enum-type-handler: com.baomidou.mybatisplus.extension.handlers.EnumTypeHandler
   type-enums-package: com.zimu.common.mybatisplus.enums
 memcached:
   servers: memcached.qinbeixian.com:11211

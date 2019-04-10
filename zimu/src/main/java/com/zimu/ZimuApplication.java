@@ -3,7 +3,7 @@ package com.zimu;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
@@ -15,8 +15,7 @@ import javax.net.ssl.X509TrustManager;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
-@SpringBootApplication
-@ServletComponentScan
+@SpringBootApplication(exclude = FreeMarkerAutoConfiguration.class)
 @MapperScan("com.zimu.mapper")
 @EnableCaching
 @EnableRedisHttpSession
