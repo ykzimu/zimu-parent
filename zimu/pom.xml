@@ -274,10 +274,6 @@
         </dependency>
 
         <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.joda</groupId>
             <artifactId>joda-convert</artifactId>
         </dependency>
@@ -303,11 +299,6 @@
             <groupId>com.thoughtworks.xstream</groupId>
             <artifactId>xstream</artifactId>
         </dependency>
-        <!-- sitemesh -->
-        <dependency>
-            <groupId>org.sitemesh</groupId>
-            <artifactId>sitemesh</artifactId>
-        </dependency>
         <!-- poi -->
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -332,10 +323,6 @@
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.thetransactioncompany</groupId>
-            <artifactId>cors-filter</artifactId>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
