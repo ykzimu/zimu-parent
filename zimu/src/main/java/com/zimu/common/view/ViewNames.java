@@ -5,6 +5,9 @@ package com.zimu.common.view;
  */
 public enum ViewNames {
 
+    //登录页
+    LOGIN("/login"),
+
     //看板首页
     DASHBOARD_INDEX("/views/dashboard/index"),
 

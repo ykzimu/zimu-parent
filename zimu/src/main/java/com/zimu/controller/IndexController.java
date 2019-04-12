@@ -5,6 +5,7 @@ import com.zimu.common.exception.ValidationException;
 import com.zimu.common.utils.LoginUserUtils;
 import com.zimu.entity.UserEntity;
 import com.zimu.service.UserService;
+import com.zimu.view.LoginView;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -101,7 +102,7 @@ public class IndexController {
         if (islogin) {// 已登录，直接跳转至首页
             mv.setViewName("redirect:/");
         } else {// 未登陆，跳转到登录页
-            mv.setViewName("/views/login");
+            return LoginView.builder().build().view();
         }
         return mv;
     }
