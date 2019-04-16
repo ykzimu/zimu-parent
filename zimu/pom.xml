@@ -487,6 +487,12 @@
             <groupId>org.webjars</groupId>
             <artifactId>jQuery-contextMenu</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/net.java.dev.jets3t/jets3t -->
+        <dependency>
+            <groupId>net.java.dev.jets3t</groupId>
+            <artifactId>jets3t</artifactId>
+            <version>0.9.0</version>
+        </dependency>
 
     </dependencies>
 
