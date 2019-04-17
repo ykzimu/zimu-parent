@@ -28,7 +28,6 @@ import com.zimu.mapper.UserGithubMapper;
 import com.zimu.mapper.UserMapper;
 import com.zimu.mapper.UserRoleMapper;
 import com.zimu.service.UserService;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -435,7 +434,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
         List<DataTablesInfo.Order> orderList = dataTablesInfo.getOrder();
         List<DataTablesInfo.Column> columnList = dataTablesInfo.getColumns();
-        if (CollectionUtils.isNotEmpty(orderList)) {
+        if (orderList != null) {
             StringBuffer buffer = new StringBuffer();
             orderList.forEach(order -> {
                 String name = columnList.get(order.getColumn()).getName();
