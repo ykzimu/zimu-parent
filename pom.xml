@@ -52,14 +52,13 @@
         <layui.version>2.4.5</layui.version>
         <zTree.version>3.5.37</zTree.version>
         <chartjs.version>2.7.3</chartjs.version>
-        <ckeditor.version>4.11.1</ckeditor.version>
+        <ckeditor.version>11.2.0</ckeditor.version>
         <jqueryui.version>1.12.1</jqueryui.version>
         <icheck.version>1.0.2</icheck.version>
         <morrisjs.version>0.5.1</morrisjs.version>
         <fastclick.version>1.0.6</fastclick.version>
         <flot.version>0.8.3-1</flot.version>
         <fullcalendar.version>3.9.0</fullcalendar.version>
-        <jvectormap.version>2.0.4</jvectormap.version>
         <pace.version>1.0.2</pace.version>
         <highlightjs.version>9.8.0</highlightjs.version>
         <echarts.version>4.1.0</echarts.version>
