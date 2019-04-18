@@ -34,7 +34,7 @@ $(document).ready(function () {
         }
 
         //登录校验
-        var url = $("#ctx").val() + "/public/validateLogin";
+        var url = contextPath + "/public/validateLogin";
         var pData = {username: $("#username").val(), password: $("#password").val()};
         $.post(url, pData, function (data, status) {
             //设置登录按钮可用
@@ -98,16 +98,4 @@ function loginBtn(flag) {
         item.html('登录中......');
         item.attr("disabled", true);
     }
-};
-
-function oauth2Login(id) {
-    $("#spinnerModal").modal({
-        backdrop: 'static',
-        keyboard: false
-    });
-    $("#username").val("");
-    $("#password").val("")
-    loginBtn(false);
-    var url = $("#ctx").val() + '/oauth2/authorization/' + id;
-    window.location.href = url;
 };

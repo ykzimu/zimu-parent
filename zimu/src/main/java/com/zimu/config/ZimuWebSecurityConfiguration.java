@@ -80,7 +80,7 @@ public class ZimuWebSecurityConfiguration {
             }
             //
             registry.anyRequest().authenticated()//
-                .and().formLogin().permitAll()
+                .and().formLogin().loginPage("/login").permitAll()
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll()//
                 .and().headers().frameOptions().disable()//
                 // oauth2Login登录

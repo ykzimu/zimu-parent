@@ -1,27 +1,13 @@
-<#assign ctx=request.getContextPath()>
-<#assign ctxStatic=request.getContextPath()+"/static">
-
 <!DOCTYPE html>
-<html>
-<head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="/common/include::common_header(~{::title},~{::link},~{::style},~{::script},~{::meta})">
     <title>登录</title>
-<#include "../common/include.ftl">
-    <script type="text/javascript" src="${ctxStatic}/js/login.js"></script>
-    <style>
-        a {
-            color: gold;
-        }
-
-        a:hover,
-        a:active {
-            color: yellow;
-        }
-    </style>
+    <script th:src="@{/static/js/login.js}"></script>
 </head>
 <body>
-<form class="form-horizontal" action="${ctx}/login" method="post">
+<form class="form-horizontal" th:action="@{/login}" method="post">
     <div class="container">
-        <div class="row form-group justify-content-center text-white">
+        <div class="row form-group justify-content-center">
             <div class="row form-group col-sm-4 justify-content-center">
                 <div class="row form-group col-sm-12" style="height: 50px;">
                 </div>
@@ -63,7 +49,7 @@
                 </div>
                 <div class="row form-group col-sm-12 justify-content-center">
                     <label><a href="javascript:void(0)">忘记密码</a>&nbsp;&nbsp;<a
-                        href="${ctx}/register">立即注册</a></label>
+                        th:href="@{/register}">立即注册</a></label>
                 </div>
                 <br>
                 <div class="row form-group col-sm-12">
@@ -81,11 +67,11 @@
                 </div>
                 <div class="row form-group col-sm-12 justify-content-center">
                     <label>
-                        <a href="javascript:void(0)" onclick="oauth2Login('github')" title="github">
+                        <a th:href="@{/oauth2/authorization/github}" title="github">
                             <i class="fab fa-github fa-2x" aria-hidden="true"></i>
                         </a>
                         &nbsp;&nbsp;
-                        <a href="javascript:void(0);" title="QQ" onclick="oauth2Login('qq')">
+                        <a th:href="@{/oauth2/authorization/qq}" title="QQ">
                             <i class=" fab fa-qq fa-2x" aria-hidden="true"></i>
                         </a>
                     </label>
@@ -106,7 +92,5 @@
         </div>
     </div>
 </form>
-<#include "../common/message.ftl">
-<#include "../common/hidden.ftl">
 </body>
 </html>
