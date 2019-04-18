@@ -150,14 +150,7 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore-nio</artifactId>
         </dependency>
-        <!--        <dependency>
-                    <groupId>io.dropwizard.metrics</groupId>
-                    <artifactId>metrics-core</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>io.dropwizard.metrics</groupId>
-                    <artifactId>metrics-healthchecks</artifactId>
-                </dependency>-->
+
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
@@ -266,8 +259,6 @@
         </dependency>
 
 
-
-
         <!-- webjar -->
         <dependency>
             <groupId>org.webjars</groupId>
@@ -288,10 +279,22 @@
         <dependency>
             <groupId>org.webjars.bowergithub.ludo</groupId>
             <artifactId>jquery-treetable</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars.bowergithub.jquery</groupId>
+                    <artifactId>jquery-dist</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.webjars.bower</groupId>
             <artifactId>jquery.countdown</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>jquery</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
@@ -341,6 +344,11 @@
             <groupId>org.webjars</groupId>
             <artifactId>echarts</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>metisMenu</artifactId>
+        </dependency>
+
 
     </dependencies>
 

@@ -45,6 +45,7 @@
         <font-awesome.version>5.2.0</font-awesome.version>
         <zTree.version>3.5.37</zTree.version>
         <echarts.version>4.1.0</echarts.version>
+        <metisMenu.version>3.0.3</metisMenu.version>
 
         <!--webjars end-->
 
@@ -349,6 +350,11 @@
                 <groupId>org.webjars</groupId>
                 <artifactId>echarts</artifactId>
                 <version>${echarts.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>metisMenu</artifactId>
+                <version>${metisMenu.version}</version>
             </dependency>
 
 
