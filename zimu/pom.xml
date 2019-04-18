@@ -438,9 +438,28 @@
             <artifactId>jquery.countdown</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>rangy</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>ckeditor</artifactId>
+            <version>11.2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars.bowergithub.swisnl</groupId>
+            <artifactId>jquery-contextmenu</artifactId>
+            <version>3.0.0-beta.2</version>
+        </dependency>
+  <!--      <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>adminlte</artifactId>
+        </dependency>-->
+<!--        <dependency>
             <groupId>org.webjars.bower</groupId>
             <artifactId>bootstrap3-wysihtml5-bower</artifactId>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap-timepicker</artifactId>

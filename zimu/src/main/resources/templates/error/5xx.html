@@ -3,8 +3,8 @@
 <head th:include="/common/include::common_header(~{::title},~{::link},~{::style},~{::script},~{::meta})">
     <title th:text="${status}"></title>
 
-    <script type="text/javascript" th:src="@{/static/plugins/jquery-countdown/2.2.0/jquery.countdown.min.js}"></script>
-    <script type="text/javascript" th:src="@{/static/js/error.js}"></script>
+    <script th:src="@{/webjars/jquery.countdown/dist/jquery.countdown.min.js}"></script>
+    <script th:src="@{/static/js/error.js}"></script>
 </head>
 <body>
 <form class="form-horizontal">
