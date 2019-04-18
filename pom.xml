@@ -23,25 +23,26 @@
         <mybatis.spring.version>2.0.1</mybatis.spring.version>
         <mybatis.plus.version>3.1.0</mybatis.plus.version>
         <mybatis.typehandlers.jsr310.version>1.0.2</mybatis.typehandlers.jsr310.version>
-        <fastjson.version>1.2.56</fastjson.version>
+        <fastjson.version>1.2.57</fastjson.version>
         <tika.version>1.20</tika.version>
 
         <!--webjars start-->
-        <webjars.locator.version>0.34</webjars.locator.version>
+        <webjars-locator.version>0.36</webjars-locator.version>
         <jquery.version>3.4.0</jquery.version>
-        <jquery.cookie.version>1.4.1-1</jquery.cookie.version>
-        <jquery.inputmask.version>4.0.5</jquery.inputmask.version>
-        <jquery.treetable.version>3.2.0</jquery.treetable.version>
+        <jquery-cookie.version>1.4.1-1</jquery-cookie.version>
+        <jQuery-contextMenu.version>1.6.5</jQuery-contextMenu.version>
+        <jquery-treetable.version>3.2.0</jquery-treetable.version>
+        <jquery.countdown.version>2.2.0</jquery.countdown.version>
         <bootstrap.version>4.3.1</bootstrap.version>
-        <bootstrap.datepicker.version>1.8.0</bootstrap.datepicker.version>
-        <bootstrap.timepicker.version>0.5.2</bootstrap.timepicker.version>
-        <bootstrap.select.version>1.13.3</bootstrap.select.version>
+        <bootstrap-datepicker.version>1.8.0</bootstrap-datepicker.version>
+        <bootstrap-timepicker.version>0.5.2</bootstrap-timepicker.version>
+        <bootstrap-select.version>1.13.3</bootstrap-select.version>
         <select2.version>4.0.5</select2.version>
-        <select2.bootstrap.css.version>1.4.6</select2.bootstrap.css.version>
+        <select2-bootstrap-css.version>1.4.6</select2-bootstrap-css.version>
         <datatables.version>1.10.19</datatables.version>
+        <datatables-buttons.version>1.5.6</datatables-buttons.version>
         <animate.css.version>3.5.2</animate.css.version>
-        <fontawesome.version>5.2.0</fontawesome.version>
-        <layui.version>2.4.5</layui.version>
+        <font-awesome.version>5.2.0</font-awesome.version>
         <zTree.version>3.5.37</zTree.version>
         <echarts.version>4.1.0</echarts.version>
 
@@ -111,123 +112,6 @@
                 <artifactId>mybatis-typehandlers-jsr310</artifactId>
                 <version>${mybatis.typehandlers.jsr310.version}</version>
             </dependency>
-            <dependency>
-                <groupId>p6spy</groupId>
-                <artifactId>p6spy</artifactId>
-                <version>3.8.2</version>
-            </dependency>
-            <!-- webjar -->
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>webjars-locator</artifactId>
-                <version>${webjars.locator.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>jquery</artifactId>
-                <version>${jquery.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>jquery-cookie</artifactId>
-                <version>${jquery.cookie.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>bootstrap</artifactId>
-                <version>${bootstrap.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>bootstrap-datepicker</artifactId>
-                <version>${bootstrap.datepicker.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>bootstrap-select</artifactId>
-                <version>${bootstrap.select.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>select2</artifactId>
-                <version>${select2.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>datatables</artifactId>
-                <version>${datatables.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>datatables-buttons</artifactId>
-                <version>1.5.6</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>select2-bootstrap-css</artifactId>
-                <version>${select2.bootstrap.css.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>animate.css</artifactId>
-                <version>${animate.css.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>font-awesome</artifactId>
-                <version>${fontawesome.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>layui</artifactId>
-                <version>${layui.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>zTree</artifactId>
-                <version>${zTree.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars.bower</groupId>
-                <artifactId>jquery.countdown</artifactId>
-                <version>2.2.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars.bowergithub.swisnl</groupId>
-                <artifactId>jquery-contextmenu</artifactId>
-                <version>3.0.0-beta.2</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars.bower</groupId>
-                <artifactId>adminlte</artifactId>
-                <version>3.0.0-alpha.2</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>bootstrap-timepicker</artifactId>
-                <version>${bootstrap.timepicker.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>jquery.inputmask</artifactId>
-                <version>${jquery.inputmask.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars.bowergithub.ludo</groupId>
-                <artifactId>jquery-treetable</artifactId>
-                <version>${jquery.treetable.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>echarts</artifactId>
-                <version>${echarts.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>jQuery-contextMenu</artifactId>
-                <version>1.6.5</version>
-            </dependency>
-
 
             <dependency>
                 <groupId>commons-lang</groupId>
@@ -333,11 +217,7 @@
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.thoughtworks.xstream</groupId>
-                <artifactId>xstream</artifactId>
-                <version>1.4.10</version>
-            </dependency>
+
             <!-- 文本 -->
             <dependency>
                 <groupId>org.apache.tika</groupId>
@@ -370,21 +250,107 @@
                 <artifactId>sigar</artifactId>
                 <version>1.6.4</version>
             </dependency>
+
+            <!-- webjar -->
             <dependency>
-                <groupId>org.ow2.asm</groupId>
-                <artifactId>asm</artifactId>
-                <version>7.1</version>
+                <groupId>org.webjars</groupId>
+                <artifactId>webjars-locator</artifactId>
+                <version>${webjars-locator.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.ow2.asm</groupId>
-                <artifactId>asm-commons</artifactId>
-                <version>7.1</version>
+                <groupId>org.webjars</groupId>
+                <artifactId>jquery</artifactId>
+                <version>${jquery.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.ow2.asm</groupId>
-                <artifactId>asm-util</artifactId>
-                <version>7.1</version>
+                <groupId>org.webjars</groupId>
+                <artifactId>jquery-cookie</artifactId>
+                <version>${jquery-cookie.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>jQuery-contextMenu</artifactId>
+                <version>${jQuery-contextMenu.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bowergithub.ludo</groupId>
+                <artifactId>jquery-treetable</artifactId>
+                <version>${jquery-treetable.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>jquery.countdown</artifactId>
+                <version>${jquery.countdown.version}</version>
+            </dependency>
+
+            <!-- font-awesome -->
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>font-awesome</artifactId>
+                <version>${font-awesome.version}</version>
+            </dependency>
+
+            <!-- bootstrap -->
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>bootstrap</artifactId>
+                <version>${bootstrap.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>bootstrap-datepicker</artifactId>
+                <version>${bootstrap-datepicker.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>bootstrap-timepicker</artifactId>
+                <version>${bootstrap-timepicker.version}</version>
+            </dependency>
+
+            <!-- select -->
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>bootstrap-select</artifactId>
+                <version>${bootstrap-select.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>select2</artifactId>
+                <version>${select2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>select2-bootstrap-css</artifactId>
+                <version>${select2-bootstrap-css.version}</version>
+            </dependency>
+
+            <!-- datatables -->
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>datatables</artifactId>
+                <version>${datatables.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>datatables-buttons</artifactId>
+                <version>${datatables-buttons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>animate.css</artifactId>
+                <version>${animate.css.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>zTree</artifactId>
+                <version>${zTree.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>echarts</artifactId>
+                <version>${echarts.version}</version>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>
