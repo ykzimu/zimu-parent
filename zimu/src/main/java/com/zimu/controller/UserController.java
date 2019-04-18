@@ -1,6 +1,10 @@
 package com.zimu.controller;
 
-import org.apache.commons.lang.StringUtils;
+import com.zimu.common.exception.ValidationException;
+import com.zimu.common.utils.LoginUserUtils;
+import com.zimu.domain.info.JsonView;
+import com.zimu.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -9,11 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.zimu.common.exception.ValidationException;
-import com.zimu.common.utils.LoginUserUtils;
-import com.zimu.domain.info.JsonView;
-import com.zimu.service.UserService;
 
 @Controller
 @RequestMapping("user")

@@ -11,7 +11,7 @@ import com.zimu.entity.RoleEntity;
 import com.zimu.entity.RoleMenuEntity;
 import com.zimu.mapper.MenuMapper;
 import com.zimu.mapper.RoleMenuMapper;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

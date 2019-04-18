@@ -1,9 +1,8 @@
 package com.zimu.common.utils;
 
 
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;

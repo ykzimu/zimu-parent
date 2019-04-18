@@ -1,16 +1,16 @@
 package com.zimu.common.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
 
 public class CommonUtils {
 
     private static final String[] IP_HEADERS = {"X-Forwarded-For", "Proxy-Client-IP", "HTTP_CLIENT_IP",
-            "HTTP_X_FORWARDED_FOR",};
+        "HTTP_X_FORWARDED_FOR",};
 
     private static final String UNKNOWN = "unknown";
     /**
