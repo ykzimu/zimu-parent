@@ -373,19 +373,11 @@
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
-            <artifactId>jqgrid</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
             <artifactId>animate.css</artifactId>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>font-awesome</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>metisMenu</artifactId>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
@@ -396,28 +388,8 @@
             <artifactId>zTree</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>chartjs</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>ckeditor</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery-ui</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap-slider</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.webjars.bower</groupId>
             <artifactId>jquery.countdown</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>rangy</artifactId>
         </dependency>
         <dependency>
             <groupId>org.webjars.bowergithub.swisnl</groupId>
@@ -433,57 +405,17 @@
                 </exclusion>
             </exclusions>
         </dependency>
-<!--      <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>bootstrap3-wysihtml5-bower</artifactId>
-        </dependency>-->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap-timepicker</artifactId>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
-            <artifactId>fastclick</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap-daterangepicker</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars.bowergithub.farbelous</groupId>
-            <artifactId>bootstrap-colorpicker</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>flot</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>fullcalendar</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
             <artifactId>jquery.inputmask</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery-knob</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>pace</artifactId>
         </dependency>
         <dependency>
             <groupId>org.webjars.bowergithub.ludo</groupId>
             <artifactId>jquery-treetable</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jQuery-slimScroll</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>highlightjs</artifactId>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>

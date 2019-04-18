@@ -39,14 +39,6 @@ $(document).ready(function () {
         contextPath = contextPath.substring(0, contextPath.length - 1);
     }
 
-    $('#navMenu').metisMenu();
-
-    $("#personMenu").hover(function () {
-        $(this).children("div").addClass("show");
-    }, function () {
-        $(this).children("div").removeClass("show");
-    });
-
     // 退出确认框
     logOutModel = new jBox('Confirm', {
         id: "jBoxLogoutModel",
