@@ -34,7 +34,6 @@
         <jquery.knob.version>1.2.11</jquery.knob.version>
         <jquery.treetable.version>3.2.0</jquery.treetable.version>
         <jquery.slimscroll.version>1.3.8</jquery.slimscroll.version>
-        <jquery.sparkline.version>2.1.2</jquery.sparkline.version>
         <bootstrap.version>4.3.1</bootstrap.version>
         <bootstrap.datepicker.version>1.8.0</bootstrap.datepicker.version>
         <bootstrap.timepicker.version>0.5.2</bootstrap.timepicker.version>
@@ -54,8 +53,6 @@
         <chartjs.version>2.7.3</chartjs.version>
         <ckeditor.version>11.2.0</ckeditor.version>
         <jqueryui.version>1.12.1</jqueryui.version>
-        <icheck.version>1.0.2</icheck.version>
-        <morrisjs.version>0.5.1</morrisjs.version>
         <fastclick.version>1.0.6</fastclick.version>
         <flot.version>0.8.3-1</flot.version>
         <fullcalendar.version>3.9.0</fullcalendar.version>
@@ -236,11 +233,6 @@
                 <version>${bootstrap.slider.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.webjars.bowergithub.fronteed</groupId>
-                <artifactId>icheck</artifactId>
-                <version>${icheck.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.webjars.bower</groupId>
                 <artifactId>jquery.countdown</artifactId>
                 <version>2.2.0</version>
@@ -270,11 +262,6 @@
                 <groupId>org.webjars</groupId>
                 <artifactId>bootstrap-timepicker</artifactId>
                 <version>${bootstrap.timepicker.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>morrisjs</artifactId>
-                <version>${morrisjs.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
@@ -325,11 +312,6 @@
                 <groupId>org.webjars</groupId>
                 <artifactId>jQuery-slimScroll</artifactId>
                 <version>${jquery.slimscroll.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>jquery.sparkline</artifactId>
-                <version>${jquery.sparkline.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
