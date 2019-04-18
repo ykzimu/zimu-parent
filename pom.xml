@@ -28,7 +28,7 @@
 
         <!--webjars start-->
         <webjars.locator.version>0.34</webjars.locator.version>
-        <jquery.version>3.3.1</jquery.version>
+        <jquery.version>3.4.0</jquery.version>
         <jquery.cookie.version>1.4.1-1</jquery.cookie.version>
         <jquery.inputmask.version>4.0.5</jquery.inputmask.version>
         <jquery.knob.version>1.2.11</jquery.knob.version>
@@ -242,6 +242,17 @@
                 <version>${icheck.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>jquery.countdown</artifactId>
+                <version>2.2.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>bootstrap3-wysihtml5-bower</artifactId>
+                <version>0.3.3</version>
+            </dependency>
+            <dependency>
                 <groupId>org.webjars</groupId>
                 <artifactId>bootstrap-timepicker</artifactId>
                 <version>${bootstrap.timepicker.version}</version>
@@ -326,6 +337,7 @@
                 <artifactId>jQuery-contextMenu</artifactId>
                 <version>1.6.5</version>
             </dependency>
+
 
             <dependency>
                 <groupId>commons-lang</groupId>

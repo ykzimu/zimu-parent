@@ -434,6 +434,14 @@
             <artifactId>icheck</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>jquery.countdown</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>bootstrap3-wysihtml5-bower</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap-timepicker</artifactId>
         </dependency>

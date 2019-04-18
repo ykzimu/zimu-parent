@@ -1,8 +1,8 @@
 
 
-$table-selected: #0275d8 !default;
+$table-selected: #08C !default;
 
-@import 'select.dataTables.scss';
+@import 'select.dataTables';
 
 table.dataTable tbody {
 	tr.selected,

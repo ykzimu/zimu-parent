@@ -2,7 +2,7 @@
 
 $table-selected: #008cba !default;
 
-@import 'select.dataTables.scss';
+@import 'select.dataTables';
 
 table.dataTable tbody {
 	tr.selected th,

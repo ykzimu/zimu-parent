@@ -3,7 +3,7 @@
 $table-selected: rgba(0, 0, 0, 0.05) !default;
 $table-text-selected: rgba(0, 0, 0, 0.95) !default;
 
-@import 'select.dataTables.scss';
+@import 'select.dataTables';
 
 table.dataTable tbody {
 	tr.selected,
