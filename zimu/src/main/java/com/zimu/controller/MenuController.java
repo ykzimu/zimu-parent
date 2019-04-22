@@ -1,12 +1,12 @@
-package com.zimu.controller.admin;
+package com.zimu.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zimu.domain.info.*;
 import com.zimu.entity.MenuEntity;
 import com.zimu.service.MenuService;
 import com.zimu.service.RequestMappingService;
-import com.zimu.view.admin.MenuAddView;
-import com.zimu.view.admin.MenuListView;
+import com.zimu.view.MenuAddView;
+import com.zimu.view.MenuListView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin/menu")
+@RequestMapping("/menu")
 public class MenuController {
 
     @Autowired

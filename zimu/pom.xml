@@ -125,10 +125,6 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-typehandlers-jsr310</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.freemarker</groupId>

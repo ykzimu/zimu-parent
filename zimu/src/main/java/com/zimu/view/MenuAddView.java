@@ -1,4 +1,4 @@
-package com.zimu.view.admin;
+package com.zimu.view;
 
 import com.zimu.common.view.BaseView;
 import com.zimu.common.view.ViewNames;

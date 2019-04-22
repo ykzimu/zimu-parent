@@ -1,4 +1,4 @@
-package com.zimu.controller.admin;
+package com.zimu.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author yk
  */
 @Controller
-@RequestMapping("/admin/database")
+@RequestMapping("/database")
 public class DatabaseController {
 }

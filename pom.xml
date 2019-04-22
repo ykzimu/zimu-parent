@@ -22,7 +22,6 @@
     <properties>
         <mybatis.spring.version>2.0.1</mybatis.spring.version>
         <mybatis.plus.version>3.1.0</mybatis.plus.version>
-        <mybatis.typehandlers.jsr310.version>1.0.2</mybatis.typehandlers.jsr310.version>
         <fastjson.version>1.2.57</fastjson.version>
         <tika.version>1.20</tika.version>
 
@@ -107,11 +106,6 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-generator</artifactId>
                 <version>${mybatis.plus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mybatis</groupId>
-                <artifactId>mybatis-typehandlers-jsr310</artifactId>
-                <version>${mybatis.typehandlers.jsr310.version}</version>
             </dependency>
 
             <dependency>
