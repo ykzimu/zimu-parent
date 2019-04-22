@@ -254,11 +254,6 @@
                 <version>${jquery-cookie.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>jQuery-contextMenu</artifactId>
-                <version>${jQuery-contextMenu.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.webjars.bowergithub.ludo</groupId>
                 <artifactId>jquery-treetable</artifactId>
                 <version>${jquery-treetable.version}</version>
@@ -345,6 +340,11 @@
                 <groupId>org.webjars.bower</groupId>
                 <artifactId>adminlte</artifactId>
                 <version>3.0.0-alpha.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bowergithub.swisnl</groupId>
+                <artifactId>jquery-contextmenu</artifactId>
+                <version>3.0.0-beta.2</version>
             </dependency>
 
 

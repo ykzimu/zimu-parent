@@ -87,13 +87,6 @@ $(document).ready(function () {
         // there's more, have a look at the demos and docs...
     });
 
-    $("#golabRefeshId").click(function () {
-        $.getJSON(contextPath + "/public/refesh", {}, function () {
-            window.location.reload(true);
-        });
-
-    });
-
 });
 
 /**

@@ -17,7 +17,7 @@
 
 
     <link rel="stylesheet" th:href="@{/static/plugins/wdScrollTab/css/ZimuTabPanel.css}">
-    <link rel="stylesheet" th:href="@{/webjars/jQuery-contextMenu/jquery.contextMenu.css}">
+    <link rel="stylesheet" th:href="@{/webjars/jQuery-contextMenu/dist/jquery.contextMenu.min.css}">
     <link rel="stylesheet" th:href="@{/static/css/home.css}">
 
 
@@ -33,7 +33,7 @@
     <script th:src="@{/static/plugins/wdScrollTab/src/Plugins/Fader.js}"></script>
     <script th:src="@{/static/plugins/wdScrollTab/src/Plugins/TabPanel.js}"></script>
     <script th:src="@{/static/plugins/wdScrollTab/src/Plugins/Math.uuid.js}"></script>
-    <script th:src="@{/webjars/jQuery-contextMenu/jquery.contextMenu.js}"></script>
+    <script th:src="@{/webjars/jQuery-contextMenu/dist/jquery.contextMenu.min.js}"></script>
 
     <script th:src="@{/static/plugins/screenfull/4.0.0/screenfull.min.js}"></script>
     <script th:src="@{/static/plugins/jquery-resize/jq.resize.js}"></script>
@@ -75,13 +75,6 @@
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
 
-
-            <!-- Messages Dropdown Menu -->
-            <li class="nav-item">
-                <a id="golabRefeshId" title="刷新" class="nav-link" href="javascript:void(0);">
-                    <i class=" fas fa-sync-alt"></i>
-                </a>
-            </li>
             <!-- Messages Dropdown Menu -->
             <li class="nav-item">
                 <a id="fullScreen" title="全屏/非全屏" class="nav-link" href="javascript:void(0);">
@@ -256,14 +249,6 @@
 
         </div>
     </div>
-    <!-- /.content-wrapper -->
-    <!--    <footer class="main-footer">
-            <strong>Copyright &copy; 2017-2019 <a th:href="@{/home}">济南揽艾贸易有限公司</a>.</strong>
-            All rights reserved.
-            <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 1.0.0
-            </div>
-        </footer>-->
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -273,9 +258,5 @@
 </div>
 <!-- ./wrapper -->
 
-
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<!--<script th:src="@{/webjars/adminlte/js/pages/dashboard.js}"></script>-->
-<!-- AdminLTE for demo purposes -->
 </body>
 </html>
