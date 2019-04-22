@@ -45,6 +45,8 @@
         <zTree.version>3.5.37</zTree.version>
         <echarts.version>4.1.0</echarts.version>
         <metisMenu.version>3.0.3</metisMenu.version>
+        <adminlte.version>3.0.0-alpha.2</adminlte.version>
+        <jquery-contextmenu.version>3.0.0-beta.2</jquery-contextmenu.version>
 
         <!--webjars end-->
 
@@ -339,12 +341,12 @@
             <dependency>
                 <groupId>org.webjars.bower</groupId>
                 <artifactId>adminlte</artifactId>
-                <version>3.0.0-alpha.2</version>
+                <version>${adminlte.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars.bowergithub.swisnl</groupId>
                 <artifactId>jquery-contextmenu</artifactId>
-                <version>3.0.0-beta.2</version>
+                <version>${jquery-contextmenu.version}</version>
             </dependency>
 
 
