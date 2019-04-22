@@ -15,7 +15,6 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
 
-
     <link rel="stylesheet" th:href="@{/static/plugins/wdScrollTab/css/ZimuTabPanel.css}">
     <link rel="stylesheet" th:href="@{/webjars/jQuery-contextMenu/dist/jquery.contextMenu.min.css}">
     <link rel="stylesheet" th:href="@{/static/css/home.css}">
@@ -173,6 +172,21 @@
                 <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"><i
                     class="fa fa-th-large"></i></a>
             </li>
+
+            <li class="nav-item">
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <th:block th:text="${session.SPRING_SECURITY_CONTEXT?.authentication?.principal?.nickname} "/>
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="#">个人信息</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" th:href="@{/logout}">退出</a>
+                    </div>
+                </div>
+            </li>
         </ul>
     </nav>
     <!-- /.navbar -->
@@ -191,7 +205,8 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img th:src="@{/webjars/adminlte/dist/img/user2-160x160.jpg}" class="img-circle elevation-2" alt="User Image">
+                    <img th:src="@{/webjars/adminlte/dist/img/user2-160x160.jpg}" class="img-circle elevation-2"
+                         alt="User Image">
                 </div>
                 <div class="info">
                     <a href="#" class="d-block">
