@@ -6,7 +6,7 @@ $(document).ready(function () {
         searching: true,
         pagingType: "full_numbers",
         ajax: {
-            url: contextPath + "/admin/dict/listData",
+            url: contextPath + "/dict/listData",
             type: "POST"
         },
         treeGrid: {

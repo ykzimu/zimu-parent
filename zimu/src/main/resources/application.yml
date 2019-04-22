@@ -82,14 +82,6 @@ static:
     - /webjars/**
     - /test/**
     - /register/**
-eureka:
-  client:
-    enabled: false
-    service-url:
-      defaultZone: http://eureka.qinbeixian.com:8761/eureka/
-mybatis:
-  mapper-locations: classpath:com/zimu/dao/mapper/*.xml
-  type-aliases-package: com.zimu.domain.entity
 mybatis-plus:
   type-aliases-package: com.zimu.entity
   mapper-locations: classpath:com/zimu/mapper/xml/*.xml

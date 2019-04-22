@@ -1,4 +1,4 @@
-package com.zimu.view;
+package com.zimu.view.dashboard;
 
 import com.zimu.common.view.annotation.ViewName;
 import com.zimu.common.view.BaseView;

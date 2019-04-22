@@ -5,6 +5,14 @@ package com.zimu.common.view;
  */
 public enum ViewNames {
 
+    //首页
+    INDEX("/index"),
+
+
+    //首页
+    HOME("/views/home"),
+
+
     //登录页
     LOGIN("/views/login"),
 
@@ -15,7 +23,10 @@ public enum ViewNames {
     MENU_ADD("/views/menu/add"),
 
     //菜单页列表
-    MENU_LIST("/views/menu/list");
+    MENU_LIST("/views/menu/list"),
+
+    //字典页列表
+    DICT_LIST("/views/dict/list");
 
     private String viewName;
 

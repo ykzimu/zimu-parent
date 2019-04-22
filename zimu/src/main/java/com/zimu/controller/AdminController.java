@@ -86,29 +86,4 @@ public class AdminController {
         return mv;
     }
 
-    /**
-     * 数据字典列表
-     *
-     * @return ModelAndView
-     */
-    @GetMapping("/dict/list")
-    public ModelAndView dictList() {
-        ModelAndView mv = new ModelAndView("/views/dict/list");
-        return mv;
-    }
-
-    /**
-     * 数据字典
-     *
-     * @return ModelAndView
-     */
-    @PostMapping("/dict/listData")
-    @ResponseBody
-    public DataTablesView dictListData(DataTablesInfo dataTablesInfo) {
-        UserInfo userInfo = LoginUserUtils.getUserInfo();
-        IPage<UserEntity> page = userService.getUsers(dataTablesInfo);
-        DataTablesView<UserEntity> dataTablesView = new DataTablesView(page);
-        return dataTablesView;
-    }
-
 }

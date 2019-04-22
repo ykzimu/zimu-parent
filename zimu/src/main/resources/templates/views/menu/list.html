@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head th:include="/common/include::common_header(~{::title},~{::link},~{::style},~{::script},~{::meta})">
         <title>菜单管理</title>
-        <script type="text/javascript" th:src="@{/static/js/menu_list.js}"></script>
+        <script type="text/javascript" th:src="@{/static/js/menu/list.js}"></script>
     </head>
     <body>
         <div class="container-fluid">
-            <form class="form-horizontal" th:action="@{/admin/menu/list}" method="POST">
+            <form class="form-horizontal" th:action="@{/menu/list}" method="POST">
                 <div class="form-group">
                 </div>
                 <div class="card">

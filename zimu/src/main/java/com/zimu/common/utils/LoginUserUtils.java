@@ -1,18 +1,20 @@
 package com.zimu.common.utils;
 
 import com.zimu.domain.info.UserInfo;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+/**
+ * @author yk
+ */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LoginUserUtils {
 
     // 获取是否登录
     public static boolean isLogin() {
         UserInfo userInfo = getUserInfo();
-        boolean isLogin = false;
-        if (userInfo != null && userInfo.getId() != null && userInfo.getId() != 0L) {
-            isLogin = true;
-        }
-        return isLogin;
+        return userInfo != null && userInfo.getId() != null && userInfo.getId() != 0L;
     }
 
     // 获取登录用户信息

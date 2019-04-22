@@ -1,6 +1,6 @@
 package com.zimu.controller;
 
-import com.zimu.view.IndexView;
+import com.zimu.view.HomeView;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,16 +8,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
 @Controller
-public class IndexController {
+public class HomeController {
 
     /**
-     * 首页
+     * HOME页
      *
      * @return ModelAndView
      */
-    @GetMapping(value = {"/", "/index"})
-    public ModelAndView index() {
-        return IndexView.builder().build().view();
+    @GetMapping("/home")
+    public ModelAndView home() {
+        // 视图
+        return HomeView.builder().build().view();
     }
-
 }

@@ -8,7 +8,7 @@ $(document).ready(function () {
         paging: false,
         ordering: false,
         ajax: {
-            url: contextPath + "/admin/menu/listData",
+            url: contextPath + "/menu/listData",
             type: "POST"
         },
         treeGrid: {

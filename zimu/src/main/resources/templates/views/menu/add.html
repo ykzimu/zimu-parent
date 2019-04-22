@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head th:include="/common/include::common_header(~{::title},~{::link},~{::style},~{::script},~{::meta})">
         <title>添加菜单</title>
-        <script type="text/javascript" th:src="@{/static/js/menu_add.js}"></script>
+        <script type="text/javascript" th:src="@{/static/js/menu/add.js}"></script>
     </head>
     <body>
-        <form class="form-horizontal" th:action="@{/admin/menu/save}" method="POST">
+        <form class="form-horizontal" th:action="@{/menu/save}" method="POST">
             <div class="container-fluid">
                 <div class="form-group">
                     <div class="row form-group ">

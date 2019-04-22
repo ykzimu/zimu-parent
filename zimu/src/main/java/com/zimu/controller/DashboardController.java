@@ -1,6 +1,6 @@
 package com.zimu.controller;
 
-import com.zimu.view.DashboardIndexView;
+import com.zimu.view.dashboard.DashboardIndexView;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
