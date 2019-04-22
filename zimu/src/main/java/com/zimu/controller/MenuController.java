@@ -62,12 +62,12 @@ public class MenuController {
         // 视图
         ModelAndView mv = new ModelAndView();
         if (id == null) {
-            mv.setViewName("redirect:/admin/menu/list");
+            mv.setViewName("redirect:/menu/list");
             return mv;
         }
         MenuEntity menuEntity = menuService.getMenuById(id);
         if (id != 0L && menuEntity == null) {
-            mv.setViewName("redirect:/admin/menu/list");
+            mv.setViewName("redirect:/menu/list");
             return mv;
         }
 
@@ -104,12 +104,12 @@ public class MenuController {
         // 视图
         ModelAndView mv = new ModelAndView("/views/menu/edit");
         if (id == null) {
-            mv.setViewName("redirect:/admin/menu/list");
+            mv.setViewName("redirect:/menu/list");
             return mv;
         }
         MenuEntity menuEntity = menuService.getMenuById(id);
         if (menuEntity == null) {
-            mv.setViewName("redirect:/admin/menu/list");
+            mv.setViewName("redirect:/menu/list");
             return mv;
         }
         List<SelectInfo> list = requestMappingService.getUrls();

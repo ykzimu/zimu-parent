@@ -15,7 +15,7 @@ $(document).ready(function () {
     //默认首页
     var dashboardTitle = '仪表盘';
     var dashboardDataTabId = 'tabpanel-25';
-    var dashboardDataHref = contextPath + '/admin/dashboard/index';
+    var dashboardDataHref = contextPath + '/dashboard/index';
     var dashboardHtml = '<iframe id="' + dashboardDataTabId + 'Frame" src="' + dashboardDataHref + '" width="100%" height="100%" frameborder="0" onload="iframeOnload(null)"></iframe>';
     tabpanel = new TabPanel({
         renderTo: 'mainTab',

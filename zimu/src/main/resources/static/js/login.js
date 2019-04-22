@@ -34,23 +34,7 @@ $(document).ready(function () {
         }
 
         //登录校验
-        var url = contextPath + "/public/validateLogin";
-        var pData = {username: $("#username").val(), password: $("#password").val()};
-        $.post(url, pData, function (data, status) {
-            //设置登录按钮可用
-            loginBtn(true);
-            $("#loginSpinnerModal").modal('hide');
-            var code = data.msg.code;
-            if (code != '0000') {
-                new jBox('Notice', {
-                    content: data.msg.message,
-                    color: 'black',
-                    autoClose: '2000'
-                });
-            } else {
-                $("form").submit();
-            }
-        }, 'json');
+        $("form").submit();
     });
 
     $("#btnLogin").click(function () {

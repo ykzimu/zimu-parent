@@ -341,6 +341,11 @@
                 <artifactId>metisMenu</artifactId>
                 <version>${metisMenu.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>adminlte</artifactId>
+                <version>3.0.0-alpha.2</version>
+            </dependency>
 
 
         </dependencies>
