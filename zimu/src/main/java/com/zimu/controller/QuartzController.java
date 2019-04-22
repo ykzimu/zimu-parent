@@ -1,14 +1,18 @@
 package com.zimu.controller;
 
 import com.zimu.component.QuartzComponent;
+import com.zimu.domain.info.DataTablesInfo;
+import com.zimu.domain.info.DataTablesView;
 import com.zimu.domain.info.JsonView;
 import com.zimu.quartz.JobData;
+import com.zimu.view.quartz.QuartzListView;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,8 +33,23 @@ public class QuartzController {
 
     @GetMapping("/list")
     public ModelAndView list() {
-        ModelAndView mv = new ModelAndView("/views/quartz/list");
-        return mv;
+        return QuartzListView.builder().build().view();
+    }
+
+    /**
+     * 数据字典
+     *
+     * @return ModelAndView
+     */
+    @PostMapping("/listData")
+    @ResponseBody
+    public DataTablesView listData(DataTablesInfo dataTablesInfo) {
+        try {
+            List<JobData> jobDataList = quartzComponent.jobList();
+            return new DataTablesView<>(jobDataList);
+        } catch (Exception e) {
+            return DataTablesView.error(e);
+        }
     }
 
     @GetMapping("/bean/list")
@@ -41,20 +60,6 @@ public class QuartzController {
 
             //List<SelectInfo> selectInfoList = quartzService.beansList();
             //jsonView.setData(selectInfoList);
-        } catch (Exception e) {
-            log.error("", e);
-        }
-
-        return jsonView;
-    }
-
-    @GetMapping("/job/list")
-    @ResponseBody
-    public JsonView jobList() {
-        JsonView jsonView = new JsonView();
-        try {
-            List<JobData> jobDataList = quartzComponent.jobList();
-            jsonView.setData(jobDataList);
         } catch (Exception e) {
             log.error("", e);
         }

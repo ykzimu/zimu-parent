@@ -1,6 +1,5 @@
 package com.zimu.component.impl;
 
-import com.zimu.common.utils.SpringContextUtils;
 import com.zimu.component.QuartzComponent;
 import com.zimu.quartz.JobData;
 import lombok.extern.slf4j.Slf4j;
@@ -11,14 +10,14 @@ import org.quartz.impl.triggers.CronTriggerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-@Service
+@Component
 @Slf4j
 public class QuartzComponentImpl implements QuartzComponent {
 
@@ -40,10 +39,17 @@ public class QuartzComponentImpl implements QuartzComponent {
             Trigger.TriggerState triggerState = scheduler.getTriggerState(triggerKey);
             JobKey jobKey = trigger.getJobKey();
             JobDetail jobDetail = scheduler.getJobDetail(jobKey);
-            JobData jobData = new JobData(triggerState, trigger, jobDetail);
+
+
+            Class clazz = jobDetail.getJobClass();
+            String[] beanNames = applicationContext.getBeanNamesForType(clazz);
+            JobData jobData = new JobData(triggerState, trigger);
             if (trigger instanceof CronTrigger) {
                 jobData.setCron(((CronTrigger) trigger).getCronExpression());
             }
+
+            jobData.setBeanName(beanNames[0]);
+            jobData.setBeanClass(clazz.getName());
             jobDataList.add(jobData);
         }
         return jobDataList;
@@ -65,7 +71,7 @@ public class QuartzComponentImpl implements QuartzComponent {
                 return false;
             }
 
-            QuartzJobBean beanClazz = SpringContextUtils.getBean(beanName, QuartzJobBean.class);
+            QuartzJobBean beanClazz = applicationContext.getBean(beanName, QuartzJobBean.class);
             JobDataMap jobDataMap = new JobDataMap();
             jobDataMap.put("name", name);
 

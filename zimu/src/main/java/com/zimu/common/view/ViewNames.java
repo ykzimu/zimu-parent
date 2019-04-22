@@ -26,7 +26,10 @@ public enum ViewNames {
     MENU_LIST("/views/menu/list"),
 
     //字典页列表
-    DICT_LIST("/views/dict/list");
+    DICT_LIST("/views/dict/list"),
+
+    //任务列表
+    QUARTZ_LIST("/views/quartz/list");
 
     private String viewName;
 

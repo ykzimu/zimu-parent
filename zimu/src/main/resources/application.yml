@@ -72,6 +72,8 @@ spring:
     type: redis
     ehcache:
       config: classpath:ehcache.xml
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
 static:
   url-patterns:
     - /

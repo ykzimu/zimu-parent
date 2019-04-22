@@ -19,9 +19,30 @@ public class DataTablesView<T> implements Serializable {
     private String error;
     private JSONObject extendData;
 
+    private DataTablesView() {
+
+    }
+
     public DataTablesView(IPage<T> page) {
         this.recordsTotal = page.getTotal();
         this.recordsFiltered = page.getTotal();
         this.data = page.getRecords();
+    }
+
+    public DataTablesView(List<T> list) {
+        Long size = new Long(list.size());
+        this.recordsTotal = size;
+        this.recordsFiltered = size;
+        this.data = list;
+    }
+
+    public static DataTablesView error(String error) {
+        DataTablesView dataTablesView = new DataTablesView();
+        dataTablesView.setError(error);
+        return dataTablesView;
+    }
+
+    public static DataTablesView error(Exception e) {
+        return error(e.getMessage());
     }
 }
