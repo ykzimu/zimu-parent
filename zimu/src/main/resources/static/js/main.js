@@ -35,7 +35,11 @@ $(document).ready(function () {
 
     if (contextPath == null) {
         var metaContextPath = $("meta[name='context-path']");
-        contextPath = metaContextPath.attr("content");
+        if (metaContextPath == null || metaContextPath.attr("content") == null || metaContextPath.attr("content") == undefined) {
+            contextPath = "";
+        } else {
+            contextPath = metaContextPath.attr("content");
+        }
     }
 
     // 退出确认框
