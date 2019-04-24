@@ -1,3 +1,7 @@
+server:
+  port: 80
+  servlet:
+    context-path: /zimu
 spring:
   application:
     name: zimu

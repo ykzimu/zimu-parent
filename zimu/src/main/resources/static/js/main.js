@@ -36,7 +36,6 @@ $(document).ready(function () {
     if (contextPath == null) {
         var metaContextPath = $("meta[name='context-path']");
         contextPath = metaContextPath.attr("content");
-        contextPath = contextPath.substring(0, contextPath.length - 1);
     }
 
     // 退出确认框
