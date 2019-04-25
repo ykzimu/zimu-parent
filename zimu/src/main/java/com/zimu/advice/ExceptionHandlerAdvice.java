@@ -28,10 +28,10 @@ public class ExceptionHandlerAdvice {
 
         String message = null;
         if (e instanceof AuthenticationException) {
-            msg.setMsg(ResultCode.AUTH_ERROR);
+            msg.setMsg(ResultCode.AUTHENTICATION_ERROR);
             message = getMessage((BasicException) e);
         } else if (e instanceof ValidationException) {
-            msg.setMsg(ResultCode.ARGUMENT_ERROR);
+            msg.setMsg(ResultCode.VALIDATION_ERROR);
             message = getMessage((BasicException) e);
         } else if (e instanceof BusinessException) {
             msg.setMsg(ResultCode.BUSINESS_ERROR);

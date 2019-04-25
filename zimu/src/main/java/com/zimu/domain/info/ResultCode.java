@@ -1,45 +1,51 @@
 package com.zimu.domain.info;
 
+import org.springframework.http.HttpStatus;
+
 public enum ResultCode {
 
     /**
      * 成功
      */
-    SUCCESS("0000", "success"),
+    SUCCESS(HttpStatus.OK),
 
     /**
      * 系统错误
      */
-    SYSTEM_ERROR("1001", "system error"),
+    SYSTEM_ERROR(1001, "System Error"),
 
     /**
      * 授权错误
      */
-    AUTH_ERROR("1002", "Verification failure"),
+    AUTHENTICATION_ERROR(1002, "Authentication Error"),
 
     /**
-     * 参数错误
+     * 参数校验错误
      */
-    ARGUMENT_ERROR("1003", "arguments error"),
+    VALIDATION_ERROR(1003, "Validation Error"),
 
     /**
      * 业务错误
      */
-    BUSINESS_ERROR("1004", "business error");
+    BUSINESS_ERROR(1004, "Business Error");
 
-    private String resultcode;
-    private String msg;
+    private int code;
+    private String reasonPhrase;
 
-    ResultCode(String resultcode, String msg) {
-        this.resultcode = resultcode;
-        this.msg = msg;
+    ResultCode(int code, String reasonPhrase) {
+        this.code = code;
+        this.reasonPhrase = reasonPhrase;
     }
 
-    public String getResultcode() {
-        return resultcode;
+    ResultCode(HttpStatus httpStatus) {
+        this(httpStatus.value(), httpStatus.getReasonPhrase());
     }
 
-    public String getMsg() {
-        return msg;
+    public int getCode() {
+        return code;
+    }
+
+    public String getReasonPhrase() {
+        return reasonPhrase;
     }
 }
