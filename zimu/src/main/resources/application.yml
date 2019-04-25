@@ -3,6 +3,8 @@ spring:
     name: zimu
   mvc:
     static-path-pattern: /static/**
+    favicon:
+      enabled: false
   resources:
     chain:
       strategy:

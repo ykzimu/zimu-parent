@@ -27,7 +27,6 @@ public class JobData {
     private String cron;
     private String beanName;
     private String beanClass;
-    private static final String[] voidParams = new String[0];
 
     public JobData(Trigger.TriggerState triggerState, Trigger trigger) {
         this.name = trigger.getKey().getName();
