@@ -98,10 +98,9 @@ $(document).ready(function () {
 
 function lockSwitchDraw() {
     $("[name='lock-switch']").bootstrapSwitch({
-        onText: "启动",
-        offText: "停止",
-        onColor: "success",
-        offColor: "info",
-        size: "small"
+        onText: '<i class="fas fa-lock-open"></i>',
+        offText: '<i class="fas fa-lock"></i>',
+        onColor: 'success',
+        offColor: 'danger'
     });
 }
