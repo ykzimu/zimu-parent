@@ -54,6 +54,8 @@ spring:
       username: quartz
       password: YKsyc@123
       driver-class-name: com.mysql.cj.jdbc.Driver
+      max-connections: 10
+      validation-query: select 1
   security:
     oauth2:
       client:

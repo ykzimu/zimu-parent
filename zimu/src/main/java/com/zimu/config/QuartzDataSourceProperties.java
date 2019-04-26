@@ -1,6 +1,7 @@
 package com.zimu.config;
 
 import lombok.Data;
+import org.quartz.utils.PoolingConnectionProvider;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -34,5 +35,9 @@ public class QuartzDataSourceProperties {
      * Login password of the database.
      */
     private String password;
+
+    private int maxConnections = PoolingConnectionProvider.DEFAULT_DB_MAX_CONNECTIONS;
+
+    private String validationQuery;
 
 }

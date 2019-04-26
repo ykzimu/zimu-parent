@@ -2,6 +2,7 @@ package com.zimu.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.autoconfigure.quartz.QuartzDataSource;
 import org.springframework.context.annotation.Bean;
@@ -34,8 +35,13 @@ public class DataSourceConfiguration {
         hikariConfig.setPassword(properties.getPassword());
         hikariConfig.setJdbcUrl(properties.getUrl());
         hikariConfig.setPoolName(properties.getName());
+        if (properties.getMaxConnections() >= 1) {
+            hikariConfig.setMaximumPoolSize(properties.getMaxConnections());
+        }
+        if (StringUtils.isNotBlank(properties.getValidationQuery())) {
+            hikariConfig.setConnectionTestQuery(properties.getValidationQuery());
+        }
         return new HikariDataSource(hikariConfig);
     }
-
 
 }
