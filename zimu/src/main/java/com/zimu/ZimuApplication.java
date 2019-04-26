@@ -5,7 +5,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -17,7 +16,6 @@ import java.security.cert.X509Certificate;
 @SpringBootApplication(exclude = FreeMarkerAutoConfiguration.class)
 @MapperScan("com.zimu.mapper")
 @EnableCaching
-@EnableRedisHttpSession
 public class ZimuApplication {
 
     public static void main(String[] args) {
