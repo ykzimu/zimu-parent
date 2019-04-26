@@ -48,6 +48,12 @@ spring:
       initialize-schema: embedded
     properties:
       org.quartz.jobStore.driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+    datasource:
+      name: quartzDataSource
+      url: jdbc:mysql://mysql.qinbeixian.com:3306/quartz?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      username: quartz
+      password: YKsyc@123
+      driver-class-name: com.mysql.cj.jdbc.Driver
   security:
     oauth2:
       client:
