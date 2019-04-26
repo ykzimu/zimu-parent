@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="/common/include::common_header(~{::title},~{::link},~{::style},~{::script},~{::meta})">
+    <title>数据字典列表</title>
+    <script type="text/javascript" th:src="@{/static/js/user/list.js}"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <form class="form-horizontal">
+        <div class="form-group">
+
+        </div>
+        <div class="form-group">
+            <div class="form-group">
+                <table class="table table-sm table-striped table-bordered table-hover" id="myTable">
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

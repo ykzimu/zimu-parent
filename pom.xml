@@ -39,6 +39,7 @@
         <bootstrap-datepicker.version>1.8.0</bootstrap-datepicker.version>
         <bootstrap-timepicker.version>0.5.2</bootstrap-timepicker.version>
         <bootstrap-select.version>1.13.3</bootstrap-select.version>
+        <bootstrap-switch.version>4.0.0-alpha.1</bootstrap-switch.version>
         <select2.version>4.0.5</select2.version>
         <select2-bootstrap-css.version>1.4.6</select2-bootstrap-css.version>
         <datatables.version>1.10.19</datatables.version>
@@ -328,6 +329,11 @@
                 <groupId>org.webjars</groupId>
                 <artifactId>bootstrap-timepicker</artifactId>
                 <version>${bootstrap-timepicker.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>bootstrap-switch</artifactId>
+                <version>${bootstrap-switch.version}</version>
             </dependency>
 
             <!-- select -->

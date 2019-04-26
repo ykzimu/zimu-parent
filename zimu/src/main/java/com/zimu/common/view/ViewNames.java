@@ -29,7 +29,10 @@ public enum ViewNames {
     DICT_LIST("/views/dict/list"),
 
     //任务列表
-    QUARTZ_LIST("/views/quartz/list");
+    QUARTZ_LIST("/views/quartz/list"),
+
+    //用户列表
+    USER_LIST("/views/user/list");
 
     private String viewName;
 
