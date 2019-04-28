@@ -113,6 +113,8 @@ function lockSwitchDraw() {
 
     $('table tbody [type="checkbox"]').on("switchChange.bootstrapSwitch", function (event, state) {
 
+        //window.parent.globalSpinnerModal.show();
+
         var title = "";
         var content = "";
         if (state) {
@@ -122,15 +124,19 @@ function lockSwitchDraw() {
             title = '<i class="fas fa-lock text-danger">&nbsp;&nbsp;锁定成功!</i>';
             content = '账户：' + $(this).attr("data-username") + '&nbsp;（' + $(this).attr("data-realname") + '）已锁定！';
         }
-        jBoxMsgModel.setTitle(title).setContent(content).open();
+
+        jBoxMsgModel.setTitle('<i class="fas fa-spinner fa-pulse"></i>').setContent('处理中......').open();
 
         var url = contextPath + "/user/updateLockStatus";
         var pData = {
             userId: $(this).attr('data-id'),
             state: state
         };
-        $.post(url, pData, function (data, status) {
 
+        $.post(url, pData, function (data, status) {
+            if (data.msg.code == '200') {
+                jBoxMsgModel.setTitle(title).setContent(content);
+            }
         });
     });
 }
