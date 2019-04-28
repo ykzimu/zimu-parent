@@ -6,6 +6,7 @@ import com.zimu.common.utils.LoginUserUtils;
 import com.zimu.domain.info.DataTablesInfo;
 import com.zimu.domain.info.DataTablesView;
 import com.zimu.domain.info.JsonView;
+import com.zimu.domain.info.UserInfo;
 import com.zimu.entity.UserEntity;
 import com.zimu.service.UserService;
 import com.zimu.view.user.UserListView;
@@ -15,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("user")
@@ -40,6 +43,30 @@ public class UserController {
     public DataTablesView listData(DataTablesInfo dataTablesInfo) {
         IPage<UserEntity> page = userService.getUsers(dataTablesInfo);
         return new DataTablesView<>(page);
+    }
+
+    /**
+     * 更新用户锁定状态
+     */
+    @RequestMapping(value = "updateLockStatus", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonView updateLockStatus(Long userId, Boolean state) {
+
+
+        UserInfo userInfo = LoginUserUtils.getUserInfo();
+        JsonView jsonView = new JsonView();
+
+        Integer isLocked = state ? 0 : 1;
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        userEntity.setIsLocked(isLocked);
+        userEntity.setUpdateBy(userInfo.getUsername());
+        userEntity.setUpdateDate(LocalDateTime.now());
+
+        // 更新密码
+        userService.updateById(userEntity);
+
+        return jsonView;
     }
 
 

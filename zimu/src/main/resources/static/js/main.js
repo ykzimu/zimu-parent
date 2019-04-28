@@ -3,9 +3,6 @@
  * Author: 杨坤
  */
 
-
-//全局退出确认框
-var logOutModel = null;
 //全局消息提示框
 var jBoxMsgModel = null;
 //工程名
@@ -42,38 +39,33 @@ $(document).ready(function () {
         }
     }
 
-    // 退出确认框
-    logOutModel = new jBox('Confirm', {
-        id: "jBoxLogoutModel",
-        title: '确认退出',
-        cancelButton: '取消',
-        confirmButton: '确认',
-        content: '你确定要退出？',
-        attach: '#btnLogOut',
-        closeOnEsc: true,
-        closeOnClick: 'overlay',
-        closeButton: 'title',
-        animation: {open: 'slide:top', close: 'slide:top'},
-    });
-
-    //全局消息提示框
-    jBoxMsgModel = new jBox('Modal',
-        {
-            id: "jBoxMsgModel",
-            title: '消息提示',
-            content: '',
-            closeOnEsc: true,
-            closeButton: 'title',
-            minWidth: '360px',
-            maxWidth: '500px',
-            animation: {open: 'slide:top', close: 'slide:top'},
-            onOpen: (function () {
-                globalSpinnerModal.hide();
-            }),
-            onClose: (function () {
-                globalSpinnerModal.hide();
-            })
-        });
+    if (jBoxMsgModel == null) {
+        if (window.parent != null && window.parent.jBoxMsgModel != null) {
+            jBoxMsgModel = window.parent.jBoxMsgModel;
+        } else {
+            //全局消息提示框
+            jBoxMsgModel = new jBox('Modal',
+                {
+                    id: "jBoxMsgModel",
+                    title: '消息提示',
+                    content: '',
+                    closeOnEsc: true,
+                    closeButton: 'title',
+                    minWidth: '360px',
+                    maxWidth: '500px',
+                    animation: {open: 'slide:top', close: 'slide:top'},
+                    onOpen: (function () {
+                        globalSpinnerModal.hide();
+                    }),
+                    onClose: (function () {
+                        globalSpinnerModal.hide();
+                    }),
+                    onCloseComplete: (function () {
+                        this.setTitle('消息提示').setContent('请使用jBoxMsgModel.setContent("xxxxx")方法设置内容');
+                    })
+                });
+        }
+    }
 });
 
 function childAddTab(item) {

@@ -3,6 +3,23 @@ var search = "";
 var initFlag = false;
 $(document).ready(function () {
 
+
+    // 退出确认框
+
+    //全局退出确认框
+    var logOutModel = new jBox('Confirm', {
+        id: "jBoxLogoutModel",
+        title: '确认退出',
+        cancelButton: '取消',
+        confirmButton: '确认',
+        content: '你确定要退出？',
+        attach: '#btnLogOut',
+        closeOnEsc: true,
+        closeOnClick: 'overlay',
+        closeButton: 'title',
+        animation: {open: 'slide:top', close: 'slide:top'},
+    });
+
     /**
      * 请勿删除，与jq.resize.js结合使用
      */

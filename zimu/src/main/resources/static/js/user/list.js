@@ -57,14 +57,18 @@ $(document).ready(function () {
             {name: "mobile", data: "mobile"},
             {
                 data: function (item) {
-                    return '<input type="checkbox" name="lock-switch" checked>';
+                    var html = '<input type="checkbox" data-id="' + item.id + '" data-username="' + item.username + '" data-realname="' + item.realname + '"';
+                    if (item.isLocked !== 1) {
+                        html += ' checked ';
+                    }
+                    html += '>';
+                    return html;
                 }
             },
             {
                 data: function (item) {
                     return '<a class="btn btn-outline-danger btn-sm" href="#" role="button" title="删除"><i class="fas fa-trash-alt"></i></a>' +
                         '&nbsp;&nbsp;<button type="button" class="btn btn-outline-primary btn-sm" title="编辑"><i class="fas fa-edit"></i></button>' +
-                        '&nbsp;&nbsp;<button type="button" class="btn btn-outline-primary btn-sm" title="编辑"><i class="fas fa-lock"></i></button>' +
                         '';
                 }
             }
@@ -97,10 +101,36 @@ $(document).ready(function () {
 });
 
 function lockSwitchDraw() {
-    $("[name='lock-switch']").bootstrapSwitch({
-        onText: '<i class="fas fa-lock-open"></i>',
-        offText: '<i class="fas fa-lock"></i>',
+    $('table tbody [type="checkbox"]').bootstrapSwitch({
+        /*  onText: '<i class="fas fa-lock-open"></i>',*/
+        onText: '未锁定',
+        /*     offText: '<i class="fas fa-lock"></i>',*/
+        offText: '已锁定',
         onColor: 'success',
-        offColor: 'danger'
+        offColor: 'danger',
+        size: 'mini'
+    });
+
+    $('table tbody [type="checkbox"]').on("switchChange.bootstrapSwitch", function (event, state) {
+
+        var title = "";
+        var content = "";
+        if (state) {
+            title = '<i class="fas fa-lock-open text-success">&nbsp;&nbsp;解锁成功！</i>';
+            content = '账户：' + $(this).attr("data-username") + '&nbsp;（' + $(this).attr("data-realname") + '）已解锁！';
+        } else {
+            title = '<i class="fas fa-lock text-danger">&nbsp;&nbsp;锁定成功!</i>';
+            content = '账户：' + $(this).attr("data-username") + '&nbsp;（' + $(this).attr("data-realname") + '）已锁定！';
+        }
+        jBoxMsgModel.setTitle(title).setContent(content).open();
+
+        var url = contextPath + "/user/updateLockStatus";
+        var pData = {
+            userId: $(this).attr('data-id'),
+            state: state
+        };
+        $.post(url, pData, function (data, status) {
+
+        });
     });
 }

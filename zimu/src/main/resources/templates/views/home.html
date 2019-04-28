@@ -183,7 +183,7 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
                         <a class="dropdown-item" href="#">个人信息</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" th:href="@{/logout}">退出</a>
+                        <a class="dropdown-item" id="btnLogOut" th:href="@{/logout}">退出</a>
                     </div>
                 </div>
             </li>
@@ -273,5 +273,14 @@
 </div>
 <!-- ./wrapper -->
 
+<!-- Modal -->
+<div class="modal fade" id="spinnerModal" tabindex="-1" role="dialog" aria-labelledby="spinnerModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered justify-content-center" role="document">
+        <div class="text-light">
+            <i class="fa fa-spinner fa-pulse fa-4x fa-fw" aria-hidden="true"></i>
+        </div>
+    </div>
+</div>
 </body>
 </html>
