@@ -1,5 +1,10 @@
 package com.zimu;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.zimu.entity.MenuEntity;
+import com.zimu.entity.UserEntity;
+import com.zimu.service.MenuService;
+import com.zimu.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,15 +14,17 @@ import org.springframework.context.MessageSource;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ZimuApplicationTests {
 
     @Autowired
-    private MessageSource messageSource;
+    private UserService userService;
 
     @Autowired
-    private ApplicationContext applicationContext;
+    private MenuService menuService;
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -25,7 +32,7 @@ public class ZimuApplicationTests {
 
     @Test
     public void contextLoads() {
-
+        List<MenuEntity> list = menuService.list(Wrappers.emptyWrapper());
     }
 
 }

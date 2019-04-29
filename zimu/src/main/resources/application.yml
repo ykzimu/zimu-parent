@@ -85,7 +85,7 @@ spring:
             user-name-attribute: basic
             jwk-set-uri: https://api.gitee.com/user
   cache:
-    type: redis
+    type: ehcache
     ehcache:
       config: classpath:ehcache.xml
   jackson:
