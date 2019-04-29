@@ -2,20 +2,18 @@ package com.zimu.config;
 
 import com.zimu.component.RoleComponent;
 import com.zimu.domain.info.UserInfo;
-import com.zimu.security.UserInfoOauth2UserService;
+import com.zimu.security.UserDetailsServiceImpl;
 import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
 import org.jasig.cas.client.util.HttpServletRequestWrapperFilter;
 import org.jasig.cas.client.validation.Cas30ServiceTicketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.cas.ServiceProperties;
-import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
 import org.springframework.security.cas.authentication.CasAuthenticationProvider;
 import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
 import org.springframework.security.cas.web.CasAuthenticationFilter;
@@ -24,8 +22,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
-import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
@@ -47,17 +43,13 @@ public class ZimuWebSecurityConfiguration {
 
 
         @Autowired
-        @Qualifier("userDetailsServiceImpl")
-        private UserDetailsService userDetailsService;
+        private UserDetailsServiceImpl userDetailsService;
 
         @Autowired
         private RoleComponent roleComponent;
 
         @Autowired
         private StaticProperties staticProperties;
-
-        @Autowired
-        private UserInfoOauth2UserService userInfoOAuth2UserService;
 
         @Autowired
         private RememberMeServices rememberMeServices;
@@ -86,7 +78,7 @@ public class ZimuWebSecurityConfiguration {
                 // oauth2Login登录
                 .and().oauth2Login().loginPage("/auth/login").defaultSuccessUrl("/").userInfoEndpoint()
                 .customUserType(UserInfo.class, "github").customUserType(UserInfo.class, "baidu")// .userAuthoritiesMapper(userAuthoritiesMapper())
-                .userService(userInfoOAuth2UserService).and().permitAll().and().httpBasic()//
+                .userService(userDetailsService).and().permitAll().and().httpBasic()//
                 .and().csrf().disable().rememberMe().rememberMeServices(rememberMeServices).alwaysRemember(true);
         }
 
@@ -112,13 +104,10 @@ public class ZimuWebSecurityConfiguration {
         private RoleComponent roleComponent;
 
         @Autowired
-        private UserInfoOauth2UserService userInfoOAuth2UserService;
+        private UserDetailsServiceImpl userDetailsService;
 
         @Autowired
         private StaticProperties staticProperties;
-
-        @Autowired
-        private AuthenticationUserDetailsService<CasAssertionAuthenticationToken> authenticationUserDetailsService;
 
         @Autowired
         private RememberMeServices rememberMeServices;
@@ -148,7 +137,7 @@ public class ZimuWebSecurityConfiguration {
                 // oauth2Login登录
                 .and().oauth2Login().loginPage("/auth/login").defaultSuccessUrl("/").userInfoEndpoint()
                 .customUserType(UserInfo.class, "github").customUserType(UserInfo.class, "baidu")// .userAuthoritiesMapper(userAuthoritiesMapper())
-                .userService(userInfoOAuth2UserService).and().permitAll().and().httpBasic()//
+                .userService(userDetailsService).and().permitAll().and().httpBasic()//
                 .and().csrf().disable().rememberMe().rememberMeServices(rememberMeServices);//
 
             http.exceptionHandling().authenticationEntryPoint(this.casAuthenticationEntryPoint())//
@@ -196,7 +185,7 @@ public class ZimuWebSecurityConfiguration {
             provider.setKey("casProvider");
             provider.setServiceProperties(this.serviceProperties());
             provider.setTicketValidator(new Cas30ServiceTicketValidator(this.casProperties.getServer().getHost()));
-            provider.setAuthenticationUserDetailsService(authenticationUserDetailsService);
+            provider.setAuthenticationUserDetailsService(userDetailsService);
             return provider;
         }
 

@@ -8,10 +8,14 @@ import org.springframework.security.core.userdetails.AuthenticationUserDetailsSe
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserDetailsServiceImpl implements UserDetailsService, AuthenticationUserDetailsService<CasAssertionAuthenticationToken> {
+public class UserDetailsServiceImpl extends DefaultOAuth2UserService implements UserDetailsService, AuthenticationUserDetailsService<CasAssertionAuthenticationToken> {
 
     @Autowired
     private UserService userService;
@@ -24,6 +28,12 @@ public class UserDetailsServiceImpl implements UserDetailsService, Authenticatio
     @Override
     public UserDetails loadUserDetails(CasAssertionAuthenticationToken token) {
         return this.loadUserInfo(token.getName());
+    }
+
+    @Override
+    public OAuth2User loadUser(OAuth2UserRequest userRequest) {
+        DefaultOAuth2User oauth2User = (DefaultOAuth2User) super.loadUser(userRequest);
+        return userService.getUserInfo(oauth2User);
     }
 
     private UserInfo loadUserInfo(String username) {
