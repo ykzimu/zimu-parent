@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zimu.domain.info.*;
 import com.zimu.entity.MenuEntity;
 import com.zimu.service.MenuService;
-import com.zimu.service.RequestMappingService;
 import com.zimu.view.menu.MenuAddView;
 import com.zimu.view.menu.MenuListView;
 import org.apache.commons.lang3.StringUtils;
@@ -24,9 +23,6 @@ public class MenuController {
 
     @Autowired
     private MenuService menuService;
-
-    @Autowired
-    private RequestMappingService requestMappingService;
 
 
     /**
@@ -71,7 +67,7 @@ public class MenuController {
             return mv;
         }
 
-        List<SelectInfo> list = requestMappingService.getUrls();
+        List<SelectInfo> list = null;//requestMappingService.getUrls();
 
         mv = MenuAddView.builder()//
             .menuHrefs(list)//
@@ -112,9 +108,7 @@ public class MenuController {
             mv.setViewName("redirect:/menu/list");
             return mv;
         }
-        List<SelectInfo> list = requestMappingService.getUrls();
         mv.addObject("menuInfo", menuEntity);
-        mv.addObject("menuHrefs", list);
         return mv;
     }
 
@@ -127,7 +121,6 @@ public class MenuController {
     public ModelAndView update(MenuEntity menuEntity) {
         // 视图
         ModelAndView mv = new ModelAndView("redirect:/success");
-        menuService.updateMenu(menuEntity);
         mv.addObject("message", "更新成功！");
         return mv;
     }

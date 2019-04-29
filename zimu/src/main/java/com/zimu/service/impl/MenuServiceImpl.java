@@ -11,11 +11,9 @@ import com.zimu.component.MenuComponent;
 import com.zimu.domain.info.MenuInfo;
 import com.zimu.domain.info.UserInfo;
 import com.zimu.entity.MenuEntity;
-import com.zimu.entity.RequestMappingEntity;
 import com.zimu.entity.RoleEntity;
 import com.zimu.entity.RoleMenuEntity;
 import com.zimu.mapper.MenuMapper;
-import com.zimu.mapper.RequestMappingMapper;
 import com.zimu.mapper.RoleMenuMapper;
 import com.zimu.service.MenuService;
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,9 +40,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
 
     @Autowired
     private MenuMapper menuMapper;
-
-    @Autowired
-    private RequestMappingMapper requestMappingMapper;
 
     @Autowired
     private RoleMenuMapper roleMenuMapper;
@@ -141,14 +135,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
         menuEntity.setMenuLevel(menuLevel);
         menuEntity.setParentIds(parentIds);
         menuEntity.setVersion(1);
-
-        if (StringUtils.isNumeric(menuEntity.getMenuHref())) {
-            RequestMappingEntity requestMappingEntity = requestMappingMapper.selectById(Long.parseLong(menuEntity.getMenuHref()));
-            if (requestMappingEntity != null) {
-                menuEntity.setMenuHref(requestMappingEntity.getPatterns());
-            }
-        }
-
         menuMapper.insert(menuEntity);
 
         //获取超级管理员角色（默认新加菜单只有超级管理员有权限）
@@ -164,21 +150,4 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
 
         return true;
     }
-
-
-    @Override
-    public boolean updateMenu(MenuEntity menuEntity) {
-        UserInfo userInfo = LoginUserUtils.getUserInfo();
-        menuEntity.setUpdateBy(userInfo.getId().toString());
-        menuEntity.setUpdateDate(LocalDateTime.now());
-        if (StringUtils.isNumeric(menuEntity.getMenuHref())) {
-            RequestMappingEntity requestMappingEntity = requestMappingMapper.selectById(Long.parseLong(menuEntity.getMenuHref()));
-            if (requestMappingEntity != null) {
-                menuEntity.setMenuHref(requestMappingEntity.getPatterns());
-            }
-        }
-        menuMapper.updateById(menuEntity);
-        return true;
-    }
-
 }

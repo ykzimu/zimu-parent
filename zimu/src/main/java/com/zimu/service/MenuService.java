@@ -27,5 +27,4 @@ public interface MenuService extends IService<MenuEntity> {
 
     boolean saveMenu(MenuEntity menuEntity);
 
-    boolean updateMenu(MenuEntity menuEntity);
 }
