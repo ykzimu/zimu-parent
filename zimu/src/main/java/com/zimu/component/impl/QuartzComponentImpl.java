@@ -4,9 +4,7 @@ import com.zimu.component.QuartzComponent;
 import com.zimu.quartz.JobData;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
-import org.quartz.impl.JobDetailImpl;
 import org.quartz.impl.matchers.GroupMatcher;
-import org.quartz.impl.triggers.CronTriggerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
@@ -71,30 +69,28 @@ public class QuartzComponentImpl implements QuartzComponent {
                 return false;
             }
 
-            QuartzJobBean beanClazz = applicationContext.getBean(beanName, QuartzJobBean.class);
+            QuartzJobBean quartzJobBean = applicationContext.getBean(beanName, QuartzJobBean.class);
             JobDataMap jobDataMap = new JobDataMap();
             jobDataMap.put("name", name);
 
+            JobDetail jobDetail = JobBuilder.newJob(quartzJobBean.getClass())//
+                .withIdentity(jobKey)//
+                .usingJobData(jobDataMap)//
+                .storeDurably(true)//
+                .withDescription(description)//
+                .build();//
 
-            JobDetailImpl jdi = new JobDetailImpl();
-            jdi.setKey(jobKey);
-            jdi.setJobClass(beanClazz.getClass());
-            jdi.setJobDataMap(jobDataMap);
-            jdi.setDurability(true);
-            jdi.setDescription(description);
+            CronTrigger cronTrigger = TriggerBuilder.newTrigger()//
+                .forJob(jobKey)//
+                .usingJobData(jobDataMap)//
+                .withIdentity(triggerKey)//
+                .startAt(startTime)//
+                .endAt(endTime)//
+                .withDescription(description)//
+                .withSchedule(CronScheduleBuilder.cronSchedule(cron))//
+                .build();
 
-
-            CronTriggerImpl cti = new CronTriggerImpl();
-            cti.setJobKey(jdi.getKey());
-            cti.setKey(triggerKey);
-            cti.setJobDataMap(jobDataMap);
-            cti.setStartTime(startTime);
-            cti.setEndTime(endTime);
-            cti.setCronExpression(cron);
-            cti.setDescription(description);
-
-
-            scheduler.scheduleJob(jdi, cti);
+            scheduler.scheduleJob(jobDetail, cronTrigger);
         } catch (Exception e) {
             log.error("", e);
             return false;

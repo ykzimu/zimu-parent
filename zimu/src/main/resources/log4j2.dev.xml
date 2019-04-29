@@ -4,7 +4,7 @@
 		<property name="LOG_PATTERN"
 			value="[%-5p][%d{HH:mm:ss}][%t][%c{1.} (%M:%L)] %m%n" />
 		<property name="LOG_PATH" value="/home/logs" />
-		<property name="LOG_FILE" value="muzi" />
+		<property name="LOG_FILE" value="zimu" />
 	</Properties>
 	<Appenders>
 		<Console name="Console" target="SYSTEM_OUT">
