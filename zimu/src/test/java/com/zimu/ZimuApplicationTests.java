@@ -1,16 +1,13 @@
 package com.zimu;
 
-import net.spy.memcached.MemcachedClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Arrays;
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,14 +20,12 @@ public class ZimuApplicationTests {
     private ApplicationContext applicationContext;
 
     @Autowired
-    private MemcachedClient memcachedClient;
+    private MongoTemplate mongoTemplate;
 
 
     @Test
     public void contextLoads() {
-        String[] names = applicationContext.getBeanDefinitionNames();
-        List<String> nameArr = Arrays.asList(names);
-        nameArr.forEach(System.out::println);
+
     }
 
 }

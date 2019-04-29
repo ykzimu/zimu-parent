@@ -36,6 +36,13 @@ spring:
         max-idle: 8
         max-wait: -1ms
         min-idle: 0
+  data:
+    mongodb:
+      host: mongodb.qinbeixian.com
+      port: 27017
+      username: zimu
+      password: yk316497
+      database: zimu
   session:
     store-type: redis
     timeout: 2000
