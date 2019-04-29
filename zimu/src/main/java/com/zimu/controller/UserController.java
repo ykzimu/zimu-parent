@@ -1,5 +1,6 @@
 package com.zimu.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zimu.common.exception.ValidationException;
 import com.zimu.common.utils.LoginUserUtils;
@@ -42,7 +43,12 @@ public class UserController {
     @ResponseBody
     public DataTablesView listData(DataTablesInfo dataTablesInfo) {
         IPage<UserEntity> page = userService.getUsers(dataTablesInfo);
-        return new DataTablesView<>(page);
+        UserInfo userInfo = LoginUserUtils.getUserInfo();
+        DataTablesView dataTablesView = new DataTablesView<>(page);
+        JSONObject extendData = new JSONObject();
+        extendData.put("userId", userInfo.getId());
+        dataTablesView.setExtendData(extendData);
+        return dataTablesView;
     }
 
     /**

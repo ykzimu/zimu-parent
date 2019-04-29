@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    var userId;
+
     $('#myTable').DataTable({
         serverSide: true,
         processing: true,
@@ -8,7 +10,12 @@ $(document).ready(function () {
         order: [[1, 'asc']],
         ajax: {
             url: contextPath + "/user/listData",
-            type: "POST"
+            type: "POST",
+            data: {xxx: "就不告诉你"},
+            dataSrc: function (json) {
+                userId = json.extendData.userId;
+                return json.data;
+            }
         },
         columnDefs: [
             {
@@ -57,19 +64,27 @@ $(document).ready(function () {
             {name: "mobile", data: "mobile"},
             {
                 data: function (item) {
-                    var html = '<input type="checkbox" data-id="' + item.id + '" data-username="' + item.username + '" data-realname="' + item.realname + '"';
+
+                    var html = '<input type="checkbox"  data-id="' + item.id + '" data-username="' + item.username + '" data-realname="' + item.realname + '"';
                     if (item.isLocked !== 1) {
                         html += ' checked ';
                     }
+                    if (userId === item.id) {
+                        html += ' disabled ';
+                    }
+
                     html += '>';
                     return html;
                 }
             },
             {
                 data: function (item) {
+                    if (userId === item.id) {
+                        return '';
+                    }
+
                     return '<a class="btn btn-outline-danger btn-sm" href="#" role="button" title="删除"><i class="fas fa-trash-alt"></i></a>' +
-                        '&nbsp;&nbsp;<button type="button" class="btn btn-outline-primary btn-sm" title="编辑"><i class="fas fa-edit"></i></button>' +
-                        '';
+                        '&nbsp;&nbsp;<button type="button" class="btn btn-outline-primary btn-sm" title="编辑"><i class="fas fa-edit"></i></button>';
                 }
             }
         ],
