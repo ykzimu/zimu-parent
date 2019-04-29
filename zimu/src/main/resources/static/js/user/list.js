@@ -65,14 +65,14 @@ $(document).ready(function () {
             {
                 data: function (item) {
 
+                    if (userId === item.id) {
+                        return '<span class="text-danger">当前登陆用户，无法锁定！</span>';
+                    }
+
                     var html = '<input type="checkbox"  data-id="' + item.id + '" data-username="' + item.username + '" data-realname="' + item.realname + '"';
                     if (item.isLocked !== 1) {
                         html += ' checked ';
                     }
-                    if (userId === item.id) {
-                        html += ' disabled ';
-                    }
-
                     html += '>';
                     return html;
                 }
@@ -80,7 +80,7 @@ $(document).ready(function () {
             {
                 data: function (item) {
                     if (userId === item.id) {
-                        return '';
+                        return '<span class="text-danger">当前登陆用户，无法操作！</span>';
                     }
 
                     return '<a class="btn btn-outline-danger btn-sm" href="#" role="button" title="删除"><i class="fas fa-trash-alt"></i></a>' +
