@@ -54,6 +54,7 @@ spring:
       initialize-schema: embedded
     properties:
       org.quartz.jobStore.driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+      org.quartz.jobStore.isClustered: true #是否使用集群
     datasource:
       name: quartzDataSource
       url: jdbc:mysql://mysql.qinbeixian.com:3306/quartz?useUnicode=true&characterEncoding=UTF-8&useSSL=false
