@@ -5,6 +5,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.autoconfigure.quartz.QuartzDataSource;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Primary;
 import javax.sql.DataSource;
 
 @Configuration
+@EnableConfigurationProperties({DataSourceProperties.class, QuartzDataSourceProperties.class})
 public class DataSourceConfiguration {
 
     @Bean
