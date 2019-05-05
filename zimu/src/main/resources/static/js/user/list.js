@@ -152,6 +152,6 @@ function lockSwitchDraw() {
             if (data.msg.code == '200') {
                 jBoxMsgModel.setTitle(title).setContent(content);
             }
-        });
+        }, 'json');
     });
 }
