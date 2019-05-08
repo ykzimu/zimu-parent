@@ -7,11 +7,11 @@ $(document).ready(function () {
         processing: true,
         searching: true,
         pagingType: "full_numbers",
-        order: [[1, 'asc']],
+        order: [[2, 'asc']],
         ajax: {
             url: contextPath + "/user/listData",
             type: "POST",
-            data: {xxx: "就不告诉你"},
+            data: {},
             dataSrc: function (json) {
                 userId = json.extendData.userId;
                 return json.data;
@@ -21,48 +21,20 @@ $(document).ready(function () {
             {
                 targets: [0, 6, 7],
                 searchable: false,
-                orderable: false
-            },
-            {
-                title: '账户',
-                targets: 1,
-            },
-            {
-                title: '昵称',
-                targets: 2,
-            },
-            {
-                title: '姓名',
-                targets: 3,
-            },
-            {
-                title: '邮箱',
-                targets: 4,
-            },
-            {
-                title: '手机',
-                targets: 5,
-            },
-            {
-                title: '锁定状态',
-                targets: 6,
-                className: "text-center"
-            },
-            {
-                title: '操作',
-                targets: 7,
+                orderable: false,
                 className: "text-center"
             }
         ],
         columns: [
             //{data: '<input class="checkchild" type="checkbox"/>'},
-            {name: "id", data: "id"},
-            {name: "username", data: "username"},
-            {name: "nickname", data: "nickname"},
-            {name: "realname", data: "realname"},
-            {name: "email", data: "email"},
-            {name: "mobile", data: "mobile"},
+            {data: null, defaultContent: '', className: 'select-checkbox', width: "33px"},
+            {title: '账户', name: "username", data: "username"},
+            {title: '昵称', name: "nickname", data: "nickname"},
+            {title: '姓名', name: "realname", data: "realname"},
+            {title: '邮箱', name: "email", data: "email"},
+            {title: '手机', name: "mobile", data: "mobile"},
             {
+                title: '锁定状态',
                 data: function (item) {
 
                     if (userId === item.id) {
@@ -78,6 +50,7 @@ $(document).ready(function () {
                 }
             },
             {
+                title: '操作',
                 data: function (item) {
                     if (userId === item.id) {
                         return '<span class="text-danger">当前登陆用户，无法操作！</span>';
@@ -103,13 +76,28 @@ $(document).ready(function () {
                 last: '末页'
             },
             infoEmpty: '没有数据!',
-            infoFiltered: "(从_MAX_条数据检索)"
+            infoFiltered: "(从_MAX_条数据检索)",
+            select: {
+                rows: {
+                    _: "选中 %d 行",
+                    0: "点击选择"
+
+                }
+            }
         },
         autoWidth: false,//关闭自动调节，与父iframe有冲突
         scrollCollapse: false,
         drawCallback: function (settings) {
             lockSwitchDraw();
-        }
+        },
+        select: {
+            style: 'multi+shift',
+            selector: 'td:first-child'
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf'
+        ]
     });
 
 
