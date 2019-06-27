@@ -54,6 +54,10 @@
 
         <!--webjars end-->
 
+        <build.number>0</build.number>
+        <timeZone>GMT+8</timeZone>
+        <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
+
         <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
     </properties>
     <dependencies>
