@@ -10,17 +10,18 @@ import com.zimu.domain.info.JsonView;
 import com.zimu.domain.info.UserInfo;
 import com.zimu.entity.UserEntity;
 import com.zimu.service.UserService;
-import com.zimu.view.user.UserListView;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 
-@Controller
+@Slf4j
+@RestController
 @RequestMapping("user")
 public class UserController {
 
@@ -30,17 +31,10 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @GetMapping("/list")
-    public ModelAndView list() {
-        return UserListView.builder().build().view();
-    }
-
-
     /**
      * 用户列表
      */
     @PostMapping("/listData")
-    @ResponseBody
     public DataTablesView listData(DataTablesInfo dataTablesInfo) {
         IPage<UserEntity> page = userService.getUsers(dataTablesInfo);
         UserInfo userInfo = LoginUserUtils.getUserInfo();
@@ -54,11 +48,8 @@ public class UserController {
     /**
      * 更新用户锁定状态
      */
-    @RequestMapping(value = "updateLockStatus", method = RequestMethod.POST)
-    @ResponseBody
+    @PostMapping(value = "updateLockStatus")
     public JsonView updateLockStatus(Long userId, Boolean state) {
-
-
         UserInfo userInfo = LoginUserUtils.getUserInfo();
         JsonView jsonView = new JsonView();
 
@@ -76,35 +67,13 @@ public class UserController {
     }
 
 
-    @GetMapping("index")
-    public ModelAndView index() {
-        // 视图
-        ModelAndView mv = new ModelAndView("/views/user/info");
-        return mv;
-    }
-
-    @GetMapping("info")
-    public ModelAndView info() {
-        // 视图
-        ModelAndView mv = new ModelAndView("/views/user/info");
-        return mv;
-    }
-
-    @GetMapping("pwd")
-    public ModelAndView pwd() {
-        // 视图
-        ModelAndView mv = new ModelAndView("/views/user/pwd");
-        return mv;
-    }
-
     /**
      * 密码验证
      *
      * @param password 密码
      * @return JsonView
      */
-    @RequestMapping(value = "validatePwd", method = RequestMethod.POST)
-    @ResponseBody
+    @PostMapping(value = "validatePwd")
     public JsonView validatePwd(String password) {
         JsonView jsonView = new JsonView();
 
@@ -123,8 +92,7 @@ public class UserController {
      * @param newPassword 新密码
      * @return JsonView
      */
-    @RequestMapping(value = "updPwd", method = RequestMethod.POST)
-    @ResponseBody
+    @PostMapping(value = "updPwd")
     public JsonView updPwd(String password, String newPassword) {
         JsonView jsonView = new JsonView();
 

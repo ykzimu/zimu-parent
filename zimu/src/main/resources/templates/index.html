@@ -27,7 +27,7 @@
             </ul>
             <div class="row">
                 <th:block th:if="${session?.SPRING_SECURITY_CONTEXT?.authentication?.principal?.id!=null}">
-                    <a class="nav-link text-white" th:href="@{/home}">
+                    <a class="nav-link text-white" th:href="@{/home.html}">
                         <i class="fas fa-fw fa-cloud " aria-hidden="true"></i>工作台
                     </a>
                     <a class="nav-link text-white" href="#">
@@ -41,7 +41,7 @@
                     </a>
                 </th:block>
                 <th:block th:if="${session?.SPRING_SECURITY_CONTEXT?.authentication?.principal?.id==null}">
-                    <a class="nav-link text-white" th:href="@{/home}">
+                    <a class="nav-link text-white" th:href="@{/home.html}">
                         <i class="fas fa-fw fa-sign-in-alt" aria-hidden="true"></i>登录
                     </a>
                 </th:block>

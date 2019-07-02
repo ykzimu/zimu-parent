@@ -1,8 +1,10 @@
 package com.zimu.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.zimu.common.utils.ViewUtils;
 import com.zimu.interceptor.HttpServletInterceptor;
 import com.zimu.resolver.DataTablesHandlerMethodArgumentResolver;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.HibernateValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
@@ -15,11 +17,13 @@ import org.springframework.session.security.web.authentication.SpringSessionReme
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.validation.Validator;
 import java.util.List;
 
+@Slf4j
 @Configuration
 public class ZimuWebMvcConfiguration implements WebMvcConfigurer {
 
@@ -33,6 +37,23 @@ public class ZimuWebMvcConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new HttpServletInterceptor())
             .excludePathPatterns(webMvcProperties.getStaticPathPattern());
+    }
+
+    /**
+     * 自动装配controller  viewname
+     *
+     * @param registry
+     */
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addRedirectViewController("/", "index.html");
+        registry.addRedirectViewController("/login", "/login.html");
+        List<String> urlPaths = ViewUtils.getUrlPaths();
+
+        log.info("自动映射url，-----start------------------");
+        urlPaths.forEach(log::info);
+        log.info("自动映射url，-----end------------------");
+        urlPaths.forEach(x -> registry.addViewController(x).setViewName(x));
     }
 
     @Override

@@ -108,7 +108,7 @@ mybatis-plus:
   mapper-locations: classpath:com/zimu/mapper/xml/*.xml
   configuration:
     map-underscore-to-camel-case: true
-    default-enum-type-handler: com.baomidou.mybatisplus.extension.handlers.EnumTypeHandler
+    default-enum-type-handler: com.baomidou.mybatisplus.extension.handlers.MybatisEnumTypeHandler
   type-enums-package: com.zimu.common.mybatisplus.enums
 memcached:
   servers: memcached.qinbeixian.com:11211
