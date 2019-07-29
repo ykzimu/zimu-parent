@@ -1,9 +1,9 @@
 package com.zimu.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.zimu.common.utils.ViewUtils;
 import com.zimu.interceptor.HttpServletInterceptor;
 import com.zimu.resolver.DataTablesHandlerMethodArgumentResolver;
+import com.zimu.view.TemplatesView;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.HibernateValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.validation.Validator;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -29,6 +30,13 @@ public class ZimuWebMvcConfiguration implements WebMvcConfigurer {
 
     @Autowired
     private WebMvcProperties webMvcProperties;
+
+
+    /**
+     * urlpath处理器
+     */
+    @Autowired
+    private List<TemplatesView> templatesViewList;
 
     /**
      * 自定义拦截器
@@ -48,8 +56,8 @@ public class ZimuWebMvcConfiguration implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addRedirectViewController("/", "index.html");
         registry.addRedirectViewController("/login", "/login.html");
-        List<String> urlPaths = ViewUtils.getUrlPaths();
-
+        List<String> urlPaths = new ArrayList<>();
+        templatesViewList.forEach(t -> urlPaths.addAll(t.getUrlPaths()));
         log.info("自动映射url，-----start------------------");
         urlPaths.forEach(log::info);
         log.info("自动映射url，-----end------------------");
