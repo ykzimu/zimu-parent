@@ -14,15 +14,19 @@ spring:
           enabled: false
           version: v1.0.0
   datasource:
-    #type: com.alibaba.druid.pool.DruidDataSource #坑：不支持java8 time包下的属性 DruidPooledResultSet不支持 getObject导致
-    type: com.zaxxer.hikari.HikariDataSource
-    name: zimuDataSource
-    url: jdbc:mysql://mysql.qinbeixian.com:3306/zimu?useUnicode=true&characterEncoding=UTF-8&useSSL=false
-    username: yangkun
-    password: YKsyc@123
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    hikari:
-      connection-test-query: SELECT 1
+    druid: #请勿使用druid的监控filter
+      zimu:
+        name: zimuDataSource
+        url: jdbc:mysql://mysql.qinbeixian.com:3306/zimu?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: yangkun
+        password: YKsyc@123
+      quartz:
+        name: quartzDataSource
+        url: jdbc:mysql://mysql.qinbeixian.com:3306/quartz?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: quartz
+        password: YKsyc@123
   thymeleaf:
     cache: false
   redis:
@@ -57,14 +61,6 @@ spring:
     properties:
       org.quartz.jobStore.driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
       org.quartz.jobStore.isClustered: true #是否使用集群
-    datasource:
-      name: quartzDataSource
-      url: jdbc:mysql://mysql.qinbeixian.com:3306/quartz?useUnicode=true&characterEncoding=UTF-8&useSSL=false
-      username: quartz
-      password: YKsyc@123
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      max-connections: 10
-      validation-query: select 1
   security:
     oauth2:
       client:
