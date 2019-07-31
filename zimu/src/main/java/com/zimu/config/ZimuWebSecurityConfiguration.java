@@ -62,9 +62,9 @@ public class ZimuWebSecurityConfiguration {
             Map<String, String[]> roleMenus = roleComponent.getRoleMenus();
 
             ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http
-                .authorizeRequests()
-                // 静态资源及无需登录的资源
-                .antMatchers(staticProperties.getUrlPatterns()).permitAll();
+                    .authorizeRequests()
+                    // 静态资源及无需登录的资源
+                    .antMatchers(staticProperties.getUrlPatterns()).permitAll();
 
             // 遍历数据库中变更的权限
             for (Map.Entry<String, String[]> entry : roleMenus.entrySet()) {
@@ -72,14 +72,14 @@ public class ZimuWebSecurityConfiguration {
             }
             //
             registry.anyRequest().authenticated()//
-                .and().formLogin().loginPage("/login").permitAll()
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll()//
-                .and().headers().frameOptions().disable()//
-                // oauth2Login登录
-                .and().oauth2Login().loginPage("/auth/login").defaultSuccessUrl("/").userInfoEndpoint()
-                .customUserType(UserInfo.class, "github").customUserType(UserInfo.class, "baidu")// .userAuthoritiesMapper(userAuthoritiesMapper())
-                .userService(userDetailsService).and().permitAll().and().httpBasic()//
-                .and().csrf().disable().rememberMe().rememberMeServices(rememberMeServices).alwaysRemember(true);
+                    .and().formLogin().loginPage("/login").permitAll()
+                    .and().logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll()//
+                    .and().headers().frameOptions().disable()//
+                    // oauth2Login登录
+                    .and().oauth2Login().loginPage("/auth/login").defaultSuccessUrl("/").userInfoEndpoint()
+                    .customUserType(UserInfo.class, "github").customUserType(UserInfo.class, "baidu")// .userAuthoritiesMapper(userAuthoritiesMapper())
+                    .userService(userDetailsService).and().permitAll().and().httpBasic()//
+                    .and().csrf().disable().rememberMe().rememberMeServices(rememberMeServices).alwaysRemember(true);
         }
 
         /**
@@ -122,9 +122,9 @@ public class ZimuWebSecurityConfiguration {
             Map<String, String[]> roleMenus = roleComponent.getRoleMenus();
 
             ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http
-                .authorizeRequests()
-                // 静态资源及无需登录的资源
-                .antMatchers(staticProperties.getUrlPatterns()).permitAll();
+                    .authorizeRequests()
+                    // 静态资源及无需登录的资源
+                    .antMatchers(staticProperties.getUrlPatterns()).permitAll();
 
             // 遍历数据库中变更的权限
             for (Map.Entry<String, String[]> entry : roleMenus.entrySet()) {
@@ -132,20 +132,20 @@ public class ZimuWebSecurityConfiguration {
             }
             //
             registry.anyRequest().authenticated()//
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll()//
-                .and().headers().frameOptions().disable()//
-                // oauth2Login登录
-                .and().oauth2Login().loginPage("/auth/login").defaultSuccessUrl("/").userInfoEndpoint()
-                .customUserType(UserInfo.class, "github").customUserType(UserInfo.class, "baidu")// .userAuthoritiesMapper(userAuthoritiesMapper())
-                .userService(userDetailsService).and().permitAll().and().httpBasic()//
-                .and().csrf().disable().rememberMe().rememberMeServices(rememberMeServices);//
+                    .and().logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll()//
+                    .and().headers().frameOptions().disable()//
+                    // oauth2Login登录
+                    .and().oauth2Login().loginPage("/auth/login").defaultSuccessUrl("/").userInfoEndpoint()
+                    .customUserType(UserInfo.class, "github").customUserType(UserInfo.class, "baidu")// .userAuthoritiesMapper(userAuthoritiesMapper())
+                    .userService(userDetailsService).and().permitAll().and().httpBasic()//
+                    .and().csrf().disable().rememberMe().rememberMeServices(rememberMeServices);//
 
             http.exceptionHandling().authenticationEntryPoint(this.casAuthenticationEntryPoint())//
-                .and()//
-                .addFilter(this.casAuthenticationFilter())//
-                .addFilterBefore(this.logoutFilter(), LogoutFilter.class)//
-                .addFilterBefore(this.singleSignOutFilter(), CasAuthenticationFilter.class)//
-                .addFilterAfter(new HttpServletRequestWrapperFilter(), CasAuthenticationFilter.class);
+                    .and()//
+                    .addFilter(this.casAuthenticationFilter())//
+                    .addFilterBefore(this.logoutFilter(), LogoutFilter.class)//
+                    .addFilterBefore(this.singleSignOutFilter(), CasAuthenticationFilter.class)//
+                    .addFilterAfter(new HttpServletRequestWrapperFilter(), CasAuthenticationFilter.class);
         }
 
         /**
@@ -205,9 +205,7 @@ public class ZimuWebSecurityConfiguration {
 
         @Bean
         public ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> singleSignOutHttpSessionListener() {
-            ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> servletListenerRegistrationBean = new ServletListenerRegistrationBean<>();
-            servletListenerRegistrationBean.setListener(new SingleSignOutHttpSessionListener());
-            return servletListenerRegistrationBean;
+            return new ServletListenerRegistrationBean<>(new SingleSignOutHttpSessionListener());
         }
     }
 

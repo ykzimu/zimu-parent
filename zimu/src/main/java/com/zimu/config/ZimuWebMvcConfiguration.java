@@ -103,34 +103,28 @@ public class ZimuWebMvcConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
-    public ServletListenerRegistrationBean metricsServletContextListener() {
-        return new ServletListenerRegistrationBean(new MetricsServlet.ContextListener() {
-            public final MetricRegistry METRIC_REGISTRY = new MetricRegistry();
-
+    public ServletListenerRegistrationBean<MetricsServlet.ContextListener> metricsServletContextListener() {
+        return new ServletListenerRegistrationBean<>(new MetricsServlet.ContextListener() {
             @Override
             protected MetricRegistry getMetricRegistry() {
-                return METRIC_REGISTRY;
+                return new MetricRegistry();
             }
         });
     }
 
     @Bean
-    public ServletListenerRegistrationBean healthCheckServletContextListener() {
-        return new ServletListenerRegistrationBean(new HealthCheckServlet.ContextListener() {
-            public final HealthCheckRegistry HEALTH_CHECK_REGISTRY = new HealthCheckRegistry();
-
+    public ServletListenerRegistrationBean<HealthCheckServlet.ContextListener> healthCheckServletContextListener() {
+        return new ServletListenerRegistrationBean<>(new HealthCheckServlet.ContextListener() {
             @Override
             protected HealthCheckRegistry getHealthCheckRegistry() {
-                return HEALTH_CHECK_REGISTRY;
+                return new HealthCheckRegistry();
             }
         });
     }
 
     @Bean
     public ServletRegistrationBean<AdminServlet> adminServlet() {
-        ServletRegistrationBean<AdminServlet> servletServletRegistrationBean = new ServletRegistrationBean<>(new AdminServlet());
-        servletServletRegistrationBean.addUrlMappings("/metrics/*");
-        return servletServletRegistrationBean;
+        return new ServletRegistrationBean<>(new AdminServlet(), "/metrics/*");
     }
 
 }
