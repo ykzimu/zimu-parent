@@ -1,6 +1,6 @@
 package com.zimu.config;
 
-import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.autoconfigure.quartz.QuartzDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -14,16 +14,16 @@ public class DataSourceConfiguration {
 
     @Bean
     @Primary
-    @ConfigurationProperties("spring.datasource.druid.zimu")
+    @ConfigurationProperties("spring.datasource.hikari.zimu")
     public DataSource zimuDataSource() {
-        return DruidDataSourceBuilder.create().build();
+        return new HikariDataSource();
     }
 
     @Bean
     @QuartzDataSource
-    @ConfigurationProperties("spring.datasource.druid.quartz")
+    @ConfigurationProperties("spring.datasource.hikari.quartz")
     public DataSource quartzDataSource() {
-        return DruidDataSourceBuilder.create().build();
+        return new HikariDataSource();
     }
 
 }

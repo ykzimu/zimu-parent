@@ -14,16 +14,16 @@ spring:
           enabled: false
           version: v1.0.0
   datasource:
-    druid: #请勿使用druid的监控filter
+    hikari:
       zimu:
-        name: zimuDataSource
-        url: jdbc:mysql://mysql.qinbeixian.com:3306/zimu?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+        pool-name: zimuDataSource
+        jdbc-url: jdbc:mysql://mysql.qinbeixian.com:3306/zimu?useUnicode=true&characterEncoding=UTF-8&useSSL=false
         driver-class-name: com.mysql.cj.jdbc.Driver
         username: yangkun
         password: YKsyc@123
       quartz:
-        name: quartzDataSource
-        url: jdbc:mysql://mysql.qinbeixian.com:3306/quartz?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+        pool-name: quartzDataSource
+        jdbc-url: jdbc:mysql://mysql.qinbeixian.com:3306/quartz?useUnicode=true&characterEncoding=UTF-8&useSSL=false
         driver-class-name: com.mysql.cj.jdbc.Driver
         username: quartz
         password: YKsyc@123
