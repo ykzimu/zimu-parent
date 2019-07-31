@@ -1,8 +1,6 @@
 package com.zimu.config;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-import org.apache.commons.lang3.StringUtils;
+import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.autoconfigure.quartz.QuartzDataSource;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -19,31 +17,25 @@ public class DataSourceConfiguration {
     @Bean
     @Primary
     public DataSource zimuDataSource(DataSourceProperties properties) {
-        HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setDriverClassName(properties.getDriverClassName());
-        hikariConfig.setUsername(properties.getUsername());
-        hikariConfig.setPassword(properties.getPassword());
-        hikariConfig.setJdbcUrl(properties.getUrl());
-        hikariConfig.setPoolName(properties.getName());
-        return new HikariDataSource(hikariConfig);
+        DruidDataSource druidDataSource = new DruidDataSource();
+        druidDataSource.setDriverClassName(properties.getDriverClassName());
+        druidDataSource.setUsername(properties.getUsername());
+        druidDataSource.setPassword(properties.getPassword());
+        druidDataSource.setUrl(properties.getUrl());
+        druidDataSource.setName(properties.getName());
+        return druidDataSource;
     }
 
     @Bean
     @QuartzDataSource
     public DataSource quartzDataSource(QuartzDataSourceProperties properties) {
-        HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setDriverClassName(properties.getDriverClassName());
-        hikariConfig.setUsername(properties.getUsername());
-        hikariConfig.setPassword(properties.getPassword());
-        hikariConfig.setJdbcUrl(properties.getUrl());
-        hikariConfig.setPoolName(properties.getName());
-        if (properties.getMaxConnections() >= 1) {
-            hikariConfig.setMaximumPoolSize(properties.getMaxConnections());
-        }
-        if (StringUtils.isNotBlank(properties.getValidationQuery())) {
-            hikariConfig.setConnectionTestQuery(properties.getValidationQuery());
-        }
-        return new HikariDataSource(hikariConfig);
+        DruidDataSource druidDataSource = new DruidDataSource();
+        druidDataSource.setDriverClassName(properties.getDriverClassName());
+        druidDataSource.setUsername(properties.getUsername());
+        druidDataSource.setPassword(properties.getPassword());
+        druidDataSource.setUrl(properties.getUrl());
+        druidDataSource.setName(properties.getName());
+        return druidDataSource;
     }
 
 }

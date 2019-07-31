@@ -20,7 +20,8 @@
     </modules>
 
     <properties>
-        <mybatis.plus.version>3.1.2</mybatis.plus.version>
+        <druid-spring.version>1.1.18</druid-spring.version>
+        <mybatis-plus.version>3.1.2</mybatis-plus.version>
         <fastjson.version>1.2.58</fastjson.version>
         <tika.version>1.21</tika.version>
         <poi.version>4.1.0</poi.version>
@@ -102,14 +103,19 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid-spring.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis.plus.version}</version>
+                <version>${mybatis-plus.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-generator</artifactId>
-                <version>${mybatis.plus.version}</version>
+                <version>${mybatis-plus.version}</version>
             </dependency>
 
             <dependency>
