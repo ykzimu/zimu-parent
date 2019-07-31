@@ -1,6 +1,11 @@
 package com.zimu.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.codahale.metrics.MetricRegistry;
+import com.codahale.metrics.health.HealthCheckRegistry;
+import com.codahale.metrics.servlets.AdminServlet;
+import com.codahale.metrics.servlets.HealthCheckServlet;
+import com.codahale.metrics.servlets.MetricsServlet;
 import com.zimu.interceptor.HttpServletInterceptor;
 import com.zimu.resolver.DataTablesHandlerMethodArgumentResolver;
 import com.zimu.view.TemplatesView;
@@ -8,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.HibernateValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,7 +51,7 @@ public class ZimuWebMvcConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new HttpServletInterceptor())
-            .excludePathPatterns(webMvcProperties.getStaticPathPattern());
+                .excludePathPatterns(webMvcProperties.getStaticPathPattern());
     }
 
     /**
@@ -93,6 +100,37 @@ public class ZimuWebMvcConfiguration implements WebMvcConfigurer {
     @Bean
     public PaginationInterceptor paginationInterceptor() {
         return new PaginationInterceptor();
+    }
+
+    @Bean
+    public ServletListenerRegistrationBean metricsServletContextListener() {
+        return new ServletListenerRegistrationBean(new MetricsServlet.ContextListener() {
+            public final MetricRegistry METRIC_REGISTRY = new MetricRegistry();
+
+            @Override
+            protected MetricRegistry getMetricRegistry() {
+                return METRIC_REGISTRY;
+            }
+        });
+    }
+
+    @Bean
+    public ServletListenerRegistrationBean healthCheckServletContextListener() {
+        return new ServletListenerRegistrationBean(new HealthCheckServlet.ContextListener() {
+            public final HealthCheckRegistry HEALTH_CHECK_REGISTRY = new HealthCheckRegistry();
+
+            @Override
+            protected HealthCheckRegistry getHealthCheckRegistry() {
+                return HEALTH_CHECK_REGISTRY;
+            }
+        });
+    }
+
+    @Bean
+    public ServletRegistrationBean<AdminServlet> adminServlet() {
+        ServletRegistrationBean<AdminServlet> servletServletRegistrationBean = new ServletRegistrationBean<>(new AdminServlet());
+        servletServletRegistrationBean.addUrlMappings("/metrics/*");
+        return servletServletRegistrationBean;
     }
 
 }
