@@ -13,6 +13,9 @@ spring:
         fixed:
           enabled: false
           version: v1.0.0
+      cache: true
+    cache:
+      period: 604800
   datasource:
     hikari:
       zimu:
@@ -28,7 +31,7 @@ spring:
         username: quartz
         password: YKsyc@123
   thymeleaf:
-    cache: false
+    cache: true
   redis:
     host: redis.qinbeixian.com
     password: yksyc316497
@@ -126,7 +129,14 @@ cas:
     logout: /logout
 logging:
   config: classpath:log4j2.xml
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
 ---
 spring:
   profiles: dev

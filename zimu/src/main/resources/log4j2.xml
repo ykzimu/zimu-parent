@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="INFO">
     <Properties>
-        <property name="LOG_PATTERN"
-                  value="[%-5p][%d{HH:mm:ss}][%t][%c (%M:%L)] %m%n"/>
+        <property name="LOG_PATTERN" value="[%-5p][%d{HH:mm:ss}][%t][%c (%M:%L)] %green{%m%n}"/>
+<!--                  value="[%-5p][%d{HH:mm:ss}][%t][%c (%M:%L)] %m%n"/>-->
+
     </Properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">

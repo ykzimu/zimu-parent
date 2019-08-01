@@ -68,7 +68,7 @@ public class ZimuWebMvcConfiguration implements WebMvcConfigurer {
         log.info("自动映射url，-----start------------------");
         urlPaths.forEach(log::info);
         log.info("自动映射url，-----end------------------");
-        urlPaths.forEach(x -> registry.addViewController(x).setViewName(x));
+        urlPaths.forEach(x -> registry.addViewController(x).setViewName(x.substring(1)));
     }
 
     @Override
