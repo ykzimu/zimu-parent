@@ -31,7 +31,7 @@ spring:
         username: quartz
         password: YKsyc@123
   thymeleaf:
-    cache: true
+    cache: false
   redis:
     host: redis.qinbeixian.com
     password: yksyc316497
