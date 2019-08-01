@@ -99,8 +99,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         if (userEntity == null) {
             return null;
         }
+        return this.getUserInfoByUserId(userEntity.getId());
+    }
 
-        Long userId = userEntity.getId();
+
+    private UserInfo getUserInfoByUserId(Long userId) {
+        // 查询用户信息
+        UserEntity userEntity = this.getById(userId);
+        if (userEntity == null) {
+            return null;
+        }
+
+
         //查询角色信息
         List<RoleEntity> roleEntities = roleComponent.getRolesByUserId(userId);
         //左侧菜单
@@ -207,24 +217,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
         }
 
-        // 查询角色信息
-        List<String> roles = this.getRoleCodesByUserId(userEntity.getId());
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        SimpleGrantedAuthority grantedAuthority = null;
-        for (String role : roles) {
-            grantedAuthority = new SimpleGrantedAuthority(role);
-            authorities.add(grantedAuthority);
-        }
-        authorities.addAll(oauth2User.getAuthorities());
-        UserInfo userInfo = new UserInfo();
-        try {
-            BeanUtils.copyProperties(userEntity, userInfo);
-        } catch (Exception e) {
-
-        }
-        userInfo.setAuthorities(authorities);
-        userInfo.setAttributes(oauth2User.getAttributes());
-        return userInfo;
+        return this.getUserInfoByUserId(userEntity.getId());
     }
 
     private UserGithubEntity mapToUserGithubEntity(Map<String, Object> map) {
@@ -383,7 +376,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         authorities.add(authority);
         userInfo.setAuthorities(authorities);
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userInfo, pwd,
-            authorities);
+                authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return true;
     }
