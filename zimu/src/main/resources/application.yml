@@ -15,7 +15,7 @@ spring:
           version: v1.0.0
       cache: true
     cache:
-      period: 604800
+      period: 604800 #必须加缓存时间，默认秒
   datasource:
     hikari:
       zimu:
