@@ -24,8 +24,10 @@
         <fastjson.version>1.2.58</fastjson.version>
         <tika.version>1.21</tika.version>
         <poi.version>4.1.0</poi.version>
+        <itext.version>2.1.7</itext.version>
         <itextpdf.version>5.5.13.1</itextpdf.version>
         <pdfbox.version>2.0.16</pdfbox.version>
+        <jodconverter.version>4.2.2</jodconverter.version>
 
         <!--webjars start-->
         <webjars-locator.version>0.36</webjars-locator.version>
@@ -116,7 +118,31 @@
                 <artifactId>mybatis-plus-generator</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.jodconverter</groupId>
+                <artifactId>jodconverter-spring-boot-starter</artifactId>
+                <version>${jodconverter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jodconverter</groupId>
+                <artifactId>jodconverter-local</artifactId>
+                <version>${jodconverter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jodconverter</groupId>
+                <artifactId>jodconverter-online</artifactId>
+                <version>${jodconverter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jodconverter</groupId>
+                <artifactId>jodconverter-spring</artifactId>
+                <version>${jodconverter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jodconverter</groupId>
+                <artifactId>jodconverter-core</artifactId>
+                <version>${jodconverter.version}</version>
+            </dependency>
             <dependency>
                 <groupId>commons-dbutils</groupId>
                 <artifactId>commons-dbutils</artifactId>
@@ -250,6 +276,11 @@
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml-schemas</artifactId>
                 <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lowagie</groupId>
+                <artifactId>itext</artifactId>
+                <version>${itext.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.itextpdf</groupId>

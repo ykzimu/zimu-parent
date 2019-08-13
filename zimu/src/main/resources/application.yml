@@ -137,6 +137,12 @@ management:
   endpoint:
     health:
       show-details: always
+jodconverter:
+  local:
+    office-home: C:\Program Files\LibreOffice
+    portNumbers: 8100
+    maxTasksPerProcess: 10
+    enabled: true
 ---
 spring:
   profiles: dev
