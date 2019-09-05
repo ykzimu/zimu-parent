@@ -19,6 +19,7 @@ import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
 import org.springframework.security.cas.web.CasAuthenticationFilter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
@@ -80,6 +81,13 @@ public class ZimuWebSecurityConfiguration {
                     .customUserType(UserInfo.class, "github").customUserType(UserInfo.class, "baidu")// .userAuthoritiesMapper(userAuthoritiesMapper())
                     .userService(userDetailsService).and().permitAll().and().httpBasic()//
                     .and().csrf().disable().rememberMe().rememberMeServices(rememberMeServices).alwaysRemember(true);
+        }
+
+
+        @Override
+        public void configure(WebSecurity web) throws Exception {
+            //解决静态资源被拦截的问题
+            web.ignoring().antMatchers(staticProperties.getUrlPatterns());
         }
 
         /**
@@ -146,6 +154,12 @@ public class ZimuWebSecurityConfiguration {
                     .addFilterBefore(this.logoutFilter(), LogoutFilter.class)//
                     .addFilterBefore(this.singleSignOutFilter(), CasAuthenticationFilter.class)//
                     .addFilterAfter(new HttpServletRequestWrapperFilter(), CasAuthenticationFilter.class);
+        }
+
+        @Override
+        public void configure(WebSecurity web) throws Exception {
+            //解决静态资源被拦截的问题
+            web.ignoring().antMatchers(staticProperties.getUrlPatterns());
         }
 
         /**
