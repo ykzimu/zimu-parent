@@ -43,6 +43,12 @@ spring:
         max-idle: 8
         max-wait: -1ms
         min-idle: 0
+  rabbitmq:
+    host: mq.qinbeixian.com
+    port: 5672
+    username: zimu
+    password: yk316497
+    virtual-host: zimuvh
   data:
     mongodb:
       host: mongodb.qinbeixian.com
