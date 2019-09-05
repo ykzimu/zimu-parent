@@ -25,8 +25,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.logout.LogoutFilter;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.util.Map;
 
@@ -140,7 +141,7 @@ public class ZimuWebSecurityConfiguration {
             }
             //
             registry.anyRequest().authenticated()//
-                    .and().logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll()//
+                    .and().logout().logoutSuccessHandler(urlLogoutSuccessHandler()).logoutRequestMatcher(logoutRequestMatcher()).permitAll()//
                     .and().headers().frameOptions().disable()//
                     // oauth2Login登录
                     .and().oauth2Login().loginPage("/auth/login").defaultSuccessUrl("/").userInfoEndpoint()
@@ -151,7 +152,6 @@ public class ZimuWebSecurityConfiguration {
             http.exceptionHandling().authenticationEntryPoint(this.casAuthenticationEntryPoint())//
                     .and()//
                     .addFilter(this.casAuthenticationFilter())//
-                    .addFilterBefore(this.logoutFilter(), LogoutFilter.class)//
                     .addFilterBefore(this.singleSignOutFilter(), CasAuthenticationFilter.class)//
                     .addFilterAfter(new HttpServletRequestWrapperFilter(), CasAuthenticationFilter.class);
         }
@@ -170,7 +170,8 @@ public class ZimuWebSecurityConfiguration {
             auth.authenticationProvider(this.casAuthenticationProvider());
         }
 
-        private CasAuthenticationFilter casAuthenticationFilter() throws Exception {
+        @Bean
+        public CasAuthenticationFilter casAuthenticationFilter() throws Exception {
             CasAuthenticationFilter casAuthenticationFilter = new CasAuthenticationFilter();
             casAuthenticationFilter.setAuthenticationManager(super.authenticationManager());
             casAuthenticationFilter.setFilterProcessesUrl(this.casProperties.getService().getLogin());
@@ -179,7 +180,8 @@ public class ZimuWebSecurityConfiguration {
             return casAuthenticationFilter;
         }
 
-        private ServiceProperties serviceProperties() {
+        @Bean
+        public ServiceProperties serviceProperties() {
             ServiceProperties serviceProperties = new ServiceProperties();
             serviceProperties.setService(this.casProperties.getService().getHost() + this.casProperties.getService().getLogin());
             serviceProperties.setSendRenew(this.casProperties.getService().getSendRenew());
@@ -187,14 +189,16 @@ public class ZimuWebSecurityConfiguration {
             return serviceProperties;
         }
 
-        private CasAuthenticationEntryPoint casAuthenticationEntryPoint() {
+        @Bean
+        public CasAuthenticationEntryPoint casAuthenticationEntryPoint() {
             CasAuthenticationEntryPoint entryPoint = new CasAuthenticationEntryPoint();
             entryPoint.setLoginUrl(this.casProperties.getServer().getLogin());
             entryPoint.setServiceProperties(this.serviceProperties());
             return entryPoint;
         }
 
-        private CasAuthenticationProvider casAuthenticationProvider() {
+        @Bean
+        public CasAuthenticationProvider casAuthenticationProvider() {
             CasAuthenticationProvider provider = new CasAuthenticationProvider();
             provider.setKey("casProvider");
             provider.setServiceProperties(this.serviceProperties());
@@ -203,14 +207,16 @@ public class ZimuWebSecurityConfiguration {
             return provider;
         }
 
-        private LogoutFilter logoutFilter() {
+        @Bean
+        public SimpleUrlLogoutSuccessHandler urlLogoutSuccessHandler() {
             String logoutRedirectPath = this.casProperties.getServer().getLogout() + "?service=" + this.casProperties.getService().getHost();
-            LogoutFilter logoutFilter = new LogoutFilter(logoutRedirectPath, new SecurityContextLogoutHandler());
-            logoutFilter.setFilterProcessesUrl(this.casProperties.getService().getLogout());
-            return logoutFilter;
+            SimpleUrlLogoutSuccessHandler urlLogoutSuccessHandler = new SimpleUrlLogoutSuccessHandler();
+            urlLogoutSuccessHandler.setDefaultTargetUrl(logoutRedirectPath);
+            return urlLogoutSuccessHandler;
         }
 
-        private SingleSignOutFilter singleSignOutFilter() {
+        @Bean
+        public SingleSignOutFilter singleSignOutFilter() {
             SingleSignOutFilter singleSignOutFilter = new SingleSignOutFilter();
             singleSignOutFilter.setCasServerUrlPrefix(this.casProperties.getServer().getHost());
             singleSignOutFilter.setIgnoreInitConfiguration(true);
@@ -220,6 +226,10 @@ public class ZimuWebSecurityConfiguration {
         @Bean
         public ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> singleSignOutHttpSessionListener() {
             return new ServletListenerRegistrationBean<>(new SingleSignOutHttpSessionListener());
+        }
+
+        private RequestMatcher logoutRequestMatcher() {
+            return new AntPathRequestMatcher(this.casProperties.getService().getLogout());
         }
     }
 
