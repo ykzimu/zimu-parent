@@ -20,7 +20,7 @@
     </modules>
 
     <properties>
-        <mybatis-plus.version>3.1.2</mybatis-plus.version>
+        <mybatis-plus.version>3.2.0</mybatis-plus.version>
         <fastjson.version>1.2.58</fastjson.version>
         <tika.version>1.21</tika.version>
         <poi.version>4.1.0</poi.version>
