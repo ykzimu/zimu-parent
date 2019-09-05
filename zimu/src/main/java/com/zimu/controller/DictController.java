@@ -5,18 +5,16 @@ import com.zimu.domain.info.DataTablesInfo;
 import com.zimu.domain.info.DataTablesView;
 import com.zimu.entity.UserEntity;
 import com.zimu.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/dict")
 public class DictController {
 
-    @Resource
+    @Autowired
     private UserService userService;
 
     /**
@@ -25,7 +23,6 @@ public class DictController {
      * @return ModelAndView
      */
     @PostMapping("/listData")
-    @ResponseBody
     public DataTablesView listData(DataTablesInfo dataTablesInfo) {
         IPage<UserEntity> page = userService.getUsers(dataTablesInfo);
         return new DataTablesView<>(page);
