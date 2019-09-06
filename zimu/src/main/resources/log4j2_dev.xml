@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Properties>
+        <property name="APP_NAME" value="zimu"/>
+        <property name="ENV_NAME" value="dev"/>
+        <property name="LOG_PATH" value="/opt/logs"/>
+        <property name="LOG_PATTERN" value="[%-5p][%d{HH:mm:ss}][%t][%c (%M:%L)] {%m%n}"/>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+        <RollingFile name="LogFile"
+                     fileName="${LOG_PATH}/${APP_NAME}/${APP_NAME}.log"
+                     filePattern="${LOG_PATH}/${APP_NAME}/${APP_NAME}-%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <SizeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy max="30">
+                <Delete basePath="${LOG_PATH}/${APP_NAME}/">
+                    <IfFileName glob="*.log.gz"/>
+                    <!--清除7天之前的文件-->
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="LogFile"/>
+        </Root>
+        <Logger name="com.zimu" level="INFO"/>
+        <Logger name="com" level="INFO"/>
+        <Logger name="org" level="INFO"/>
+        <Logger name="io" level="INFO"/>
+        <Logger name="net" level="INFO"/>
+        <Logger name="reactor" level="INFO"/>
+        <Logger name="springfox" level="INFO"/>
+    </Loggers>
+</Configuration>
