@@ -153,4 +153,6 @@ management:
 spring:
   profiles: dev
 cas:
-  enabled: true
+  enabled: false
+server:
+  port: 9001
