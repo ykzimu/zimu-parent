@@ -40,6 +40,8 @@ spring:
       config: classpath:ehcache.xml
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+  liquibase:
+    enabled: false
 static:
   url-patterns:
     - /

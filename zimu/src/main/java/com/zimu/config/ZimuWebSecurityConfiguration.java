@@ -170,8 +170,7 @@ public class ZimuWebSecurityConfiguration {
             auth.authenticationProvider(this.casAuthenticationProvider());
         }
 
-        @Bean
-        public CasAuthenticationFilter casAuthenticationFilter() throws Exception {
+        private CasAuthenticationFilter casAuthenticationFilter() throws Exception {
             CasAuthenticationFilter casAuthenticationFilter = new CasAuthenticationFilter();
             casAuthenticationFilter.setAuthenticationManager(super.authenticationManager());
             casAuthenticationFilter.setFilterProcessesUrl(this.casProperties.getService().getLogin());
@@ -215,8 +214,7 @@ public class ZimuWebSecurityConfiguration {
             return urlLogoutSuccessHandler;
         }
 
-        @Bean
-        public SingleSignOutFilter singleSignOutFilter() {
+        private SingleSignOutFilter singleSignOutFilter() {
             SingleSignOutFilter singleSignOutFilter = new SingleSignOutFilter();
             singleSignOutFilter.setCasServerUrlPrefix(this.casProperties.getServer().getHost());
             singleSignOutFilter.setIgnoreInitConfiguration(true);
