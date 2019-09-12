@@ -434,6 +434,14 @@
             </snapshots>
         </repository>
         <repository>
+            <id>repo1-maven2</id>
+            <url> https://repo1.maven.org/maven2</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
+        <repository>
             <id>spring-snapshots</id>
             <name>Spring Snapshots</name>
             <url>https://repo.spring.io/snapshot</url>
@@ -452,6 +460,14 @@
     </repositories>
 
     <pluginRepositories>
+        <pluginRepository>
+            <id>repo1-maven2</id>
+            <name>repo1-maven2</name>
+            <url> https://repo1.maven.org/maven2</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
         <pluginRepository>
             <id>spring-snapshots</id>
             <name>Spring Snapshots</name>

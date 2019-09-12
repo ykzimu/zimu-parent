@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1559701365347" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema">
+  <process id="ZK_CHECK" isClosed="false" isExecutable="true" processType="None">
+    <startEvent id="_2" name="StartEvent"/>
+    <userTask activiti:exclusive="true" id="QA_CHECK" name="QACheck"/>
+    <userTask activiti:async="false" activiti:exclusive="true" id="PLATFORM_ASSITANT_CHECK" name="platformAssitantCheck"/>
+    <exclusiveGateway gatewayDirection="Unspecified" id="_5" name="ExclusiveGateway"/>
+    <userTask activiti:exclusive="true" id="ZHAKOU_UNIT_PM_CHECK_APPLY" name="zhakouUnitPmCheckApply"/>
+    <userTask activiti:exclusive="true" id="PLATFORM_PM_CHECK_APPLY" name="platformPmCheckApply"/>
+    <userTask activiti:exclusive="true" id="ZHAKOU_PM_UPLOAD_CHECK_REVIEW_RESULT" name="扎口项目经理上传验收评审结果"/>
+    <userTask activiti:exclusive="true" id="ZHAKOU_UNIT_LEADER_CONFIRM" name="zhakouUnitLeaderConfirm"/>
+    <endEvent id="_27" name="EndEvent"/>
+    <userTask activiti:exclusive="true" id="ASSITANT_UPLOAD_CHECK_REVIEW_RESULT" name="平台助理上传验收评审结果"/>
+    <endEvent id="_3" name="EndEvent"/>
+    <sequenceFlow id="_6" sourceRef="_2" targetRef="QA_CHECK"/>
+    <sequenceFlow id="_7" sourceRef="QA_CHECK" targetRef="PLATFORM_ASSITANT_CHECK"/>
+    <sequenceFlow id="_8" sourceRef="PLATFORM_ASSITANT_CHECK" targetRef="_5"/>
+    <sequenceFlow id="_9" name="zkPMCreate" sourceRef="_5" targetRef="ZHAKOU_UNIT_PM_CHECK_APPLY">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${createType == 1}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_10" name="platformPMCreate" sourceRef="_5" targetRef="PLATFORM_PM_CHECK_APPLY">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${createType == 2}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_23" sourceRef="ZHAKOU_UNIT_LEADER_CONFIRM" targetRef="_3"/>
+    <userTask activiti:exclusive="true" id="PLATFORM_PM_UPLOAD_CHECK_REVIEW_RESULT" name="平台项目经理上传验收评审结果"/>
+    <inclusiveGateway gatewayDirection="Unspecified" id="_32" name="InclusiveGateway"/>
+    <sequenceFlow id="_33" sourceRef="ZHAKOU_UNIT_PM_CHECK_APPLY" targetRef="_32"/>
+    <sequenceFlow id="_35" sourceRef="PLATFORM_PM_CHECK_APPLY" targetRef="_32"/>
+    <parallelGateway gatewayDirection="Unspecified" id="_39" name="ParallelGateway"/>
+    <sequenceFlow id="_40" sourceRef="_32" targetRef="_39"/>
+    <exclusiveGateway gatewayDirection="Unspecified" id="_41" name="ExclusiveGateway"/>
+    <inclusiveGateway gatewayDirection="Unspecified" id="_42" name="InclusiveGateway"/>
+    <sequenceFlow id="_44" sourceRef="_39" targetRef="_41"/>
+    <sequenceFlow id="_45" name="扎口项目经理创建" sourceRef="_41" targetRef="ZHAKOU_PM_UPLOAD_CHECK_REVIEW_RESULT">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${createType == 1}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_46" name="平台项目经理创建" sourceRef="_41" targetRef="PLATFORM_PM_UPLOAD_CHECK_REVIEW_RESULT">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${createType == 2}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_47" sourceRef="ZHAKOU_PM_UPLOAD_CHECK_REVIEW_RESULT" targetRef="_42"/>
+    <sequenceFlow id="_48" sourceRef="PLATFORM_PM_UPLOAD_CHECK_REVIEW_RESULT" targetRef="_42"/>
+    <sequenceFlow id="_49" sourceRef="_39" targetRef="ASSITANT_UPLOAD_CHECK_REVIEW_RESULT"/>
+    <parallelGateway gatewayDirection="Unspecified" id="_50" name="ParallelGateway"/>
+    <sequenceFlow id="_51" sourceRef="_42" targetRef="_50"/>
+    <sequenceFlow id="_52" sourceRef="ASSITANT_UPLOAD_CHECK_REVIEW_RESULT" targetRef="_50"/>
+    <sequenceFlow id="_53" sourceRef="_50" targetRef="ZHAKOU_UNIT_LEADER_CONFIRM"/>
+  </process>
+  <bpmndi:BPMNDiagram documentation="background=#3C3F41;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
+    <bpmndi:BPMNPlane bpmnElement="ZK_CHECK">
+      <bpmndi:BPMNShape bpmnElement="_2" id="Shape-_2">
+        <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="395.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="QA_CHECK" id="Shape-QA_CHECK">
+        <omgdc:Bounds height="55.0" width="85.0" x="140.0" y="385.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="PLATFORM_ASSITANT_CHECK" id="Shape-PLATFORM_ASSITANT_CHECK">
+        <omgdc:Bounds height="55.0" width="85.0" x="295.0" y="385.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_5" id="Shape-_5" isMarkerVisible="false">
+        <omgdc:Bounds height="32.0" width="32.0" x="470.0" y="395.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ZHAKOU_UNIT_PM_CHECK_APPLY" id="Shape-ZHAKOU_UNIT_PM_CHECK_APPLY">
+        <omgdc:Bounds height="55.0" width="85.0" x="580.0" y="315.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="PLATFORM_PM_CHECK_APPLY" id="Shape-PLATFORM_PM_CHECK_APPLY">
+        <omgdc:Bounds height="55.0" width="85.0" x="580.0" y="440.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ZHAKOU_PM_UPLOAD_CHECK_REVIEW_RESULT" id="Shape-ZHAKOU_PM_UPLOAD_CHECK_REVIEW_RESULT">
+        <omgdc:Bounds height="55.0" width="85.0" x="950.0" y="225.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ZHAKOU_UNIT_LEADER_CONFIRM" id="Shape-ZHAKOU_UNIT_LEADER_CONFIRM">
+        <omgdc:Bounds height="55.0" width="85.0" x="1385.0" y="395.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_27" id="Shape-_27">
+        <omgdc:Bounds height="32.0" width="32.0" x="165.0" y="1140.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ASSITANT_UPLOAD_CHECK_REVIEW_RESULT" id="Shape-ASSITANT_UPLOAD_CHECK_REVIEW_RESULT">
+        <omgdc:Bounds height="55.0" width="85.0" x="970.0" y="470.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_3" id="Shape-_3">
+        <omgdc:Bounds height="32.0" width="32.0" x="1530.0" y="405.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="PLATFORM_PM_UPLOAD_CHECK_REVIEW_RESULT" id="Shape-PLATFORM_PM_UPLOAD_CHECK_REVIEW_RESULT">
+        <omgdc:Bounds height="55.0" width="85.0" x="950.0" y="335.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_32" id="Shape-_32">
+        <omgdc:Bounds height="32.0" width="32.0" x="720.0" y="390.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_39" id="Shape-_39">
+        <omgdc:Bounds height="32.0" width="32.0" x="795.0" y="390.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_41" id="Shape-_41" isMarkerVisible="false">
+        <omgdc:Bounds height="32.0" width="32.0" x="835.0" y="285.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_42" id="Shape-_42">
+        <omgdc:Bounds height="32.0" width="32.0" x="1080.0" y="305.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_50" id="Shape-_50">
+        <omgdc:Bounds height="32.0" width="32.0" x="1200.0" y="415.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_35" id="BPMNEdge__35" sourceElement="PLATFORM_PM_CHECK_APPLY" targetElement="_32">
+        <omgdi:waypoint x="665.0" y="465.0"/>
+        <omgdi:waypoint x="730.0" y="465.0"/>
+        <omgdi:waypoint x="730.0" y="416.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_40" id="BPMNEdge__40" sourceElement="_32" targetElement="_39">
+        <omgdi:waypoint x="752.0" y="406.0"/>
+        <omgdi:waypoint x="795.0" y="406.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_44" id="BPMNEdge__44" sourceElement="_39" targetElement="_41">
+        <omgdi:waypoint x="820.0" y="399.0"/>
+        <omgdi:waypoint x="820.0" y="355.0"/>
+        <omgdi:waypoint x="835.0" y="301.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_46" id="BPMNEdge__46" sourceElement="_41" targetElement="_11">
+        <omgdi:waypoint x="860.0" y="308.0"/>
+        <omgdi:waypoint x="860.0" y="360.0"/>
+        <omgdi:waypoint x="950.0" y="360.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_23" id="BPMNEdge__23" sourceElement="ZHAKOU_UNIT_LEADER_CONFIRM" targetElement="_3">
+        <omgdi:waypoint x="1470.0" y="422.5"/>
+        <omgdi:waypoint x="1530.0" y="421.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_45" id="BPMNEdge__45" sourceElement="_41" targetElement="PM_UPLOAD_CHECK_REVIEW_RESULT">
+        <omgdi:waypoint x="860.0" y="294.0"/>
+        <omgdi:waypoint x="860.0" y="260.0"/>
+        <omgdi:waypoint x="950.0" y="260.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_48" id="BPMNEdge__48" sourceElement="_11" targetElement="_42">
+        <omgdi:waypoint x="1035.0" y="365.0"/>
+        <omgdi:waypoint x="1085.0" y="365.0"/>
+        <omgdi:waypoint x="1085.0" y="326.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_47" id="BPMNEdge__47" sourceElement="PM_UPLOAD_CHECK_REVIEW_RESULT" targetElement="_42">
+        <omgdi:waypoint x="1035.0" y="252.5"/>
+        <omgdi:waypoint x="1090.0" y="290.0"/>
+        <omgdi:waypoint x="1090.0" y="311.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_49" id="BPMNEdge__49" sourceElement="_39" targetElement="ASSITANT_UPLOAD_CHECK_REVIEW_RESULT">
+        <omgdi:waypoint x="820.0" y="413.0"/>
+        <omgdi:waypoint x="820.0" y="495.0"/>
+        <omgdi:waypoint x="970.0" y="495.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_6" id="BPMNEdge__6" sourceElement="_2" targetElement="QA_CHECK">
+        <omgdi:waypoint x="32.0" y="411.0"/>
+        <omgdi:waypoint x="140.0" y="412.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_7" id="BPMNEdge__7" sourceElement="QA_CHECK" targetElement="PLATFORM_ASSITANT_CHECK">
+        <omgdi:waypoint x="225.0" y="412.5"/>
+        <omgdi:waypoint x="295.0" y="412.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_8" id="BPMNEdge__8" sourceElement="PLATFORM_ASSITANT_CHECK" targetElement="_5">
+        <omgdi:waypoint x="380.0" y="412.5"/>
+        <omgdi:waypoint x="470.0" y="411.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_9" id="BPMNEdge__9" sourceElement="_5" targetElement="ZHAKOU_UNIT_PM_CHECK_APPLY">
+        <omgdi:waypoint x="490.0" y="399.0"/>
+        <omgdi:waypoint x="490.0" y="345.0"/>
+        <omgdi:waypoint x="580.0" y="345.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_51" id="BPMNEdge__51" sourceElement="_42" targetElement="_50">
+        <omgdi:waypoint x="1112.0" y="321.0"/>
+        <omgdi:waypoint x="1210.0" y="380.0"/>
+        <omgdi:waypoint x="1210.0" y="421.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_53" id="BPMNEdge__53" sourceElement="_50" targetElement="ZHAKOU_UNIT_LEADER_CONFIRM">
+        <omgdi:waypoint x="1232.0" y="431.0"/>
+        <omgdi:waypoint x="1385.0" y="422.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_52" id="BPMNEdge__52" sourceElement="ASSITANT_UPLOAD_CHECK_REVIEW_RESULT" targetElement="_50">
+        <omgdi:waypoint x="1055.0" y="500.0"/>
+        <omgdi:waypoint x="1210.0" y="500.0"/>
+        <omgdi:waypoint x="1210.0" y="441.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_33" id="BPMNEdge__33" sourceElement="ZHAKOU_UNIT_PM_CHECK_APPLY" targetElement="_32">
+        <omgdi:waypoint x="665.0" y="342.5"/>
+        <omgdi:waypoint x="730.0" y="380.0"/>
+        <omgdi:waypoint x="730.0" y="396.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_10" id="BPMNEdge__10" sourceElement="_5" targetElement="PLATFORM_PM_CHECK_APPLY">
+        <omgdi:waypoint x="490.0" y="423.0"/>
+        <omgdi:waypoint x="490.0" y="465.0"/>
+        <omgdi:waypoint x="580.0" y="465.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

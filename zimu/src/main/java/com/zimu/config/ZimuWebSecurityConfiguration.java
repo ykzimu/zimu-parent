@@ -179,8 +179,7 @@ public class ZimuWebSecurityConfiguration {
             return casAuthenticationFilter;
         }
 
-        @Bean
-        public ServiceProperties serviceProperties() {
+        private ServiceProperties serviceProperties() {
             ServiceProperties serviceProperties = new ServiceProperties();
             serviceProperties.setService(this.casProperties.getService().getHost() + this.casProperties.getService().getLogin());
             serviceProperties.setSendRenew(this.casProperties.getService().getSendRenew());
@@ -188,16 +187,14 @@ public class ZimuWebSecurityConfiguration {
             return serviceProperties;
         }
 
-        @Bean
-        public CasAuthenticationEntryPoint casAuthenticationEntryPoint() {
+        private CasAuthenticationEntryPoint casAuthenticationEntryPoint() {
             CasAuthenticationEntryPoint entryPoint = new CasAuthenticationEntryPoint();
             entryPoint.setLoginUrl(this.casProperties.getServer().getLogin());
             entryPoint.setServiceProperties(this.serviceProperties());
             return entryPoint;
         }
 
-        @Bean
-        public CasAuthenticationProvider casAuthenticationProvider() {
+        private CasAuthenticationProvider casAuthenticationProvider() {
             CasAuthenticationProvider provider = new CasAuthenticationProvider();
             provider.setKey("casProvider");
             provider.setServiceProperties(this.serviceProperties());
@@ -206,8 +203,7 @@ public class ZimuWebSecurityConfiguration {
             return provider;
         }
 
-        @Bean
-        public SimpleUrlLogoutSuccessHandler urlLogoutSuccessHandler() {
+        private SimpleUrlLogoutSuccessHandler urlLogoutSuccessHandler() {
             String logoutRedirectPath = this.casProperties.getServer().getLogout() + "?service=" + this.casProperties.getService().getHost();
             SimpleUrlLogoutSuccessHandler urlLogoutSuccessHandler = new SimpleUrlLogoutSuccessHandler();
             urlLogoutSuccessHandler.setDefaultTargetUrl(logoutRedirectPath);
@@ -221,13 +217,13 @@ public class ZimuWebSecurityConfiguration {
             return singleSignOutFilter;
         }
 
+        private RequestMatcher logoutRequestMatcher() {
+            return new AntPathRequestMatcher(this.casProperties.getService().getLogout());
+        }
+
         @Bean
         public ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> singleSignOutHttpSessionListener() {
             return new ServletListenerRegistrationBean<>(new SingleSignOutHttpSessionListener());
-        }
-
-        private RequestMatcher logoutRequestMatcher() {
-            return new AntPathRequestMatcher(this.casProperties.getService().getLogout());
         }
     }
 
