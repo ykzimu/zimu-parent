@@ -46,6 +46,7 @@ static:
   url-patterns:
     - /
     - /index.html
+    - /error/**
     - /resources/**
     - /static/**
     - /public/**
