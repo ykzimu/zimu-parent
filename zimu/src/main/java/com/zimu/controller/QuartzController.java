@@ -70,4 +70,18 @@ public class QuartzController {
 
         return jsonView;
     }
+
+    @GetMapping("/job/delete")
+    public JsonView jobDelete() {
+        JsonView jsonView = new JsonView();
+        try {
+            String[] beanNames = applicationContext.getBeanNamesForType(QuartzJobBean.class);
+            boolean flag = quartzComponent.deleteJob(beanNames[0]);
+            jsonView.setData(flag);
+        } catch (Exception e) {
+            log.error("", e);
+        }
+
+        return jsonView;
+    }
 }

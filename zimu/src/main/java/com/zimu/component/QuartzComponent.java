@@ -11,4 +11,6 @@ public interface QuartzComponent {
     List<JobData> jobList() throws SchedulerException;
 
     boolean addJob(String name, String beanName, String cron, Date startTime, Date endTime, String customProps, String description);
+
+    boolean deleteJob(String beanName);
 }

@@ -74,23 +74,34 @@ public class QuartzComponentImpl implements QuartzComponent {
             jobDataMap.put("name", name);
 
             JobDetail jobDetail = JobBuilder.newJob(quartzJobBean.getClass())//
-                .withIdentity(jobKey)//
-                .usingJobData(jobDataMap)//
-                .storeDurably(true)//
-                .withDescription(description)//
-                .build();//
+                    .withIdentity(jobKey)//
+                    .usingJobData(jobDataMap)//
+                    .storeDurably(true)//
+                    .withDescription(description)//
+                    .build();//
 
             CronTrigger cronTrigger = TriggerBuilder.newTrigger()//
-                .forJob(jobKey)//
-                .usingJobData(jobDataMap)//
-                .withIdentity(triggerKey)//
-                .startAt(startTime)//
-                .endAt(endTime)//
-                .withDescription(description)//
-                .withSchedule(CronScheduleBuilder.cronSchedule(cron))//
-                .build();
+                    .forJob(jobKey)//
+                    .usingJobData(jobDataMap)//
+                    .withIdentity(triggerKey)//
+                    .startAt(startTime)//
+                    .endAt(endTime)//
+                    .withDescription(description)//
+                    .withSchedule(CronScheduleBuilder.cronSchedule(cron))//
+                    .build();
 
             scheduler.scheduleJob(jobDetail, cronTrigger);
+        } catch (Exception e) {
+            log.error("", e);
+            return false;
+        }
+        return true;
+    }
+
+    public boolean deleteJob(String beanName) {
+        try {
+            JobKey jobKey = new JobKey(beanName + "JobDetail", GROUP_NAME);
+            scheduler.deleteJob(jobKey);
         } catch (Exception e) {
             log.error("", e);
             return false;
