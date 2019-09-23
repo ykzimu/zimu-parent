@@ -3,13 +3,13 @@ spring:
     hikari:
       zimu:
         pool-name: zimuDataSource
-        jdbc-url: jdbc:mysql://mysql.qinbeixian.com:3306/zimu?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+        jdbc-url: jdbc:mysql://mysql.qinbeixian.com:3306/zimu?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
         driver-class-name: com.mysql.cj.jdbc.Driver
         username: yangkun
         password: YKsyc@123
       quartz:
         pool-name: quartzDataSource
-        jdbc-url: jdbc:mysql://mysql.qinbeixian.com:3306/quartz?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+        jdbc-url: jdbc:mysql://mysql.qinbeixian.com:3306/quartz?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
         driver-class-name: com.mysql.cj.jdbc.Driver
         username: quartz
         password: YKsyc@123
